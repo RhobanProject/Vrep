@@ -23,75 +23,46 @@
 //
 // This file was automatically created for V-REP release V3.0.1 on January 20th 2013
 
-/* Your custom remote API functions. Following are examples: */
+/* Your custom remote API functions. */
 
-if (_rawCmdID==simx_customcmd_get_object_count)
+if (_rawCmdID == simx_customcmd_get_object_name)
 {
-	// Get the total number of objects in the scene (i.e. execute the command):
-	int index=0;
-	while (simGetObjects(index,sim_handle_all)!=-1)
-		index++;
+    // First retrieve the data that is part of the command (i.e. the handle of the object). 
+    // The server is in charge of handling little endian to big endian conversions:
+    simInt handle = littleEndianIntConversion(((int*)(_cmdData+0))[0],otherSideIsBigEndian);
 
-	// We now need to return that number (index):
-	retCmd->setDataReply_1int(index,true,otherSideIsBigEndian); // Endianness of the client is detected and automatically adjusted (for simple data replies, otherwise you'll have to do that yourself)
+    // The new object name is pure data (i.e. not part of the command). The pure data is located in _data
+
+    // Execute the command:
+    simChar* objectName = simGetObjectName(handle);
+    if (objectName != NULL) {
+        retCmd->setDataReply_custom_copyBuffer(objectName, int(strlen(objectName)+1), true);
+        simReleaseBuffer(objectName);
+    }
+    else {
+        retCmd->setDataReply_nothing(false);
+    }
 }
 
-if (_rawCmdID==simx_customcmd_get_object_type)
+if (_rawCmdID == simx_customcmd_get_joint_type)
 {
-	// First retrieve the data that is part of the command (i.e. the handle of the object). The server is in charge of handling little endian to big endian conversions:
-	int handle=littleEndianIntConversion(((int*)(_cmdData+0))[0],otherSideIsBigEndian);
-
-	// Execute the command:
-	int objType=simGetObjectType(handle);
-	bool success=(objType!=-1);
-
-	// We now need to return the type:
-	retCmd->setDataReply_1int(objType,success,otherSideIsBigEndian); // Endianness of the client is detected and automatically adjusted (for simple data replies, otherwise you'll have to do that yourself)
+    simInt handle = littleEndianIntConversion(((int*)(_cmdData+0))[0],otherSideIsBigEndian);
+    simInt jointType = simGetJointType(handle);
+	 retCmd->setDataReply_1int(jointType, (jointType != -1), otherSideIsBigEndian);
 }
 
-if (_rawCmdID==simx_customcmd_set_object_name)
+if (_rawCmdID == simx_customcmd_get_joint_interval)
 {
-	// First retrieve the data that is part of the command (i.e. the handle of the object). The server is in charge of handling little endian to big endian conversions:
-	int handle=littleEndianIntConversion(((int*)(_cmdData+0))[0],otherSideIsBigEndian);
+    simInt handle = littleEndianIntConversion(((int*)(_cmdData+0))[0],otherSideIsBigEndian);
 
-	// The new object name is pure data (i.e. not part of the command). The pure data is located in _data
-	
-	// Execute the command:
-	bool success=(simSetObjectName(handle,_pureData)!=-1);
+    simBool cyclic;
+    simFloat interval[2];
+    simInt success = simGetJointInterval(handle, &cyclic, interval);
+    char buffer[9];
+    buffer[0] = (char)cyclic;
+    *((float*)&buffer[1]) = littleEndianFloatConversion(interval[0], otherSideIsBigEndian);
+    *((float*)&buffer[5]) = littleEndianFloatConversion(interval[1], otherSideIsBigEndian);
 
-	// We now need to return an empty command reply, just indicating the success of the command:
-	retCmd->setDataReply_nothing(success);
+    retCmd->setDataReply_custom_copyBuffer(buffer, 9, (success != -1));
 }
 
-if (_rawCmdID==simx_customcmd_get_ui_button_label)
-{
-	// First retrieve the data that is part of the command (i.e. the handle of the UI and the ID of the button). The server is in charge of handling little endian to big endian conversions:
-	int uiHandle=littleEndianIntConversion(((int*)(_cmdData+0))[0],otherSideIsBigEndian);
-	int buttonID=littleEndianIntConversion(((int*)(_cmdData+0))[1],otherSideIsBigEndian);
-
-	// Execute the command:
-	char* label=simGetUIButtonLabel(uiHandle,buttonID);
-
-	// We now need to return the label (if the function was successful):
-	if (label!=NULL)
-	{
-		retCmd->setDataReply_custom_copyBuffer(label,int(strlen(label)+1),true); // we return the string (including terminal zero) as pure data
-		simReleaseBuffer(label); // do not forget to release that buffer!
-	}
-	else
-		retCmd->setDataReply_nothing(false); // we do not return anything, we just indicate that the function failed on the server side
-}
-
-if (_rawCmdID==simx_customcmd_get_script_handle)
-{
-	// The data that is part of the command (i.e. the name of the object) is stored in _cmdString
-
-	// Execute the command now:
-	int h=simGetObjectHandle(_cmdString.c_str());
-	int scriptHandle=-1;
-	if (h!=-1)
-		scriptHandle=simGetScriptAssociatedWithObject(h);
-
-	// We now need to return the script handle:
-	retCmd->setDataReply_1int(scriptHandle,scriptHandle!=-1,otherSideIsBigEndian); // Endianness of the client is detected and automatically adjusted (for simple data replies, otherwise you'll have to do that yourself)
-}

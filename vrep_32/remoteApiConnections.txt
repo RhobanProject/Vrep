@@ -7,9 +7,8 @@
 // portIndex@_syncSimTrigger = xxxx 	// where xxxx is true or false. When true, then the service will be pre-enabled for synchronous operation. Only one service at a time can be pre-enabled for synchronous operation!
 //
 // In above strings, @ can be any number starting with 1. If more than one server service is required, then numbers need to be consecutive and starting with 1
-//
-// As an example:
-//
-// portIndex1_port 		= 19998
-// portIndex1_debug 		= false
-// portIndex1_syncSimTrigger 	= true
+
+portIndex1_port = 4242
+portIndex1_debug = false
+portIndex1_syncSimTrigger = true
+

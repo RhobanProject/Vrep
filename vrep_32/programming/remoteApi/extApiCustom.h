@@ -35,11 +35,15 @@
 	#define EXTAPI_DLLEXPORT extern
 #endif
 
-/* Your custom remote API functions. Following are examples: */
-EXTAPI_DLLEXPORT simxInt simxCustomGetObjectCount(simxInt* objectCount,simxInt operationMode); /* related to command ID: simx_customcmd_get_object_count */
-EXTAPI_DLLEXPORT simxInt simxCustomGetObjectType(simxInt objectHandle,simxInt* objectType,simxInt operationMode); /* related to command ID: simx_customcmd_get_object_type */
-EXTAPI_DLLEXPORT simxInt simxCustomSetObjectName(simxInt objectHandle,const simxChar* objectName,simxInt operationMode); /* related to command ID: simx_customcmd_set_object_name */
-EXTAPI_DLLEXPORT simxInt simxCustomGetUIButtonLabel(simxInt uiHandle,simxInt buttonID,simxChar** label,simxInt operationMode); /* related to command ID: simx_customcmd_get_ui_button_label */
-EXTAPI_DLLEXPORT simxInt simxCustomGetScriptHandle(const simxChar* objectName,simxInt* scriptHandle,simxInt operationMode); /* related to command ID: simx_customcmd_get_script_handle */
+/* Your custom remote API functions. */
+
+//related to command ID: simx_customcmd_get_object_name
+EXTAPI_DLLEXPORT simxInt simxCustomGetObjectName(simxInt objectHandle, simxChar** objectName, simxInt operationMode); 
+
+//related to command ID: simx_customcmd_get_joint_type
+EXTAPI_DLLEXPORT simxInt simxCustomGetJointType(simxInt objectHandle, simxInt* jointType, simxInt operationMode); 
+
+//related to command ID: simx_customcmd_get_joint_interval
+EXTAPI_DLLEXPORT simxInt simxCustomGetJointInterval(simxInt objectHandle, simxChar* cyclic, simxFloat* interval, simxInt operationMode); 
 
 #endif /* _EXTAPICUSTOM__ */		

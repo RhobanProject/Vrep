@@ -1,7 +1,7 @@
 CFLAGS = -I./include -I./remoteApi -Wall -DNON_MATLAB_PARSING
 LDFLAGS = -lpthread -ldl
 
-OBJS = remoteApi/extApi.o remoteApi/extApiPlatform.o
+OBJS = remoteApi/extApi.o remoteApi/extApiPlatform.o remoteApi/extApiCustom.c
 
 OS = $(shell uname -s)
 ECHO=@
@@ -16,7 +16,7 @@ else
 	EXT = dylib
 endif
 
-TARGET = remoteApi.$(EXT)
+TARGET = remoteApiSharedLib/remoteApi.$(EXT)
 
 all: remoteApiLib
 

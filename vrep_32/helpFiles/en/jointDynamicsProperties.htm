@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Joint dynamics dialog</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Joint dynamics dialog</h1>
+
+<p>The joint dynamics dialog is part of the <a href="jointProperties.htm">joint dialog</a>. The dialog displays the dynamics settings and parameters of the last selected <a href="joints.htm">joint</a>. If no object is selected, the dialog is inactive. If more than one joint is selected, then some parameters can be copied from the last selected joint to the other selected joints (<strong>Apply to selection</strong>-buttons. Be aware that this however only has an effect between joints of same type or mode):<br>
+</p>
+<p align=center><img src="images/jointDynamicsProperties1.jpg"></p>
+<p class=imageLabel>[Joint dynamics dialog]</p>
+<br>
+
+
+
+
+
+
+
+<li><strong>Motor enabled</strong>: enables or disables the motor of the joint. If disabled, the joint is free. Available only if the joint is in torque/force mode.<br>
+</li>
+
+<li><strong>Target velocity</strong>: the target velocity for the joint motor. The target velocity will be instantaneously reached if the maximum torque/force is high enough; otherwise the target velocity is gradually approached. Available only if the joint is in torque/force mode.<br>
+</li>
+
+<li><strong>Engine specific  properties</strong>: allows adjusting engine-specific parameters. Refer to the <a href="http://www.bulletphysics.org">Bullet</a> or <a href="http://www.ode.org">ODE</a> documentations for more details.<br>
+</li>
+
+
+<li><strong>Max. torque/force</strong>: the torque or force at which the joint motor operates. Available only if the joint is in torque/force mode, or in hybrid operation mode.<br>
+</li>
+
+
+<li><strong>Position control enabled</strong>: enables or disables the position control of the joint motor (PID control). Available only if the joint is in torque/force mode.<br>
+</li>
+
+<li><strong>Regulate velocity</strong>: the PID controller will adjust the joint velocity (refer to the <a href="jointDescription.htm">section on joint types and operation</a> for details). <strong>Upper limit</strong> allows limiting the regulation velocity to a maximum value.<br>
+</li>
+
+<li><strong>Regulate torque/force</strong>: the PID controller will modulate the joint torque/force (refer to the <a href="jointDescription.htm">section on joint types and operation</a> for details)<br>
+</li>
+
+<li><strong>Proportional / Integral / Derivative parameter</strong>: the P / I / D parameter of the PID position control. Available only if the joint is in torque/force mode, or in hybrid operation mode.
+</li>
+
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="joints.htm">Joints</a></li>
+<li><a href="jointDescription.htm">Joint types and operation</a></li>
+<li><a href="jointProperties.htm">Joint dialog</a></li>
+<li><a href="dynamicsModule.htm">Dynamics module</a></li>
+<li><a href="http://www.bulletphysics.org">Bullet Physics Library</a></li>
+<li><a href="http://www.ode.org">Open Dynamic Engine</a></li>
+
+<br>
+<br>
+
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

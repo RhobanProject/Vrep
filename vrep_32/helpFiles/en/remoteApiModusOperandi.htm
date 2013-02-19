@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Remote API modus operandi</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Remote API modus operandi</h1>
+
+<p>A remote API function is called in a similar fashion as a <a href="apiOverview.htm">regular API</a> function, however with 2 major differences:</p>
+<li>most remote API functions return a similar value: an <a href="remoteApiConstants.htm#functionErrorCodes">error code</a></li>
+<li>most remote API functions require an additional argument: <a href="remoteApiConstants.htm#operationModes">the operation mode</a></li>
+
+<p>
+The need for an operation mode and specific error code comes from the fact that the remote API function has to travel via socket communication to the server (V-REP), execute a task, then return to the caller (the client). A naive (or <em>regular</em>) approach would be to have the client send a request, and wait until the server processed the request and replied: in most situations this would take too much time and the lag would penalize the client application. Instead, the V-REP remote API lets the user chose the type of operation mode by providing two basic mechanisms to reduce communication lags or network overloads:</p>
+
+<li><strong>Data streaming</strong>: the server can anticipate what type of data the client requires. For that to happen, the client has to signal this desire to the server with a &quot;streaming&quot; or &quot;continuous&quot; operation mode flag (i.e. the function is stored on the server side, executed and sent on a regular time basis, without the need of a request from the client). This can be seen as a command/message subscription from the client to the server, where the server will be streaming the data to the client. Such a streaming operation request and reading of streamed data could look like this on the client side:
+ </li>
+
+<pre class=lightPurpleBoxTab>
+// Streaming operation request (subscription) (function returns immediately (<strong>non-blocking</strong>)):
+simxGetJointPosition(jointHandle,&jointPosition,simx_opmode_streaming);
+
+// The control loop:
+while (simxGetConnectionId()!=-1) // while we are connected to the server..
+{ 
+    // Fetch the newest joint value from the inbox (func. returns immediately (<strong>non-blocking</strong>)):
+    if (simxGetJointPosition(jointHandle,&jointPosition,simx_opmode_buffer)==simx_error_noerror) 
+    { 
+        // here we have the newest joint position in variable <em>jointPosition</em>!    
+    }
+}
+
+// Streaming operation is enabled/disabled individually for each command and
+// object(s) the command applies to. In above case, only the joint position of
+// the joint with handle <em>jointHandle</em> will be streamed.</pre>
+
+
+<li><strong>Data partitioning</strong>: the client and server can partition a large amount of data into smaller chunks that will be sent together with other data (e.g. streaming data). This reduces the load on the communication between client and server, and allows for a more fluid and continuous operation. On the client side, we can have something like this:</li>
+
+<pre class=lightPurpleBoxTab>
+// Following function (<strong>non-blocking</strong> mode) will send a large amount of data in 2000-byte chunks:
+simxSetVisionSensorImage(sensorHandle,imageData,dataSize,0,simx_opmode_oneshot_split+2000);</pre>
+<pre class=lightPurpleBoxTab>
+// Following function (<strong>non-blocking</strong> mode) will request streaming data partitioned in 4000-byte chunks:
+simxGetVisionSensorImage(sensorHandle,0,&amp;resolution,&amp;imageData,simx_opmode_streaming_split+4000);
+
+// Streaming and partitioning operation is enabled/disabled individually for each command
+// and object(s) the command applies to. In above case, only the image of the vision sensor
+// with handle <em>sensorHandle</em> will be streamed, and this in 4000-byte chunks.</pre>
+
+<br>
+<p>The naive or regular approach is of course also supported for situations where we cannot afford not to wait for a reply from the server, like in following situation:</p>
+
+<pre class=lightPurpleBox>
+// Following function (<strong>blocking</strong> mode) will retrieve an object handle:
+if (simxGetObjectHandle("myJoint",&jointHandle,simx_opmode_oneshot_wait)==simx_error_noerror) 
+{
+    // here we have the joint handle in variable <em>jointHandle</em>!    
+}</pre>
+
+
+<p>
+On the client side (i.e. your application), at least 2 threads will be running: the main thread (the one from which you will be calling remote API functions), and the communication thread (the one that will be handling data transfer behind the scenes). The server side, which is implemented with a V-REP plugin, operates in a similar way. Following figure illustrates the remote API modus operandi:
+</p>
+
+<p align=center><img src="images/remoteApi1.jpg"></p>
+<p class=imageLabel>[Remote API functionality overview]</p>
+<br>
+
+
+<p><strong>Data streaming from the server to the client</strong> always happens at once (e.g. all requested joint values will be sent in the same message, and received at the same time on the client side), unless a data partitioning mode was selected (e.g. simx_opmode_streaming_split). In that case only the partitionned data will arrive in several different messages. </p>
+
+<p>On the other hand,<strong> data streaming from the client to the server</strong> might happen in different steps (i.e. because the user application might submit values to send to the server at random times). In some situations, it is however important to be able to send various data within a same message, in order to have that data also applied at the same time on the server side (e.g. we want the 3 joints of a robot to be applied to its V-REP model at the exact same time). In that case, the user can temporarily hald the communication thread in order to achieve this, as shown in following example: </p>
+
+<pre class=lightPurpleBox>
+simxPauseCommunication(1);
+simxSetJointPosition(joint1Handle,joint1Value,simx_opmode_oneshot);
+simxSetJointPosition(joint2Handle,joint2Value,simx_opmode_oneshot);
+simxSetJointPosition(joint3Handle,joint3Value,simx_opmode_oneshot);
+simxPauseCommunication(0);
+
+// Above's 3 joints will be received and set on the V-REP side at the same time</pre>
+
+<br>
+
+<p>
+Following describes the various supported <a href="remoteApiConstants.htm#operationModes">modes of operations</a>: </p>
+
+
+<li><strong>simx_opmode_oneshot</strong>: non-blocking mode. A command is sent to the server for execution (1)-(b)-(3). A reply to a same command, but previously executed, is returned from a local buffer, if available (i)-(2). The function doesn't wait for a reply from the server (7)-(i).  On the server side, the command is stored temporarily (4)-(d), executed  once (d)-(9)-(g) and a reply sent back (g)-(6). This mode is often used with &quot;set-functions&quot; (e.g. simxSetJointPosition), where the user doesn't care about the return value.</li>
+
+<li><strong>simx_opmode_oneshot_wait</strong>: blocking mode. A command is sent to the server for execution (1)-(b)-(3), and the function waits for the reply from the server (7)-(i)-(2). The received reply will then be erased from the inbox buffer (i), which doesn't happen with the other operation modes. On the server side, the command is stored temporarily (4)-(d), executed  once (d)-(9)-(g) and a reply sent back (g)-(6). This mode is often used with &quot;get-functions&quot; (e.g. simxGetObjectHandle), where the user requires a reply to the sent command.</li>
+
+<li><strong>simx_opmode_streaming</strong>: non-blocking mode. A command is sent to the server for execution (1)-(b)-(3).  A reply to a same command, but previously executed, is returned from a local buffer, if available (i)-(2). The function doesn't wait for a reply from the server (7)-(i). Similar to simx_opmode_oneshot, but with the difference that the command will be stored on the server side (4)-(e),  continuously executed (e)-(9)-(g), and continuously sent back to the client (g)-(6). This mode is often used with &quot;get-functions&quot; (e.g. simxGetJointPosition), where the user requires a specific value constantly.</li>
+
+<li><strong>simx_opmode_oneshot_split</strong>: non-blocking mode. A command is sent gradually (in small data chunks) to the server for execution (1)-(a)-(3). A reply to a same command, but previously executed, is returned from a local buffer, if available (i)-(2). The function doesn't wait for a reply from the server (7)-(h)-(i). When the command was fully sent, it is removed from (a). On the server side, the command chunks are remporarily stored (4)-(c) and when the command was fully received, the command will be executed once (5)-(d)-(9)-(f) and a reply gradually sent back to the client (f)-(6). The client receives the reply in small chunks (7)-(h) and when the reply is complete, it is stored in the local buffer (8)-(i).  This mode is often used with &quot;set-functions&quot; associated with large amounts of data (e.g. simxSetVisionSensorImage), in order not to overload the communication network.</li>
+
+<li><strong>simx_opmode_streaming_split</strong>: non-blocking mode. A command is sent gradually (in small data chunks) to the server for execution (1)-(a)-(3).  A reply to a same command, but previously executed, is returned from a local buffer, if available (i)-(2). The function doesn't wait for a reply from the server (7)-(h)-(i). When the command was fully sent, it is removed from (a). On the server side, the command chunks are remporarily stored (4)-(c) and when the command was fully received (5)-(e), the command will be executed continuously (e)-(9)-(f) and a reply gradually sent back to the client (f)-(6). The client receives the reply in small chunks (7)-(h) and when the reply is complete, it is stored in the local buffer (8)-(i).  This mode is often used with &quot;get-functions&quot; associated with large amounts of data (e.g. simxGetVisionSensorImage), where the user requires data constantly without overloading the communication network.</li>
+
+<li><strong>simx_opmode_discontinue</strong>: non-blocking mode. A command is sent to the server (1)-(b)-(3). A reply to a same command, but previously executed, is returned from a local buffer, if available (i)-(2). The function doesn't wait for a reply from the server (7)-(i).  On the server side, the command simply clears a similar command that is located in (e). A reply is sent to the client (6)-(7) that will also clear a similar reply located in (i). This mode is used to release some memory in (i) (similar to simx_opmode_remove), or to interrupt streaming commands (i.e. by removing them from (e)).</li>
+
+<li><strong>simx_opmode_buffer</strong>: non-blocking mode. No command is sent to the server, but just a  reply to a same command, previously executed, is returned from a local buffer, if available (i)-(2). This mode is often used in conjunction with the simx_opmode_streaming or simx_opmode_streaming_split operation mode: first, a constant command execution is started with a streaming command, then only command replies fetched.</li>
+
+<li><strong>simx_opmode_remove</strong>: non-blocking mode. No command is sent to the server, but just a  reply to a same command, previously executed, is cleared from the local buffer, if present (i). The function doesn't return any values, except for an error code. This mode can be used to release some memory on the client side, but is rarely necessary.</li>
+
+<br>
+
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="remoteApiOverview.htm">Remote API overview</a></li>
+<li><a href="remoteApiExtension.htm">Extending the remote API</a></li>
+<br>
+<br>
+ </tr>
+ <tr>
+   <td > 
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

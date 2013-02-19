@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Accessing objects programmatically</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Accessing objects programmatically</h1>
+
+<h3 class=relatedApiFunctions><a href="apiFunctionListCategory.htm#HandleRetrieval">Related API functions</a></h3>
+
+<p>A <a href="simulation.htm">simulation</a> in V-REP supports virtually an infinite number of <a href="scripts.htm">embedded scripts</a>. Moreover, all scripts associated with <a href="objects.htm">objects</a> (i.e. <a href="childScripts.htm">child scripts</a>) will be duplicated if their associated object is duplicated. Which brings the question: how can a duplicated script access the correct objects? Normally, one would have to adjust each script (i.e. redirect commands to new objects, change object names, etc.), but this is not necessary in V-REP. Copied scripts will <em>know</em> they are a copy themselves and will adjust their behavior accordingly. Imagine a robot made-up by 6 objects and 2 child scripts. Following figure illustrates this example:<br>
+</p>
+
+<p align=center><img src="images/objectAccess1.jpg"></p>
+<p class=imageLabel>[Example of a robot model composed by 6 objects and 2 child scripts]</p>
+<br>
+
+<p>In above example, each child script will have to access some of the robot's objects (e.g. the robot's sensors/motors, etc.). Accessing scene objects and general-type objects in V-REP works by providing an object name to a <a href="apiFunctionListCategory.htm#HandleRetrieval">function</a> that will return a handle to that object. The handles can then be used to interact with the object (e.g. simGetObjectPosition(objectHandle,...)).<br>
+</p>
+
+<p>If the robot is now duplicated in the scene (through a single and same copy/paste operation), then the duplicated robot will be directly operational and behave like the original robot. Following figure illustrates the duplicated robot:<br>
+</p>
+
+<p align=center><img src="images/objectAccess2.jpg"></p>
+<p class=imageLabel>[Example of a duplicated robot model]</p>
+<br>
+
+<p>Notice that all duplicated objects have a &quot;#0&quot; appended to their original name. This is because there cannot be two identical names for objects in V-REP. Notice also that the duplicated child scripts have the same program content as the original child scripts. How come that the duplicated child scripts are not accessing the original objects? This is because V-REP uses an automatic name adjustment mechanism for child scripts. Following figure illustrates this concept:<br>
+</p>
+
+<p align=center><img src="images/objectAccess3.jpg"></p>
+<p class=imageLabel>[Automatic name adjustment mechanism for child scripts]</p>
+<br>
+
+
+<p>When a child script retrieves the handle of a scene object or a general-type object, then the provided object name will be augmented with a name suffix identical to the name suffix of the child script. This mechanism can be altered with the <a href="apiFunctions.htm#simGetNameSuffix">simGetNameSuffix</a> and the <a href="apiFunctions.htm#simSetNameSuffix">simSetNameSuffix</a> commands. By default the mechanism is adjusted to the name suffix of the current script, and it is recommended to alter this behavior only for very special cases and then immediately reset it again to its previous state. You can also tell V-REP not to automatically adjust the name, by using the '#' char when accessing the object: simGetObjectHandle(&quot;myObject#&quot;), simGetObjectHandle(&quot;myObject#0&quot;) or simGetObjectHandle(&quot;myObject#42&quot;) will retrieve the handles of &quot;myObject&quot;, &quot;myObject#0&quot; and &quot;myObject#42&quot; respectively, irrespective of the name suffix of the child script. The name adjustment mechanism is individually handled by each script (i.e. altering the mechanism in one script will not alter it in other scripts).<br>
+</p>
+
+<p>When retrieving object handles from the C/C++ side of the <a href="apiOverview.htm">regular API</a>, the automatic name adjustment mechanism will not work directly. Instead, you will have to adjust the name suffix manually to what you want, to obtain a similar behavior.<br>
+</p>
+
+
+
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="childScripts.htm">Child scripts</a></li>
+<br>
+<br>
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

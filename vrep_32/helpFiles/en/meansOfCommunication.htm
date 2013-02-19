@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Means of communication in and around V-REP</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Means of communication in and around V-REP</h1>
+
+<p>Make sure you understand the <a href="writingCode.htm">overall structure of the simulator</a>, and its <a href="apisOverview.htm">API framework</a> before going ahead reading this section.<br>
+</p>
+
+<p>V-REP's API supports following communication mechanisms <strong>to exchange random data</strong> between two entities:<br>
+</p>
+
+<p align=center><img src="images/meansOfComm1.jpg"></p>
+<p class=imageLabel>[V-REP's messaging methods for random data]</p>
+<br>
+
+<p>Above's communication mechanisms, together with some alternative communication mechanisms (i.e. those that are not directly part of V-REP's API) are described hereafter:<br>
+</p>
+<br>
+
+
+<h3>
+  <a href="apiFunctionListCategory.htm#TubeCommunicationFunctionality">Tubes</a></h3>
+
+<p><a href="apiFunctionListCategory.htm#TubeCommunicationFunctionality">Tubes</a> are bidirectional communication lines similar to pipes. The <em>tube</em> denomination was selected in order to avoid confusion with pipes, since tubes cannot be used to communicate with the outside world. Tubes are a very convenient and easy means to connecting two entities and exchanging information. They are often used between a <a href="childScripts.htm">child script</a> and a server-like threaded communication child script (e.g. where the latter could handle socket or serial port communication).<br>
+</p>
+<br>
+
+<h3>
+<a name="wireless" id="wireless"></a><a href="apiFunctionListCategory.htm#wirelessFunctionality">Wireless communication simulation</a></h3>
+
+<p>V-REP allows simulating wireless communications in a very flexible way: data can be emitted into a specific direction, and over a specific distance. Emitted data can then be received if the receiver is located within the specified emission area. Refer to the <a href="apiFunctionListCategory.htm#wirelessFunctionality">corresponding functions</a> in the <a href="apiOverview.htm">regular API</a> for more details. Wireless emission/reception activities can be visualized by enabling the <strong>Visualize wireless emissions</strong> and <strong>Visualize wireless receptions</strong> items in the <a href="environmentPropertiesDialog.htm">environment dialog</a>. Following figure illustrates the visualized wireless communication between two mobile robots:<br>
+</p>
+
+<p align=center><img src="images/meansOfComm2.jpg"></p>
+<p class=imageLabel>[Wireless communication simulation between two mobile robots]</p>
+<br>
+
+<h3>
+<a name="signals" id="signals"></a><a href="apiFunctionListCategory.htm#signals">Signals</a></h3>
+
+<p><a href="apiFunctionListCategory.htm#signals">Signals</a> can be seen as global variables. Three types of signals are currently supported: integer-type signals, floating-type signals and string-type signals. Signals can be defined, redefined, read and cleared. At <a href="simulation.htm">simulation</a> end, all signals created by the <a href="mainScript.htm">main script</a> or any <a href="childScripts.htm">child script</a> will be cleared. See also the item below.<br>
+</p>
+<br>
+
+
+<h3>
+  <a href="apiFunctionListCategory.htm#persistentData">Persistent Data</a></h3>
+
+<p><a href="apiFunctionListCategory.htm#persistentData">Persistent data blocks</a> can be seen as persistent global buffers. Persistent data blocks can be defined, redefined, read and cleared, and are shared across all opened scenes. They persist until the simulator ends, but can also persist on file and automatically be reloaded next time V-REP starts. See also the item above.<br>
+</p>
+<br>
+
+
+<h3>
+  <a href="scriptSimulationParameters.htm">Script simulation parameters</a></h3>
+
+<p><a href="scripts.htm">Scripts</a> can exchange information by accessing/modifying other script's simulation parameters. Refer to the <a href="scriptSimulationParameters.htm">script simulation parameters dialog</a> and to the <a href="apiFunctionListCategory.htm#scriptSimulationParameters">related functions</a> in the API for more information.<br>
+</p>
+<br>
+
+<h3><a href="apiFunctions.htm#simHandleChildScript">simHandleChildScript</a>-type calls<br>
+</h3>
+
+<p>When calling <a href="apiFunctions.htm#simHandleChildScript">simHandleChildScript</a>, additional arguments can be appended. Following shows a script code that passes two arguments (argument1 and argument2) to its <a href="childScripts.htm">child scripts</a>:<br>
+</p>
+
+<pre class=lightRedBox>
+simHandleChildScript(sim_handle_all_except_explicit,argumentValue1,argumentValue2)
+</pre>
+
+<p>
+Following is the called child script's code (that receives the arguments in value1FromCaller and value2FromCaller):
+</p>
+
+<pre class=lightRedBox>
+value1FromCaller,value2FromCaller=...
+</pre>
+
+<p>When a non-threaded child script is <a href="explicitHandling.htm">explicitely called</a> (i.e. simHandleChildScript(childScriptHandle)), values can also be returned from the called script. Following shows a script code that passes two arguments (argument1 and argument2) and receives two return values (returnValue1 and returnValue2) to/from a child script named <em>theChildScriptName</em>:<br>
+</p>
+
+<pre class=lightRedBox>
+childScriptHandle=simGetScriptHandle(&quot;theChildScriptName&quot;)
+returnValue1,returnValue2=simHandleChildScript(childScriptHandle,argumentValue1,argumentValue2)</pre>
+
+<p>
+Following is the called child script's code:
+</p>
+
+<pre class=lightRedBox>
+value1FromCaller,value2FromCaller=...
+-- do some processing
+return returnValue1,returnValue2</pre>
+<br>
+
+
+<h3><a href="apiFunctionListCategory.htm#customizingLuaFunctions">Custom Lua functions</a></h3>
+
+<p>The <a href="mainClientApplication.htm">main client application</a> or any <a href="plugins.htm">plugin</a> can register custom Lua functions via the <a href="apiFunctionListCategory.htm#customizingLuaFunctions">Lua customization API commands</a>. The custom Lua commands will then, when called from a <a href="scripts.htm">script</a>, call back a registered function in the main client application or a plugin. This is very convenient to achieve high level Lua commands (e.g. one could imagine having a plugin handle a robot's movement with a single Lua command <em>simExtRobot_moveAndAvoidObstacles</em>() !)<br>
+</p>
+<br>
+
+
+<h3><a href="apiFunctionListCategory.htm#serialCommunicationFunctionality">Serial port communication</a></h3>
+
+<p>V-REP implements <a href="apiFunctionListCategory.htm#serialCommunicationFunctionality">specific functions</a> in the API for serial port communication. <br>
+</p>
+<br>
+
+<h3><a href="http://w3.impa.br/~diego/software/luasocket/home.html">LuaSocket</a></h3>
+
+<p>V-REP ships with a Lua extension library called <a href="http://w3.impa.br/~diego/software/luasocket/home.html">LuaSocket</a> (see <a href="acknowledgments.htm#LuaSocketCredit">here</a> for acknowledgements and credits related to this library). It allows performing various type of socket communication from within an <a href="scripts.htm">embedded script</a> or an <a href="addOns.htm">add-on</a>. Following code section illustrates how a <a href="childScripts.htm#threaded">threaded child script</a> would fetch a webpage:<br>
+</p>
+
+<pre class=lightRedBox>
+http=require("socket.http")
+simSetThreadIsFree(true) -- Allow real threading from here (to avoid blocking V-REP)
+page=http.request("http://www.google.com")
+simSetThreadIsFree(false) -- Forbid real threading from here</pre>
+
+<p>Notice how the blocking part of the request command is put  within a non-blocking section. For more information on how to avoid external commands to block, refer to the <a href="apiFunctions.htm#simSetThreadIsFree">simSetThreadIsFree</a> API command.<br>
+</p>
+
+<p>If your application requires socket communication, it is very convenient to set-up a threaded script as a <em>request server</em> and have the other scripts access it for socket communication as in following example:<br>
+</p>
+
+<p>
+The threaded <em>request server</em>: </p>
+
+<pre class=lightRedBox>
+simDelegateChildScriptExecution()
+
+http = require("socket.http")
+-- Open a communication tube:
+tubeHandle=simTubeOpen(0,'http_communication_test',1)
+
+while (simGetSimulationState()~=sim_simulation_advancing_abouttostop) do
+    -- Wait for a message in the tube and reat it:
+    data=simTubeRead(tubeHandle,true)
+    if (data) then
+        -- Fetch the page:
+        simSetThreadIsFree(true) -- Allow real threading from here (to avoid blocking V-REP)
+        reply=http.request(data)
+        simSetThreadIsFree(false) -- Forbid real threading from here
+        -- Send back the page:
+        if (reply) then
+            simTubeWrite(tubeHandle,reply)
+        else
+            simTubeWrite(tubeHandle,'Page could not be retrieved')
+        end
+    else
+        simSwitchThread() -- explicitely switch thread
+    end
+end</pre>
+
+<p>
+Following <a href="childScripts.htm#nonThreaded">non-threaded child script</a> example could then be used to access socket information: </p>
+
+
+<pre class=lightRedBox>
+if (simGetScriptExecutionCount()==0) then
+    -- Open a communication tube:
+    tubeHandle=simTubeOpen(0,'http_communication_test',1)
+
+    urlsToCheck={'http://www.google.com','http://www.yahoo.com','http://www.titech.co.jp'}
+    urlIndex=1
+end
+
+simHandleChildScript(sim_handle_all_except_explicit)
+
+s,r,w=simTubeStatus(tubeHandle)
+if (s==1)and(r==0)and(w==0) then
+    -- Send a request for a page:
+    simTubeWrite(tubeHandle,urlsToCheck[urlIndex])
+end
+if (s==1)and(r==1) then
+    -- Read the reply (the page):
+    page=simTubeRead(tubeHandle)
+    print('URL: '..urlsToCheck[urlIndex])
+    print(page:sub(1,200)) -- Only print the first 200 chars
+    urlIndex=urlIndex+1
+    if (urlIndex>3) then
+        urlIndex=1
+    end
+end</pre>
+
+
+<br>
+
+
+<h3>Custom communication
+</h3>
+
+<p>The user is free to implement any type of custom communication (e.g. sockets, pipes, etc.) with the outside world from the <a href="mainClientApplication.htm">main client application</a> or a <a href="plugins.htm">plugin</a>. Best is to create a communication thread that handles exclusively the communication. Make sure that the communication thread doesn't call any V-REP API commands, since that would lead to a crash. For  examples, refer to the <a href="robotLanguageIntegrationTutorial.htm">Robot language interpreter integration tutorial</a>., or the remote API source code located in <em>programming/remoteApi</em>.<br>
+</p>
+<br>
+
+<h3><a href="apiFunctions.htm#simBroadcastMessage">simBroadcastMessage call</a></h3>
+
+<p>The best way to achieve communication between two or more <a href="plugins.htm">plugins</a> is by using the <a href="apiFunctions.htm#simBroadcastMessage">simBroadcastMessage</a> API function.<br>
+</p>
+<br>
+
+
+<h3><a href="http://lua-users.org/wiki/LibrariesAndBindings">Lua extension library</a></h3>
+
+<p>It is possible to extend the means of communication of V-REP almost infinitely, by using Lua's extension library mechanism. As is done with the LuaSocket library (see above), you could add any other type of <a href="http://lua-users.org/wiki/LibrariesAndBindings">Lua extension library available online</a>. You will just have to install the library in V-REP's installation directory according to the library's instructions. As illustrated with the LuaSocket here above, make sure you make use of a non-blocking section with the <a href="apiFunctions.htm#simSetThreadIsFree">simSetThreadIsFree</a> API command should an extension library command block V-REP.<br>
+</p>
+<br>
+
+
+
+
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="writingCode.htm">Writing code in and around V-REP</a></li>
+<li><a href="scripts.htm">Embedded scripts</a></li>
+<li><a href="addOns.htm">Add-ons</a></li>
+<li><a href="plugins.htm">Plugins</a></li>
+<li><a href="mainClientApplication.htm">The main client application</a></li>
+<li><a href="apiOverview.htm">Regular API</a></li>
+<li><a href="remoteApiOverview.htm">Remote API</a></li>
+<li><a href="rosInterfaceOverview.htm">ROS interface</a></li>
+<br>
+<br>
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

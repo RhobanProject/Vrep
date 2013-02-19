@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Importing and exporting paths</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Importing and exporting paths</h1>
+
+
+<p>The <a href="paths.htm">path</a> import/export functionality operates on CSV-files (Comma Separated Values) than can be created or read with a simple text-editor, but also easily imported/exported into applications like Microsoft Excel.
+</p>
+<br>
+<h3>
+Importing paths
+</h3>
+
+<p>
+V-REP's import functionality ( [Menu bar --&gt; File --&gt; Import path from CSV...] ) reads line-by-line values, where each line corresponds to a <a href="pathsControlPointsAndBezierPoints.htm">control point</a>. Each line should be formatted in following way:
+</p>
+
+<pre class=lightGreyBox>
+x,y,z,alpha,beta,gamma,relativeVelocity,BezierPointCount,interpolationFactor1,interpolationFactor2
+</pre>
+
+<p>
+Where:
+</p>
+
+<li><strong>(x, y, z)</strong> represents a control point's position in METERS </li>
+
+<li><strong>(alpha, beta, gamma)</strong> represents a control point's orientation given as Euler angles in DEGREES. </li>
+
+<li><strong>RelativeVelocity</strong> represents a control point's relative velocity (for the generation of a velocity profile) </li>
+
+<li><strong>BezierPointCount</strong> is the number of Bezier points that are desired for the control point </li>
+
+<li><strong>InterpolationFactor1</strong> &amp; <strong>InterpolationFactor2</strong> are the interpolation factors described in the section on <a href="pathsControlPointsAndBezierPoints.htm">path control points and Bezier points</a>.<br>
+</li>
+
+<p>Except for the first 3 values (control point position coordinates), all other values can be omitted, in which case default values are applied.<br>
+</p>
+
+<br>
+<h3>
+Exporting paths
+</h3>
+
+<p>A path's control points can be exported by selecting the path, then clicking [Menu bar --&gt; File --&gt; Export selected path as CSV...]. The export format in this case is identical to the previously described path import format.<br>
+</p>
+
+<p>A path's Bezier points can also be exported by selecting the path, then clicking [Menu bar --&gt; File --&gt; Export selected path's bezier curve as CSV...]. In this case, each line in the created file (exported file) corresponds to a Bezier point and contains following values:
+</p>
+
+<pre class=lightGreyBox>
+x,y,z,alpha,beta,gamma,relativeVelocity
+</pre>
+
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="paths.htm">Paths</a></li>
+<li><a href="pathsControlPointsAndBezierPoints.htm">Path control points and Bezier points</a></li>
+<li><a href="pathPropertiesDialog.htm">Path dialog</a></li>
+<li><a href="pathEditMode.htm">Path edit mode</a></li>
+<br>
+<br>
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

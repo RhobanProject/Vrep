@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Shape dialog</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Shape dialog</h1>
+
+<p>The shape dialog is part of the <a href="sceneObjectPropertiesDialog.htm">scene object properties dialog</a>, which is located at [Menu bar --&gt; Tools --&gt; Scene object properties]. You can also open the dialog with a double-click on an object icon in the <a href="userInterface.htm#SceneHierarchy">scene hierarchy</a>, or with a click on its <a href="userInterface.htm#toolbars">toolbar</a> button:<br>
+</p>
+
+<p align=center><img src="images/objectPropertyToolbarButton.jpg"></p>
+<p class=imageLabel>[Scene object properties toolbar button]</p>
+<br>
+
+<p>In the scene object properties dialog, click  the <strong>Shape</strong> button to display the shape dialog (the <strong>Shape</strong> button only appears if the last selection is a <a href="shapes.htm">shape</a><a href="lights.htm"></a><a href="cameras.htm"></a><a href="paths.htm"></a>). The dialog displays the settings and parameters of the last selected shape. If more than one shape is selected, then some parameters can be copied from the last selected shape to the other selected shapes (<strong>Apply to selection</strong>-buttons):<br>
+</p>
+
+
+
+<p align=center><img src="images/shapeProperties1.jpg"></p>
+<p class=imageLabel>[Shape dialog]</p>
+<br>
+
+<li><strong>Backface culling</strong>: each triangle composing a shape has an inside and an outside face. When <strong>Backface culling</strong> is enabled, then inside faces won't be displayed. This is a useful parameter for closed shapes and for shapes that are transparent. This option is unavailable for grouped shapes (they first need to be ungrouped)<br>
+</li>
+
+<li><strong>Wireframe</strong>: if selected, then the shape will always appear as wireframe when seen through a <a href="cameras.htm">camera</a>. This option is unavailable for grouped shapes (they first need to be ungrouped)<br>
+</li>
+
+<li><strong>Inside and outside faces have same color</strong>: when this option is unchecked, then the shape's triangles will be displayed in two different colors (for the inside and outside faces). This option is unavailable for grouped shapes (they first need to be ungrouped)<br>
+</li>
+
+<li><strong>Invert faces</strong>: this flips all triangles. Inside faces become outside faces and vice-versa.<br>
+</li>
+
+<li><strong>Show edges</strong>: displays edges in black by default. Displayed edges will depend on the <strong>Shading angle</strong>, the <strong>Edges width</strong> and the <strong>Edge color</strong> items (cf. hereafter). This option is unavailable for <a href="shapes.htm">grouped shapes</a> (they first need to be ungrouped).<br>
+</li>
+
+<li><strong>Edges width</strong>: width at which edges should be drawn. This option cannot be edited for grouped shapes (they first need to be ungrouped)<br>
+</li>
+
+<li><strong>Shading angle</strong>: the shading angle is the angle from which individual faces are distinguished. This only affects the visual appearance of a shape. A small angle makes a shape appear sharp, with many edges, a large angle makes a shape appear smooth and with less edges. The shading angle also directly influences the amount of visible edges. This option is not available for grouped shapes (they first need to be ungrouped).<br>
+</li>
+
+
+<li><strong>Show dynamic properties dialog</strong>: toggles the <a href="shapeDynamicsProperties.htm">shape dynamics dialog</a>. The shape dynamics dialog allows to adjust a shape's dynamics properties.<br>
+</li>
+
+
+<li><strong>Adjust outside / inside / edge color</strong>: allows editing the colors of outside / inside faces, and the colors of edges. Those colors cannot directly be modified for grouped shapes (grouped shapes first need to be ungrouped), unless this happens through the <a href="apiFunctions.htm#simSetShapeColor">simSetShapeColor</a> <a href="apiOverview.htm">API</a> function call.<br>
+</li>
+
+<li><strong>Adjust texture</strong>: opens the<a href="textureDialog.htm"> texture dialog</a> for the selected shape. When a shape is associated with a texture, it will be displayed in a textured way. Only <a href="shapes.htm">simple shapes</a> can have their texture modified/adjusted.
+</li>
+
+<li><strong>Quick textures (selection)</strong>: applies a cubic mapped texture to all selected shapes. This is specially useful with seamless textures used as &quot;dirt&quot;, in order to make objects look more realistic.</li>
+
+<li><strong>Clear textures (selection)</strong>: removes the texture from all selected shapes.</li>
+
+<li><strong>View/modify geometry</strong>: opens the <a href="geometryDialog.htm">shape geometry dialog</a> for the selected shape. It allows to adjust various parameters of the mesh.<br>
+  <br>
+</li>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="shapes.htm">Shapes</a></li>
+<li><a href="shapeDynamicsProperties.htm">Shape dynamics dialog</a></li>
+<li><a href="textureDialog.htm"> Texture dialog</a></li>
+<li><a href="geometryDialog.htm">Geometry dialog</a></li>
+
+<br>
+<br>
+
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

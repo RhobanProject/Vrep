@@ -1,0 +1,752 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>versionInfo</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>
+V-REP version history
+</h1>
+
+<p>
+V-REP versions are indicated as follows:
+</p>
+
+<pre class=lightGreyBox>
+V-REP Vx.y.z
+</pre>
+<p>
+Where:
+</p>
+<pre class=lightGreyBox>
+x identifies a special release. Once every couple of years.
+y identifies a yearly release (every January.)
+z identifies a regular release (5-10 times a year, includes bug fixes, new features, etc.)</pre>
+
+<p>
+Only V-REP PRO requires a license key. A license key generated for V-REP PRO version Vx.y.z will work for all following V-REP PRO versions up to (including) Vx.y+1.z-1
+</p>
+<p>
+Version history:
+</p>
+
+
+<h3>V-REP V3.0.1 (January 20th 2013)</h3>
+<li><a href="shapes.htm">Convex shapes</a> are now also directly supported in V-REP. We however still recommend using only pure shapes for dynamic simulations.</li>
+<li>Added a <a href="convexDecomposition.htm">convex decomposition function</a> (routines courtesy of Khaled Mamou)</li>
+<li>Added one new <a href="apiOverview.htm">regular API</a> function: <a href="apiFunctions.htm#simConvexDecompose">simConvexDecompose</a>.</li>
+<li>The <a href="urdfPlugin.htm">URDF importer</a> is now in an advanced beta stage.</li>
+
+<br>
+
+
+
+
+<h3>V-REP V3.0.0 (January 10th 2013)</h3>
+<li>V-REP is now <strong>open source</strong>! All source code of V-REP or any related item can be downloaded, modified and compiled. Make sure to read the <a href="licensing.htm">licensing conditions</a>.</li>
+<li>V-REP comes now is several flavours:</li>
+<li class=tabTab> V-REP PRO EDU (educational version. No limitation and Free). Can be used by students, teachers, professors, schools and Universities. Make sure to read the <a href="licensing.htm">licensing conditions</a>.</li>
+<li class=tabTab> V-REP PRO (commercial version)</li>
+<li class=tabTab> V-REP PLAYER (free player version)</li>
+<li><a href="colladaPlugin.htm">Collada importer/exporter plugin</a></li>
+<li><a href="urdfPlugin.htm">URDF importer plugin</a>, courtesy of Ignacio Tartavull</li>
+<li>Added 4 new <a href="apiOverview.htm">regular API</a> functions: <a href="apiFunctions.htm#simCreateForceSensor">simCreateForceSensor</a>, <a href="apiFunctions.htm#simCreateProximitySensor">simCreateProximitySensor</a>, <a href="apiFunctions.htm#simCreateVisionSensor">simCreateVisionSensor</a> and <a href="apiFunctions.htm#simImportShape">simImportShape</a>.</li>
+<li>Added a <em>quick textures</em> button to the <a href="shapeProperties.htm">shape properties dialog</a>: it allows for instance to quickly apply a &quot;dirt&quot; texture to several shapes, in order to make them appear more realistic.</li>
+<li>New demo scene: proximitySensorDemo.ttt</li>
+
+<br>
+
+
+
+<h3>V-REP V2.6.8 (December 2nd 2012)</h3>
+<li><a href="addOns.htm">Add-ons</a> are now supported: they can run in the background, or be called as a function, when needed</li>
+<li>Added 3 new <a href="apiOverview.htm">regular API</a> functions: <a href="apiFunctions.htm#simFileDialog">simFileDialog</a>,  <a href="apiFunctions.htm#simMsgBox">simMsgBox</a> and <a href="apiFunctions.htm#simCreateDummy">simCreateDummy</a>.</li>
+<li>Textured shapes can now also be grouped</li>
+<li>The bounding box of <a href="shapes.htm">pure grouped shapes</a> can now also be reoriented</li>
+<li>The <a href="shapeDynamicsProperties.htm">shape dynamic dialog</a> allows now specifying non-diagonal inertia matrices relative to a specific reference frame.
+<li>Shape grouping will now correctly compute the combined inertia matrix for the group.</li>
+<li>Added 2 new <a href="apiOverview.htm">regular API</a> functions: <a href="apiFunctions.htm#simGetShapeMassAndInertia">simGetShapeMassAndInertia</a> and <a href="apiFunctions.htm#simSetShapeMassAndInertia">simSetShapeMassAndInertia</a>.</li>
+<li>Added 2 new <a href="apiOverview.htm">regular API</a> functions: <a href="apiFunctions.htm#simGroupShapes">simGroupShapes</a> and <a href="apiFunctions.htm#simUngroupShape">simUngroupShape</a>.</li>
+<li>Added more than 80 new functions (<a href="apiFunctionListCategory.htm#additionalFunctions">additional API functions</a>), only available from the C/C++ interface, that extend functionality and allow faster data access.</li>
+<li>Serialization version is now 16. Earlier files can still be loaded, but V-REP versions 2.6.7 and earlier cannot load this new fileformat.</li>
+
+<br>
+
+
+
+
+
+<h3>V-REP V2.6.7 (September 20th 2012)</h3>
+<li>Added a new <a href="remoteApiOverview.htm">remote API</a> function: <a href="remoteApiFunctions.htm#simxPauseCommunication">simxPauseCommunication</a>. This allows to set several value on the server side (i.e. V-REP) at the exact same time.</li>
+<li>Added a new type of object: <a href="mirrors.htm">mirrors</a>. They can act as regular mirrors, or they can operate as auxiliary clipping planes.</li>
+<li>Added a new ROS service, and ROS subscriber type: <a href="rosServices.htm#simRosSetJointState">simRosSetJointState</a> and <a href="rosSubscriberTypes.htm#simros_strmcmd_set_joint_state">simros_strmcmd_set_joint_state</a>. They allow to set several joints' states at the same time.</li>
+<li>Added following ROS publisher/subscriber types (courtesy of Cedric Pradalier): <a href="rosPublisherTypes.htm#simros_strmcmd_get_range_finder_data">simros_strmcmd_get_range_finder_data</a>, <a href="rosPublisherTypes.htm#simros_strmcmd_get_transform">simros_strmcmd_get_transform</a>, <a href="rosPublisherTypes.htm#simros_strmcmd_get_twist_status">simros_strmcmd_get_twist_status</a>, <a href="rosPublisherTypes.htm#simros_strmcmd_get_vision_sensor_info">simros_strmcmd_get_vision_sensor_info</a>, and <a href="rosSubscriberTypes.htm#simros_strmcmd_set_twist_command">simros_strmcmd_set_twist_command</a>.</li>
+<li>Converted the v_repExtMtb plugin to a Qt project. Source files are located in the /programming directory. Refer to the <a href="plugins.htm">section on plugins</a> for details how to compile this plugin. The plugin binary is in the main directory.</li>
+<li>Converted the v_repExtSimpleFilter plugin to a Qt project. Source files are located in the /programming directory. Refer to the <a href="plugins.htm">section on plugins</a> for details how to compile this plugin. The plugin binary is in the main directory.</li>
+<li>Converted the mtbServer application to a cross-platform project. Source files are located in the /programming directory. The executable binary is in the main directory.</li>
+<li>Added source code in /programming/matrixCalc that allows handling transformation calculations inside an external application (code can be embedded into your application). Refer to the matrix calculation documentation.</li>
+<li>Added source code in /programming/externalIk that allows handling complex kinematic calculations inside an external application (code can be embedded into your application). Refer to the <a href="externalIk.htm">external kinematics documentation</a>.</li>
+<li>Added a project that demonstrates the <a href="externalIk.htm">external kinematics</a> functionality: externalIkDemo. The source code is located in the /programming directory. The executable binary is in the main directory.</li>
+<li>Added a new demo scene: &quot;externalIkDemo.ttt&quot;. It demonstrates the <a href="externalIk.htm">external kinematics</a> functionality.</li>
+<li>An external editor for V-REP's embedded scripts can now be used. Refer to the <a href="settings.htm">user settings</a>.</li>
+<li>Additional texture mapping methods have been implemented: cylinder-, sphere-, or box-mapping. Refer to the <a href="textureDialog.htm">texture dialog</a> for details.</li>
+<li>The linux version of V-REP comes now in 32 or 64 bit.</li>
+<li>Added 2 new functions to handle object/joint motion from a threaded script: <a href="apiFunctions.htm#simRMLMoveToPosition">simRMLMoveToPosition</a> and <a href="apiFunctions.htm#simRMLMoveToJointPositions">simRMLMoveToJointPositions</a></li>
+
+<br>
+
+
+
+
+
+<h3>V-REP V2.6.6 (August 20th 2012)</h3>
+<li>The <a href="rosInterfaceOverview.htm">ROS plugin</a> is now fully operational and offers <a href="rosServices.htm">100 services</a>, <a href="rosPublisherTypes.htm">30 publisher types</a> and <a href="rosSubscriberTypes.htm">25 subscriber types</a>. The plugin is fully open source and can easily be adapted to various projects if needed. Have a look at the <a href="rosTutorial.htm">ROS tutorial</a> for a quick start.</li>
+<li>Integrated the <a href="http://www.reflexxes.com">Reflexxes Motion Library</a> type IV via a plugin. Following new functions can now be called from C/C++, Lua, the <a href="remoteApiOverview.htm">remote API</a>, and from a ROS node: <a href="apiFunctions.htm#simRMLPosition">simRMLPosition</a> and <a href="apiFunctions.htm#simRMLVelocity">simRMLVelocity</a>. Have a look at the related demo scene: &quot;reflexxesMotionLibraryType4Demo.ttt&quot;</li>
+<li>Added 4 new API functions: <a href="apiFunctions.htm#simGetObjectQuaternion">simGetObjectQuaternion</a>, <a href="apiFunctions.htm#simSetObjectQuaternion">simSetObjectQuaternion</a>, <a href="apiFunctions.htm#simBuildMatrixQ">simBuildMatrixQ</a> and <a href="apiFunctions.htm#simGetQuaternionFromMatrix">simGetQuaternionFromMatrix</a> (internally V-REP used quaternions since always, but only Euler angles could be accessed)</li>
+<li>Added an option to colorize items in the scene hierarchy, for quicker identification</li>
+<li>Simplified the way the <a href="remoteApiOverview.htm">remote API</a> function <a href="remoteApiFunctions.htm#simxGetUIEventButton">simxGetUIEventButton</a> operates</li>
+<li>New scene: &quot;reflexxesMotionLibraryType4Demo.ttt&quot;</li>
+<li>New model: &quot;kinect - closest point calculation.ttm&quot;</li>
+<li>Added  new <a href="dataStreamTypes.htm">graph data streams</a>: Joint velocity, object velocity, object velocity x, object velocity y, object velocity y, and object rotation velocity.</li>
+<li>Added a new tutorial: <a href="rosTutorial.htm">ROS tutorial</a>.</li>
+<br>
+
+
+
+<h3>V-REP V2.6.5 (July 7th 2012)</h3>
+<li>Renamed following remote API functions/constants to avoid confusion: <a href="remoteApiFunctions.htm#simxGetInMessageInfo">simxGetInMessageInfo</a>, <a href="remoteApiFunctions.htm#simxGetOutMessageInfo">simxGetOutMessageInfo</a>, <a href="remoteApiConstants.htm#inboxMessageInfoType">simx_headeroffset_message_id</a>.</li>
+<li>Added a user manual section about <a href="remoteApiExtension.htm">how to extend the remote API</a></li>
+<li>Fixed a few bugs related to the Linux/Mac version of the remote API</li>
+<li>Added a new <a href="userInterface.htm#toolbars">toolbar button</a> to handle object assembling/disassembling. The way two objects assemble via this toolbar button can be adjusted in the <a href="commonPropertiesDialog.htm">object common properties dialog</a> (Assembling button)</li>
+<li>Added a <a href="remoteApiFunctionsPython.htm">Python binding</a> for the <a href="remoteApiOverview.htm">remote API</a></li>
+<li>Added a <a href="remoteApiFunctionsJava.htm">Java binding</a> for the <a href="remoteApiOverview.htm">remote API</a></li>
+<li>Added a <a href="remoteApiFunctionsMatlab.htm">Matlab binding</a> for the <a href="remoteApiOverview.htm">remote API</a></li>
+<li>Added a <a href="remoteApiFunctionsUrbi.htm">Urbi binding</a> for the <a href="remoteApiOverview.htm">remote API</a></li>
+<li>Added a first <a href="rosInterfaceOverview.htm">interface to ROS</a>. This version is temporary and will be updated in next release</li>
+<br>
+
+
+
+<h3>V-REP V2.6.4 (May 23rd 2012)</h3>
+<li>A new powerful mechanism was developed to allow easy access to V-REP API functions from external applications (e.g. robots): the <a href="remoteApiOverview.htm">remote API</a>. Now V-REP supports <a href="writingCode.htm">4 different programming approaches</a>.</li>
+<li>simSerialPortOpen, simSerialPortClose, simSerialPortSend and simSerialPortRead are declared deprecated. They are replaced by <a href="apiFunctions.htm#simSerialOpen">simSerialOpen</a>, <a href="apiFunctions.htm#simSerialClose">simSerialClose</a>, <a href="apiFunctions.htm#simSerialSend">simSerialSend</a>, <a href="apiFunctions.htm#simSerialRead">simSerialRead</a> and <a href="apiFunctions.htm#simSerialCheck">simSerialCheck</a>.</li>
+<li>The serial port functionality is now also operational on the Mac and Linux platforms</li>
+<li>Fixed a bug where icons would not appear on systems with an old or non-accelerated graphic card</li>
+<li>Added a new integer parameter:  <a href="apiConstants.htm#integerParameters">sim_intparam_scene_unique_id</a></li>
+<li>Added a new event callback message:  <a href="apiConstants.htm#simulatorMessages">sim_message_eventcallback_mainscriptabouttobecalled</a></li>
+<br>
+
+
+<h3>V-REP V2.6.3 (April 10th 2012)</h3>
+<li>First release that is also available on the Linux platform (Ubuntu is preferred). The Mac and Linux versions are however still flagged as early beta releases</li>
+<li>Added a new <a href="userInterface.htm#statusBar">status bar</a></li>
+<li>Reworked the <a href="coordinateDialog.htm">coordinates and transformation dialog</a>, as well as the <a href="objectMovement.htm">method of moving object/items</a></li>
+<li>Modified the way objects/items get selected when no key combination is used: objects get selected at mouse button release if the mouse didn't move. This makes it more convenient to navigate with the camera without always losing the object selection state</li>
+<li>Added a checker background in the <a href="customUserInterfaceEditMode.htm">custom user interface edit mode</a></li>
+<li>Added a new video compression library used by V-REP's <a href="aviRecorder.htm">video recorder</a>, based on the <a href="http://www.ffmpeg.org">FFmpeg library</a>. Click <a href="acknowledgments.htm">here</a> for related credits</li>
+<li>The player version of V-REP has now been enabled to display the <a href="settings.htm">user settings dialog</a>, and the <a href="layerSelectionDialog.htm">layer selection dialog</a>. <a href="scripts.htm">Scripts</a> can now also be edited from within the player version of V-REP</li>
+<br>
+
+
+<h3>V-REP V2.6.2 (March 18th 2012)</h3>
+<li>Since this release, the concept of "simulator instances"  has been abandonned for the concept of "scenes". Functionality basically stays same, but now matches the standard approach. An unlimited number of <a href="scenes.htm">scenes</a> can now be opened, also in the player version of V-REP</li>
+<li>Tree elements in the <a href="userInterface.htm#SceneHierarchy">scene hierarchy</a> can now be drag-and-dropped onto other objects for convenient parent-child relationship building (similar to [Menu bar --> Edit --> Make last selected object parent] or [Menu bar --> Edit --> Make last selected object(s) orphan])</li>
+<li>All <a href="userInterface.htm#SceneHierarchy">scene hierarchy</a> icons have been redesigned</li>
+<li>All <a href="userInterface.htm#toolbars">toolbar buttons</a> have been redesigned</li>
+<li>The <a href="userInterface.htm#SceneHierarchy">scene hierarchy</a> now also visualizes all opened scenes, and switching between scenes is achieved with a simple click</li>
+<li>A new page selector was implemented, allowing to quickly visualize and select from all available <a href="pagesAndViews.htm">pages</a> of a given scene</li>
+<li>A new <a href="scenes.htm#sceneSelector">scene selector</a> was implemented, allowing to quickly visualize and select from all available opened scenes</li>
+<li>The <a href="userInterface.htm#ModelBrowser">model browser</a> has been reworked and now uses 24-bit colors for displaying <a href="models.htm">model</a> thumbnails</li>
+<li><a href="customUserInterfaces.htm">Custom user interfaces</a> can now be saved and loaded separately, in a similar way as models are loaded /saved</li>
+<li>Added 3 new API functions: <a href="apiFunctions.htm#simCloseScene">simCloseScene</a>, <a href="apiFunctions.htm#simLoadUI">simLoadUI</a> and <a href="apiFunctions.htm#simSaveUI">simSaveUI</a></li>
+<br>
+
+
+
+<h3>V-REP V2.6.1 (February 28th 2012)</h3>
+<li>First release that is also available on the Mac platform. The Mac release is however still a Beta release where several items are not yet fully supported.</li>
+<li>Added an auto-save functionality. It can be turned on/off in the <a href="settings.htm">user settings dialog</a>.</li>
+<li>Fixed a bug in which V-REP would crash after an undo operation in certain conditions.</li>
+<li>Color-coded objects in the <a href="designingDynamicSimulations.htm#dynamicContentVisualization">dynamic content visualization mode</a>.</li>
+<li>Added a parameter to the user settings file (system/usrset.txt) that allows to adjust the GUI font size: guiFontSize_Win</li>
+<li>Added a new integer parameter to detect the platform V-REP is running on: <a href="apiConstants.htm#integerParameters">sim_intparam_platform</a></li>
+<li>New model: "spring-damper.ttm"</li>
+<li>New model: "motorbike.ttm"</li>
+<br>
+
+
+<h3>V-REP V2.6.0 (January 27th 2012)</h3>
+<li>This release too underwent heavy internal changes in preparation for support of other platforms (Mac and Linux). Please inform us as soon as possible in case of unexpected behaviour with this release. Thanks!</li>
+<li>All dialogs and user interfaces have been completely rewritten/redesigned/reorganized. They now all rely on the <a href="http://www.qt.nokia.com">Qt framework</a></li>
+<li>The application main loop (i.e. the default <a href="mainClientApplication.htm">main client application</a>) has been simplified and prepared for separate GUI thread functionality. The rendering of the scene is now handled internally. Following functions were added: <a href="apiFunctions.htm#simRunSimulator">simRunSimulator</a>, <a href="apiFunctions.htm#simGetMainWindow">simGetMainWindow</a>, <a href="apiFunctions.htm#simLoadModule">simLoadModule</a>, <a href="apiFunctions.htm#simSendModuleMessage">simSendModuleMessage</a>, <a href="apiFunctions.htm#simUnloadModule">simUnloadModule</a>. Following functions were removed: simLaunchSimulator, simEndSimulator, simRenderScene, simHandleWindowMessages, simGetInstanceIndex, simGetVisibleInstanceIndex, simSwitchToInstance, simEmptyScene, simRegisterModuleName and simRegisterEventCallback.</li>
+<li>Added following values: <a href="apiConstants.htm#simulatorMessages">sim_message_eventcallback_guipass</a>, <a href="apiConstants.htm#simulatorMessages">sim_message_simulation_start_resume_request</a>, <a href="apiConstants.htm#simulatorMessages">sim_message_simulation_pause_request</a>, <a href="apiConstants.htm#simulatorMessages">sim_message_simulation_stop_request</a>, <a href="apiConstants.htm#integerParameters">sim_intparam_qt_version</a>, <a href="apiConstants.htm#floatingParameters">sim_floatparam_rand</a>. Following value is now also writable: <a href="apiConstants.htm#booleanParameters">sim_boolparam_console_visible</a></li>
+<li>Adjusted/adapted all V-REP plugins: since this release, <a href="plugins.htm">plugins</a> should dynamically bind to the V-REP library. The task is simplified with two files distributed with V-REP: &quot;v_repLib.h&quot; and &quot;v_repLib.cpp&quot;. This reduces compatibility problems linked to working with various compilers. Old plugins should be slightly modified: it is recommended to adjust old plugins in a similar way as was done for the "BubbleRob" plugin project, located in the "c_examples" directory of V-REP's installation directory. If you are having difficulties adjusting your plugin code, please contact us for assistance.</li>
+<li>Fixed a bug linked to the click-and-select functionality.</li>
+<li>Added several pre-configured simulation settings (e.g. physics engine settings or simulation time step settings). The user can conveniently modify them in the <a href="userInterface.htm#toolbars">toolbar</a>.</li>
+<li>Added an option for turning dialogs semi-transparent when they loose focus.</li>
+<li>Added a toolbar button to quickly visualize a scene's dynamic content (enabled during simulation only)</li>
+<li>Added a plugin that allows to interface joysticks: v_repExtJoystick.dll. Like with almost all V-REP plugins, the source code can be requested if not already distributed with V-REP.</li>
+<br>
+
+
+<h3>V-REP V2.5.12 (December 6th 2011)</h3>
+<li>This release too underwent heavy internal changes in preparation for support of other platforms (Mac and Linux). Please inform us as soon as possible in case of unexpected behaviour with this release. Thanks!</li>
+<li>Improved the undo/redo functionality: undo points are now set 10-20 times faster as in previous releases, which greatly improves scene edition with large scenes.</li>
+<li>The undo/redo functionality can now also be accessed via the ctrl-z and ctrl-y keys</li>
+<li>Changed the splash screen and the about dialog</li>
+<li>Since this release, it is not possible anymore to run several simulations in parallel (in different instances). This limitation greatly simplifies programming of <a href="plugins.htm">plugins</a>. Most old plugins should still be working, but some might need some simple adjustments. *Refer to the section below for quick instructions of modifications required.</li>
+<li>simGetInstanceIndex, simGetVisibleInstanceIndex and simSwitchToInstance are declared deprecated and should not be used anymore.</li>
+<li>Simplified and improved the plugin <a href="apiConstants.htm#simulatorMessages">event messages</a></li>
+<li>Removed following event callback messages: sim_message_object_added_or_removed, sim_message_object_selection_changed, sim_message_scene_loaded, sim_message_menu_item_selected, sim_message_eventcallback_objectscaled, sim_message_eventcallback_objectabouttobeerased, sim_message_eventcallback_objecterased and sim_message_eventcallback_objectcreated. The same functionality can be obtained with the improved <a href="apiConstants.htm#simulatorMessages">sim_message_eventcallback_instancepass event callback message</a>. This results in faster loading operation for large scenes, and simplifies programming of <a href="plugins.htm">plugins</a>. *Refer to the section below for quick instructions of modifications required.</li>
+<li>Renamed rendering sensors. They are now called <a href="visionSensors.htm">vision sensors</a>, and all <a href="apiFunctionListCategory.htm#visionSensor">related API functions</a>, API constants or references have been renamed. The old API functions and constants are kept operational for backward compatibility.</li>
+<li>Renamed 2D elements. They are now called <a href="customUserInterfaces.htm">custom user interfaces</a>, and all <a href="apiFunctionListCategory.htm#customUserInterfaces">related API functions</a>, API constants or references have been renamed. The old API functions and constants are kept operational for backward compatibility.</li>
+<li>Added an option to allow for local lights (i.e. lights activated only with flagged cameras). Refer to the <a href="lightPropertiesDialog.htm">light dialog</a>, the <a href="cameraPropertiesDialog.htm">camera dialog</a> and the <a href="visionSensorPropertiesDialog.htm">vision sensor dialog</a>.</li>
+<li>Added a new toolbar button to automatically adjust the main view to the scene, or selected objects</li>
+<li>Added a new API function: <a href="apiFunctions.htm#simCameraFitToView">simCameraFitToView</a> (click <a href="http://www.youtube.com/watch?v=D3UCJci487Q" target="_blank">here</a> for a simulation that illustrates what kind of camera movement can be achieved with that function)</li>
+<li>Added a new API function: <a href="apiFunctions.htm#simIsHandleValid">simIsHandleValid</a>.</li>
+<li>Added following API functions: <a href="apiFunctions.htm#simPersistentDataWrite">simPersistentDataWrite</a> and <a href="apiFunctions.htm#simPersistentDataRead">simPersistentDataRead</a>.</li>
+<li>Added a new item in the <a href="commonPropertiesDialog.htm">object common properties dialog</a> (&quot;ignored for view-fitting&quot;)</li>
+<li>New model: "auto fitting camera.ttm"</li>
+<li>Removed scene: "youBotDemo.ttt"</li>
+<br>
+<div class=tab>*Most old plugins will not need any modification. It is however recommended to adjust the plugin's "v_repMessage" function in a similar way as was done for the "BubbleRob" plugin project, located in the "c_examples" directory of V-REP's installation directory. If you are having difficulties adjusting your plugin code, please contact us for assistance.</div>
+
+<br>
+
+<h3>V-REP V2.5.11 (November 13th 2011)</h3>
+<li>This is a bug fixing release. In version 2.5.10, when opening dialogs, V-REP could crash or freeze. This was fixed</li>
+<br>
+
+
+<h3>V-REP V2.5.10 (October 21st 2011)</h3>
+<li>This release underwent heavy internal changes in preparation for support of other platforms (Mac and Linux). Please inform us as soon as possible in case of unexpected behaviour with this release. Thanks!</li>
+<li>Removed the object common property <em>visible</em>. This option was a little bit confusing, and now <a href="objects.htm">objects</a> can still be made invisible by moving them into a hidden <a href="layerSelectionDialog.htm">layer</a></li>
+<li>Removed the object common property <em>wireframe</em></li>
+<li>Added a <em>wireframe</em> option in the <a href="shapeProperties.htm">shape dialog</a></li>
+<li>Removed the shape tracing option in order to simplify the <a href="shapeProperties.htm">shape dialog</a>. Shape tracing can still be achieved with appropriate function calls (e.g. see the "tracer" model)</li>
+<li>simResetTracing and simHandleTracing <a href="apiFunctionListAlphabetical.htm">API functions</a> were declared deprecated</li>
+<li>The <a href="shapeProperties.htm">shape dialog</a> was further simplified by encapsulating the shape calculation structure parameters in a separate dialog</li>
+<li>Added new <a href="objectParameterIDs.htm">object parameter IDs</a></li>
+<li>Following <a href="apiFunctions.htm">API functions</a> are now also available from the Lua side: <a href="apiFunctions.htm#simAddSceneCustomData">simAddSceneCustomData</a>, <a href="apiFunctions.htm#simGetSceneCustomData">simGetSceneCustomData</a>, <a href="apiFunctions.htm#simAddObjectCustomData">simAddObjectCustomData</a> and <a href="apiFunctions.htm#simGetObjectCustomData">simGetObjectCustomData</a></li>
+<li>New model: "laser pointer.ttm"</li>
+<li>New model: "tracer.ttm"</li>
+<li>New model: "custom data viewer.ttm"</li>
+<li>New model: "reference frame.ttm"</li>
+<li>New model: "Accelerometer.ttm"</li>
+<li>New model: "GyroSensor.ttm"</li>
+<br>
+
+
+<h3>V-REP V2.5.9 (September 3rd 2011)</h3>
+<li>Added support for skyboxes</li>
+<li>Added an option to hide all edges in a specific <a href="pagesAndViews.htm">view</a> (view popup menu)</li>
+<li>Added an option to display thin or thick edges in a specific <a href="pagesAndViews.htm">view</a> (view popup menu)</li>
+<li>Added an option to hide the <a href="userInterface.htm">information and status text</a> when <a href="aviRecorder.htm">recording a movie</a></li>
+<li>Added two entries in the configuration file ("usrset.txt") that allow to specify the desired resolution for a <a href="aviRecorder.htm">movie recording</a>. (&quot;movieRecordingResolutionX&quot; and &quot;movieRecordingResolutionY&quot;)</li>
+<li>Added a light concrete texture to all floors</li>
+<li>New model: "5mX5m metallic floor.ttm"</li>
+<li>New model: "5mX5m concrete floor.ttm"</li>
+<li>New model: "kinect.ttm" (there is already a kinect model for interfacing with the real device. This model is just a simulated device)</li>
+<li>New model: "blue sky skybox.ttm"</li>
+<li>New model: "felt pen.ttm"</li>
+<li>New model: "ant hexapod.ttm"</li>
+<br>
+
+
+<h3>V-REP V2.5.8 (July 20th 2011)</h3>
+<li>Improved the <a href="apiFunctions.htm#simAddParticleObject">simAddParticleObject</a> function to also support linear and quadratic drag parameters</li>
+<li>Added more arguments to the API functions <a href="apiFunctions.htm#simGetVisionSensorImage">simGetVisionSensorImage</a> and <a href="apiFunctions.htm#simGetVisionSensorDepthBuffer">simGetVisionSensorDepthBuffer</a></li>
+<li>New API functions: <a href="apiFunctions.htm#simGetArrayParameter">simGetArrayParameter</a> and <a href="apiFunctions.htm#simSetArrayParameter">simSetArrayParameter</a>
+<li>New API functions: <a href="apiFunctions.htm#simSetIkGroupProperties">simSetIkGroupProperties</a> and <a href="apiFunctions.htm#simSetIkElementProperties">simSetIkElementProperties</a></li>
+<li>Temporarily removed following commands to facilitate a move towards other platforms: simAttachCustomMenu, simRemoveCustomMenu, simCreateCustomToolbar, simSetCustomToolbarState, simRemoveCustomToolbar, simGetWindowMessage, simProcessWindowMessage</li>
+<li>Removed the "SimpleCustomClientApplication" project files</li>
+<li>Added more fog parameters</li>
+<li>Added new <a href="apiConstants.htm#integerParameters">int parameters</a>: sim_intparam_infotext_style and sim_intparam_settings</li>
+<li>Added new <a href="apiConstants.htm#arrayParameters">array parameters</a>: sim_arrayparam_gravity, sim_arrayparam_fog, sim_arrayparam_fog_color, sim_arrayparam_background_color1, sim_arrayparam_background_color2 and sim_arrayparam_ambient_light</li>
+<li>Added new <a href="apiConstants.htm#booleanParameters">Boolean parameters</a>: sim_boolparam_display_enabled, sim_boolparam_infotext_visible, sim_boolparam_statustext_open and sim_boolparam_fog_enabled</li>
+<li>Added new <a href="objectParameterIDs.htm">object parameter IDs</a></li>
+<li>Added a new <a href="visionSensors.htm">vision sensor</a> filter component: blob detection</li>
+<li>New <a href="joints.htm">joints</a> added to the <a href="scenes.htm">scene</a> are in Force/torque mode by default since this release</li>
+<li>Added two entries in the configuration file ("usrset.txt") that allows to correct display problems with specific graphic cards / systems: "renderingSurfaceVShift" and "renderingSurfaceVResize"</li>
+<li>New scene: "blobDetectionWithPickAndPlace.ttt"</li>
+<li>New scene: "youBotAndHanoiTower.ttt</li>
+<li>New model: "fast simulation mode.ttm"</li>
+<li>New model: "water surface.ttm"</li>
+<li>New model: "ABB IRB 360.ttm"</li>
+<li>New model: "Blob detection camera.ttm"</li>
+<li>Removed scene: "camFollower.ttt"</li>
+<li>Removed scene: "deltaFKDecomposed.ttt"</li>
+<li>Removed scene: "lineTracer-nonThreaded.ttt"</li>
+<li>Removed scene: "parallelManipulator1.ttt"</li>
+<li>Removed scene: "parallelManipulator2.ttt"</li>
+<li>Removed scene: "pickAndPlace.ttt"</li>
+<li>Removed scene: "mobileRobotDr20.ttt"</li>
+<li>Removed scene: "transmission.ttt"</li>
+<br>
+
+
+<h3>V-REP V2.5.7 (June 25th 2011)</h3>
+<li>Since this release, <a href="models.htm">models</a> do not required to have a <a href="dummies.htm">dummy</a> object as base object anymore (any <a href="objects.htm">object</a> can be "model base" now). This tremendously improves the way models can be combined, with much less effort (e.g. just select a gripper, then a robot, and click [Menu bar --> Edit --> Make Last Selected Object Parent]: the resulting model is fully operational)</li>
+<li>Reworked almost all models to take advantage of the improved model combination possibility (see here above)</li>
+<li>Reworked, actualized and improved the <a href="robotLanguageIntegrationTutorial.htm">"robot language interpreter integration" tutorial</a></li>
+<li>Added an application and project files that allow retrieving data from the kinect device ('kinectServer')</li>
+<li>New tutorial: <a href="externalControllerTutorial.htm">"External controller tutorial"</a></li>
+<li>New scene: "robotLanguageControl.ttt"</li>
+<li>Removed model: "MTA robot.ttm"</li>
+<li>New model: "MTB robot.ttm"</li>
+<li>New model: "suction pad.ttm"</li>
+<li>New model: "lumibot.ttm"</li>
+<li>New model: "Standing Bill.ttm"</li>
+<li>New model: "kinect.ttm"</li>
+<br>
+
+
+<h3>V-REP V2.5.6 (June 14th 2011)</h3>
+<li> Extended the functionality of the <a href="apiFunctionListCategory.htm#signals">functions related to signals</a>. Signals can now be local (to a given simulator instance) or global </li>
+<li> Textures can now also be applied using texture coordinate information loaded during an <a href="importExport.htm">import</a> operation</li>
+<li>Added a new integer parameter: <a href="apiConstants.htm#integerParameters">sim_intparam_visible_layers</a></li>
+<li>Added a new boolean parameter: <a href="apiConstants.htm#booleanParameters">sim_boolparam_shape_textures_are_visible</a></li>
+<li>New scene: "controlTypeExamples.ttt"</li>
+<li>Bug correction (crash with spherical joints, and joints involved in loop closure with the ODE engine)</li>
+<br>
+
+
+<h3>V-REP V2.5.5 (June 3rd 2011)</h3>
+<li>New API commands to build transformation interpolations: <a href="apiFunctions.htm#simGetRotationAxis">simGetRotationAxis</a> and <a href="apiFunctions.htm#simRotateAroundAxis">simRotateAroundAxis</a><br>
+</li>
+<li>New API command to launch executables: <a href="apiFunctions.htm#simLaunchExecutable">simLaunchExecutable</a>
+</li>
+<li>New API command to read the force/torque along/about a joint's z-axis: <a href="apiFunctions.htm#simJointGetForce">simJointGetForce</a></li>
+<li> New model: &quot;signal monitor.ttm&quot;<br>
+</li>
+<li> When simulation stops, then the initial parenting will try to be restored<br>
+</li>
+<li>Added a new drawing object property: <a href="apiConstants.htm#customDrawingObjects">sim_drawing_itemtransparency</a>
+</li>
+<li>Added a new integer parameter: <a href="apiConstants.htm#integerParameters">sim_intparam_dynamic_engine</a></li>
+<li>Added a new recordable data stream for graphs: "Joints: force or torque"</li>
+<li>Number of active lights not limited to 8 anymore (provided that the GPU also supports more than 8 lights)</li>
+<li>Folders now also appear and are clickable in the lower part of the model browser window</li>
+
+<br>
+
+<h3>V-REP V2.5.4 (April 22nd 2011)</h3>
+
+
+<li> Completely reworked user manual, running in web-browser now. Fixed all brocken links.</li>
+
+<li>
+New V-REP plugin &quot;v_repExtWii.dll&quot; that exports 4 new commands to interact with a wiimote device: simExtWiiStart, simExtWiiEnd, simExtWiiSet and simExtWiiGet</li>
+<li>
+Multiple simultaneous script edition is now suppored </li>
+<li>
+New API command to apply non-central forces: <a href="apiFunctions.htm#simAddForce">simAddForce</a></li>
+<li>
+New API command to temporarily forbid thread switches: <a href="apiFunctions.htm#simSetThreadAutomaticSwitch">simSetThreadAutomaticSwitch</a></li>
+<li>
+2 API commands were removed: simGetInEditionScript and simCloseEditionScript </li>
+<li>
+New data stream type: simulation pass execution time </li>
+<li>
+Switched to the most recent Bullet engine V2.78beta (rev2338) </li>
+<li>
+New model: &quot;Working Bill.ttm&quot; </li>
+<li>
+Several new models of panes for industrial manufacturing cells </li>
+<li>
+New model: &quot;5mX5m wooden floor.ttm&quot; </li>
+<li>
+New model: &quot;Sitting Bill.ttm&quot; </li>
+<li>
+Removed scene &quot;hovercraft.ttt&quot; </li>
+<li>
+Removed scene &quot;trackedRobots.ttt&quot; </li>
+<li>
+New scene: &quot;inverseKinematicsOf144DoFManipulator.ttt&quot; </li>
+
+<br>
+<h3>V-REP V2.5.3 (March 20th 2011)</h3>
+
+<li>
+Extended the functionality of the simSerialPortRead Lua function </li>
+<li>
+Extended the functionality of the <a href="apiFunctions.htm#simUnpackInts">simUnpackInts</a> and <a href="apiFunctions.htm#simUnpackFloats">simUnpackFloats</a> functions </li>
+<li>
+Extended the functionality of the <a href="apiFunctions.htm#simAdjustView">simAdjustView</a> function </li>
+<li>
+New API commands for even more inter-thread synchronization control: <a href="apiFunctions.htm#simSetThreadResumeLocation">simSetThreadResumeLocation</a> and <a href="apiFunctions.htm#simResumeThreads">simResumeThreads</a></li>
+<li>New API command to control the show state of an auxiliary console window: <a href="apiFunctions.htm#simAuxiliaryConsoleShow">simAuxiliaryConsoleShow</a><br>
+</li>
+<li>
+New API commands to set and retrieve various values linked to objects (will be extended on a regular basis): <a href="apiFunctions.htm#simGetObjectIntParameter">simGetObjectIntParameter</a>, <a href="apiFunctions.htm#simSetObjectIntParameter">simSetObjectIntParameter</a>, <a href="apiFunctions.htm#simGetObjectFloatParameter">simGetObjectFloatParameter</a>, <a href="apiFunctions.htm#simSetObjectFloatParameter">simSetObjectFloatParameter</a>, <a href="apiFunctions.htm#simGetObjectStringParameter">simGetObjectStringParameter</a> and <a href="apiFunctions.htm#simSetObjectStringParameter">simSetObjectStringParameter</a></li>
+<li>
+New API command to adjust the number of displayed frames during simulation: <a href="apiFunctions.htm#simSetSimulationPassesPerRenderingPass">simSetSimulationPassesPerRenderingPass</a></li>
+<li>
+New V-REP plugin &quot;v_repExtCam.dll&quot; (using &quot;escape.dll&quot;) that exports 4 new commands to acquire webcam images: simExtCamStart, simExtCamEnd, simExtCamInfo and simExtCamGrab</li>
+<li>
+New model: &quot;plugin enumerator.ttm&quot; </li>
+<li>
+New model: &quot;Mesa SR4000.ttm&quot; </li>
+<li>
+New model: &quot;Snake.ttm&quot; </li>
+<li>
+New model: &quot;Walking Bill.ttm&quot; </li>
+<li>
+New model: &quot;wiimote.ttm&quot; (the associated required plugin will be shipped in next release)</li>
+<li>
+New model: &quot;Barrett Hand.ttm&quot; </li>
+<li>
+New model: &quot;K-Junior.ttm&quot; </li>
+<li>
+New model: &quot;webcam.ttm&quot; </li>
+<li>
+Corrected a bug where simHandleModule would generate an additional unexpected event (sim_message_eventcallback_modulehandle) </li>
+<li>
+Model names in the model browser are now displayed on 2 lines if required </li>
+<li>
+New models: conveyor belt models were added that perform more efficiently </li>
+<li>
+Updated the conveyor belt tutorial with an alternative modeling method that performs more efficiently </li>
+<li>
+Removed scene &quot;mapBuilding.ttt&quot; </li>
+<li>
+New scene &quot;environmentMapping.ttt&quot; </li>
+<li>
+New scene &quot;BarrettHandPickAndPlace.ttt&quot; </li>
+<li>
+Added a mechanism to adjust the Bullet collision margin overall, or on an object-basis </li>
+
+
+<br>
+<h3>V-REP V2.5.2 (February 22nd 2011)</h3>
+
+<li>
+Heightfields are now supported and can be imported from *.tga, *.csv or *.txt files </li>
+<li>
+New API command to create heightfields: simCreateHeightfieldShape </li>
+<li>
+New API commands to handle views and floating views: simFloatingViewAdd, simFloatingViewRemove and simAdjustView </li>
+<li>
+New API command to register contact callbacks for custom handling of contacts: simRegisterContactCallback </li>
+<li>
+New model: 10m x 10m terrain.ttm </li>
+<li>
+Updated the quadricopter model by adding a floor and a front camera </li>
+<li>
+Updated the helicopter model by adding a front camera </li>
+
+<br>
+<h3>V-REP V2.5.1 (February 10th 2011)</h3>
+
+<li>
+Corrected bug in API function simGetObjectOrientation (when relativeTo argument was not -1, results were wrong) </li>
+<li>
+New model: ABB IRB 140.ttm </li>
+<li>
+New model: Omnidirectional Platform.ttm </li>
+<li>
+New model: 1.0 x 0.2 conveyor.ttm </li>
+<li>
+New model: Quadricopter.ttm </li>
+<li>
+New model: helicopter.ttm </li>
+<li>
+Extended the functionality of following 2 API functions: simGetScriptSimulationParameter &amp; simSetScriptSimulationParameter (a parameter can now be a string containing any byte value)</li>
+<li>
+Changed the default value of last argument of API function simMoveToJointPositions. Default is now 1. </li>
+<li>
+New tutorial &quot;Conveyor belt/caterpillar&quot; </li>
+<li>
+Corrected a bug in the propeller.ttm and Air jet.ttm models </li>
+
+
+<br>
+<h3>V-REP V2.5.0 (January 16th 2011)</h3>
+
+<li>
+New API commands to import/export meshes: simImportMesh and simExportMesh </li>
+<li>
+New API commands to create shapes and to extract the mesh of a shape: simCreateMeshShape, simCreatePureShape and simGetShapeMesh </li>
+<li>
+New API command to create joints: simCreateJoint </li>
+<li>
+API commands simGetShapeVertex and simGetShapeTriangle are declared deprecated </li>
+<li>
+New event callback messages: sim_message_eventcallback_renderingpass and sim_message_eventcallback_modulehandleinsensingpart </li>
+<li>
+Scene hierarchy now always contains a double-clickable &quot;World&quot; object. This replaces the environment toolbar button which was removed</li>
+<li>
+New API constant: sim_boolparam_scene_and_model_load_messages </li>
+<li>
+New API constants: sim_message_eventcallback_bannerclicked &amp; sim_message_bannerclicked</li>
+<li>
+New API constants for banner support </li>
+<li>
+New API commands to create banners: simAddBanner and simRemoveBanner </li>
+<li>
+New model: object locator.ttm </li>
+<li>
+Updated the default main client application vrep.exe, and the example main client application project </li>
+<li>
+Extended the lifetime of license keys (key version x.y.z now works for all V-REP versions up to x.y+1.z-1) </li>
+
+
+<br>
+<h3>V-REP V2.4.15 (December 20th 2010)</h3>
+<li>
+New API command to implement non-blocking thread sections for external commands: simSetThreadIsFree </li>
+<li>
+New API commands similar to bidirectional communication pipes: simTubeOpen, simTubeClose, simTubeRead, simTubeWrite, simTubeStatus </li>
+<li>
+New API command to set the maximum force/torque a joint can exert: simSetJointForce </li>
+<li>
+New API commands to create and handle auxiliary console windows: simAuxiliaryConsoleOpen, simAuxiliaryConsolePrint, simAuxiliaryConsoleClose </li>
+<li>
+The Lua extension library LuaSocket is included in the distribution </li>
+<li>
+Corrected a small bug that would affect the icons appearance on some graphic cards </li>
+<li>
+New scene: socketAndTubeCommunicationExample.ttt </li>
+
+
+
+<br>
+<h3>V-REP V2.4.14 (December 11th 2010)</h3>
+
+<li>
+Removed an OpenGL instruction that caused opengl driver crashes on some graphic cards (including VMWare's openGL driver &quot;vmwogl32.dll&quot;)</li>
+
+
+
+<br>
+<h3>V-REP V2.4.13 (December 8th 2010)</h3>
+
+<li>
+Warning message appears now when a scene was not saved (when leaving or discarding a scene) </li>
+<li>
+Improved and corrected the BubbleRob tutorial </li>
+<li>
+Corrected a small bug that appeared with joints in hybrid dependent mode </li>
+<li>
+New dongle drivers </li>
+<li>
+New API commands to handle particles: simAddParticleObject, simRemoveParticleObject and simAddParticleObjectItem </li>
+<li>
+New API commands for serial port communication: simSerialPortOpen, simSerialPortClose, simSerialPortSend and simSerialPortRead </li>
+<li>
+New API command to retrieve information on contacts: simGetContactInfo </li>
+<li>
+New model: contact display.ttm </li>
+<li>
+New model: AirJet.ttm </li>
+<li>
+New model: Propeller.ttm </li>
+<li>
+New model: Fire.ttm </li>
+<li>
+New model: smoke.ttm </li>
+<li>
+New model: Wheel.ttm </li>
+<li>
+New model: Caster wheel.ttm </li>
+<li>
+New model: Omniwheel 45deg A.ttm </li>
+<li>
+New model: Omniwheel 45deg B.ttm </li>
+<li>
+New model: Hokuyo URG 04LX UG01.ttm </li>
+<li>
+New scene: hovercraft.ttt </li>
+
+
+
+<br>
+<h3>V-REP V2.4.12 (October 30th 2010)</h3>
+
+<li>
+Corrected a small bug in the simMoveToJointPositions API command applied to joints in force/torque mode </li>
+<li>
+New API commands: simSetShapeColor, simResetDynamicObject and simSetJointMode </li>
+<li>
+New model: YouBot.ttm </li>
+<li>
+New model: e-puck.ttm </li>
+<li>
+New scene: youBotDemo.ttt </li>
+<li>
+New scene: e-puckDemo.ttt </li>
+
+
+
+<br>
+<h3>V-REP V2.4.11 (October 13th 2010)</h3>
+
+<li>
+Dual physics engine support: next to the Bullet Physics Library, the Open Dynamics Engine (ODE) is now also supported </li>
+<li>
+New model: Asti.ttm </li>
+<li>
+New Model: Robbie.ttm</li>
+<li>
+All models and scenes have been checked/adjusted for dual physics engine support </li>
+<li>
+New scene: ImageProcessingExample.ttt </li>
+
+
+<br>
+<h3>V-REP V2.4.10</h3>
+
+<li>
+Minor bug fixes </li>
+
+
+
+<br>
+<h3>V-REP V2.4.9</h3>
+
+<li>
+New API commands: simSetObjectSpecialProperty and simGetObjectSpecialProperty </li>
+<li>
+Model visibility can now also be overridden </li>
+<li>
+New option &quot;ignored during path planning&quot; for the &quot;collidable&quot; and &quot;measurable&quot; property</li>
+<li>
+Improved path edition capabilities </li>
+<li>
+Bug fix in the path planning module </li>
+<li>
+New model: path following human </li>
+<li>
+New model: path planning and following human </li>
+
+
+<br>
+<h3>V-REP V2.4.8</h3>
+<li>
+Edge following is enabled by default in the edge edit mode </li>
+<li>
+New demo scene: Katana robot with twisted cable simulation </li>
+<li>
+New demo scene: ABB Fanta can challenge </li>
+<li>
+New demo scene: practical path planning </li>
+<li>
+New API commands: simSetExplicitHandling and simGetExplicitHandling </li>
+<li>
+New camera fly mode </li>
+<li>
+Improved object manipulation and snapping to grid </li>
+<li>
+Automatic rendering order calculation for translucid shapes </li>
+<li>
+New custom user interface option: &quot;display only when associated object is selected&quot; </li>
+<li>
+New edit menu item: &quot;Replace selected objects with a copy of last selected object&quot; </li>
+<li>
+New model browser window with drag-and-drop functionality </li>
+<li>
+New models organized in a model library </li>
+<li>
+New option for proximity sensors: Occlusion check </li>
+<li>
+New option for ray-type proximity sensors: randomized detection </li>
+<li>
+Option to override specific properties for whole models </li>
+<li>
+New API commands: simSetModelProperty and simGetModelProperty </li>
+
+
+
+<br>
+<h3>V-REP V2.4.7</h3>
+
+<li>
+New API command: simGetStringParameter </li>
+<li>
+Option to create pure shapes with selected triangles in the triangle edit mode </li>
+<li>
+Improved demo scene: Welding robot with flexible cable simulation </li>
+<li>
+New tutorial: Inverse kinematics </li>
+<li>
+New tutorial: Importing and preparing rigid bodies </li>
+<li>
+New tutorial: Hexapod </li>
+<li>
+New tutorial: Robot language interpreter integration </li>
+
+
+<br>
+<h3>V-REP V2.4.6</h3>
+
+<li>
+Various minor bug fixes </li>
+<li>
+New demo scene: Roller-Walker.ttt </li>
+
+
+
+<br>
+<h3>V-REP V2.4.5</h3>
+<li>
+Improved simSendData and simReceiveData commands </li>
+<li>
+New API command: simGetVelocity </li>
+<li>
+New API command: simAddForceAndTorque </li>
+<li>
+New demo scene: ACM_R5H.ttt </li>
+<li>
+New demo scene: Hexapod.ttt </li>
+<li>
+Bug correction in simGetPosition, simSetPosition, simGetOrientation and simSetOrientation commands </li>
+<li>
+Antialiasing option for edges. Disabled by default </li>
+
+
+
+<br>
+<h3>V-REP V2.4.4</h3>
+<li>
+Various minor bug fixes </li>
+
+
+
+<br>
+<h3>V-REP V2.4.3</h3>
+<li>
+Texture support for shapes and custom user interfaces. Textures can be static or dynamic </li>
+
+
+
+<br>
+<h3>V-REP V2.4.2</h3>
+<li>
+First public release in March 2010 </li>
+
+ <br> 
+ <br> 
+
+  
+  </td>
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

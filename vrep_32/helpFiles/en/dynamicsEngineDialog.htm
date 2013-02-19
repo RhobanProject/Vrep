@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Dynamics engine dialog</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Dynamics engine dialog</h1>
+
+<p>The dynamics engine dialog is part of the <a href="dynamicsDialog.htm">dynamics dialog</a>. The dialog displays the engine configuration and various engine specific parameters. In the <a href="dynamicsDialog.htm">dynamics dialog</a><a href="pathPlanningDialog.htm"></a><a href="ikDialog.htm"></a>, click the <strong>Adjust engine parameters</strong> button to open this dialog:</p>
+
+
+<p align=center><img src="images/dynamicsEngineDialog.jpg"></p>
+<p class=imageLabel>[Dynamics engine dialog]</p>
+<br>
+
+<p>Each engine has specific parameters that can be set globally (see hereafter) or locally (in the <a href="shapeDynamicsProperties.htm">shape dynamics dialog</a> or in the <a href="jointDynamicsProperties.htm">joint dynamics dialog</a>). Make sure you read the respective engine documentations to achieve best parameter settings.</p>
+
+<li><strong>Configuration</strong>: allows quickly selecting predefined or custom configurations for the dynamics engines. It is however highly recommended to keep the default configuration to avoid compatibility problems (e.g. combining models that are supposed to run each with different configuration settings will never give good results).<br>
+</li>
+
+<li><strong>Bullet/ODE: Time step</strong>: specifies the desired time step for dynamics calculations. It is highly recommended to keep a time step of 5ms.<br>
+</li>
+
+
+<li><strong>Bullet: Constraint solving iterations</strong>: specifies the number of iterations that will be used to solve constraints (large values usually result in slower but more precise simulations (generally)).<br>
+</li>
+
+<li><strong>Bullet/ODE: Internal scaling</strong>: specifies how dimensions are handled internally. If your dynamic scene is composed by small (&lt;3 cm) or very large shapes, you can improve simulation stability by adjusting the scaling factor. This is particularly true for the Bullet engine.<br>
+</li>
+
+<li><strong>Bullet: Collision margin scaling</strong>: specifies how collision margins are scaled in relation to the internal scaling parameter. Following relationship is applied: new collision margin = Bullet collision margin * internal scaling * collision margin scaling. This setting can be overridden on a shape-basis (refer to the <a href="shapeDynamicsProperties.htm">shape dynamics dialog</a><a href="shapeProperties.htm"></a>).<br>
+</li>
+
+<li><strong>ODE: Use 'quickStep'</strong>: when selected, a fast iterative solving method will be used for the ODE engine. The larger the<strong> iterations</strong> parameter, the more precise the calculations (generally). When the <strong>quickStep</strong> method is not selected, calculations can be more precise and faster for small systems. Larger systems can however be very slow, unstable and can lead to sudden crashes!<br>
+</li>
+
+<li><strong>ODE: Global ERP</strong>: the global Error Reduction Parameter for the ODE engine, refer to the ODE documentation for more details.<br>
+</li>
+
+<li><strong>ODE: Global CFM</strong>: the global Constraint Force Mixing for the ODE engine, refer to the ODE documentation for more details.<br>
+</li>
+
+
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="dynamicsDialog.htm">Dynamics dialog</a></li>
+<li><a href="shapeDynamicsProperties.htm">Shape dynamics dialog</a></li>
+<li><a href="jointDynamicsProperties.htm">Joint dynamics dialog</a></li>
+<li><a href="http://www.bulletPhysics.org">Bullet Physics Library</a></li>
+<li><a href="http://www.ode.org">Open Dynamics Engine</a></li>
+<br>
+<br>
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

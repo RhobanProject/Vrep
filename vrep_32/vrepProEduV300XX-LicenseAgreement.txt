@@ -1,0 +1,27 @@
+V-REP PRO EDU LICENSE AGREEMENT
+
+By installing V-REP PRO EDU (the SOFTWARE), you (either an individual or a single entity, the LICENSEE) accept the terms and conditions of this licensing agreement.
+
+Installing and using the SOFTWARE means the acceptance of above terms and conditions of the license. If the LICENSEE does not agree with the terms of this license, the LICENSEE must remove all files related to the SOFTWARE from any storage devices and cease to use the SOFTWARE.
+
+The V-REP PRO EDU educational license applies ONLY to EDUCATIONAL ENTITIES composed by following people and institutions:
+
+1. Students, teachers and professors
+2. Schools and Universities
+
+EDUCATIONAL ENTITIES do NOT include companies, research institutions, non-profit organisations, foundations, etc.
+
+An EDUCATIONAL ENTITY may use V-REP PRO EDU under following conditions:
+ 
+1. Usage should be non-commercial.
+
+V-REP PRO EDU is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. In no event will the original author be held liable for any damages arising from the use of this software.
+
+V-REP PRO EDU is copyrighted by Dr. Marc Andreas Freese (the original author). All rights reserved.
+
+(a copy of this license agreement can be found in the installation directory)
+
+
+
+
+

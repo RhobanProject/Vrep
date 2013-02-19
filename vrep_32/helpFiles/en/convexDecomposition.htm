@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Convex hull</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Convex decomposition</h1>
+
+<h3 class=relatedApiFunctions><a href="apiFunctions.htm#simConvexDecompose">Related API function</a></h3>
+
+
+<p>V-REP allows calculating and adding the convex decomposition  of specified <a href="shapes.htm">shapes</a>. Convex shapes perform faster and are more stable that random shapes, in regards to dynamic collision response calculation. They are however not as fast nor as stable as <a href="shapes.htm">pure shapes</a>! </p>
+
+<p align=center><img src="images/dynamicsDesign15.jpg"></p>
+<p class=imageLabel>[Non-convex model (left) and corresponding convex-decomposed model (right)]</p>
+<br>
+
+<p>You can either add the convex decomposition of selected shapes, or you can morph selected shapes into their convex decomposition equivalent:</p>
+
+<li><strong>adding the convex decomp. </strong>: [Menu bar --&gt; Add --&gt; Convex decomposition of selected shapes]</li>
+<li><strong>morphing into convex decomp. </strong>: [Menu bar --&gt; Edit --&gt; Morph selected shapes into convex shapes]</li>
+
+
+
+<p>Following dialog pops open and allows adjusting the way shapes are decomposed:</p>
+
+
+<p align=center><img src="images/convexDecompDlg.jpg"></p>
+<p class=imageLabel>[Convex decomposition parameter dialog]</p>
+<br>
+
+<p>Following parameters are applied for each individual shape:</p>
+
+<li><strong>Handle grouped shape components individually</strong>: when checked, then each individual mesh of a grouped shape will be handled on its own during decomposition, otherwise the grouped shape is considered as a single mesh.</li>
+<li><strong>Apply random colors for easier entity distinction</strong>: has only a visual impact.</li>
+<li><strong>Add extra points</strong>: specifies whether extra points should be added when computing the concavity.</li>
+<li><strong>Add extra face points</strong>: specifies whether faces points should be added when computing the concavity.</li>
+<li><strong>Min. nb of clusters</strong>: specifies the minimum number of clusters to be generated</li>
+<li><strong>Max. concavity</strong>: specifies the maximum allowed concavity.</li>
+<li><strong>Max. connection distance</strong>: specifies the maximum allowed distance to get convex clusters connected.</li>
+<li><strong>Target nb of triangles of decimated mesh</strong>: specifies the targeted number of triangles of the decimated mesh.</li>
+<li><strong>Max. nb of vertices / convex hull</strong>: specifies the maximum number of vertices for each generated convex hull.</li>
+<li><strong>Small cluster detection threshold (%)</strong>: specifies the threshold to detect small clusters. The threshold is expressed as a percentage of the total mesh surface.</li>
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="convexHull.htm">Convex hull calculation</a></li>
+
+<br>
+<br>
+
+  </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

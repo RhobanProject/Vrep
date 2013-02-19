@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Script simulation parameters</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Script simulation parameters</h1>
+
+<h3 class=relatedApiFunctions><a href="apiFunctionListCategory.htm#scriptSimulationParameters">Related API functions</a></h3>
+
+<p>In V-REP, each <a href="scripts.htm">script</a> has a list of simulation parameters. Those parameters can be used as a quick way of adjusting values of a specific <a href="models.htm">model</a> for example (e.g. the maximum velocity of a mobile robot). The script simulation parameters for a script can be accessed by double-clicking the appropriate icon in the <a href="userInterface.htm#SceneHierarchy">scene hierarchy</a>:<br>
+</p>
+
+<p align=center><img src="images/scriptSimParams1.jpg"></p>
+<p class=imageLabel>[Script simulation parameter icons (1) empty parameter list, (2) non-empty parameter list]</p>
+<br>
+
+<p>The icon appearance is white when the list of simulation parameters is empty, otherwise it is orange.<br>
+</p>
+
+<p align=center><img src="images/scriptSimParams2.jpg"></p>
+<p class=imageLabel>[Script simulation parameters dialog]</p>
+<br>
+
+<p>If the user modifies a value in the parameter list during a <a href="simulation.htm">simulation</a>, a script can react to that modification and adjust its behavior accordingly. A script can use the <a href="apiFunctions.htm#simGetScriptSimulationParameter">simGetScriptSimulationParameter</a> function to retrieve the value of a parameter, or the <a href="apiFunctions.htm#simSetScriptSimulationParameter">simSetScriptSimulationParameter</a> function to modify the value of a parameter. Often, script simulation parameters are also used for specific inter-script messaging purposes.<br>
+</p>
+
+<p>Items in the script simulation parameters dialog are briefly described hereafter: <br>
+</p>
+
+<li><strong>Add new parameter</strong>: adds a new parameter to the list.<br>
+</li>
+
+<li><strong>Script parameters</strong>: list of parameters. Individual parameters can be renamed with a double-click, and their values modified.<br>
+</li>
+
+<li><strong>Value</strong>: string value of the parameter. The string can contain any value, including embedded zeros.<br>
+</li>
+
+<li><strong>Unit</strong>: the unit of the value (if applicable). The unit is merely intended to inform the user.<br>
+</li>
+
+<li><strong>Parameter is private</strong>: if enabled, then the selected parameter is not shown during a simulation (in that case the parameter is probably not meant to be modified manually, but maybe only through the API functions).<br>
+</li>
+
+<li><strong>Parameter is persistent</strong>: if enabled, then the selected parameter will not be restored to its original value at simulation end.<br>
+</li>
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="scripts.htm">Scripts</a></li>
+<br>
+<br>
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Plugin tutorial</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Plugin tutorial</h1>
+
+<p>This tutorial will try to explain how to write a <a href="plugins.htm">plugin</a> for V-REP. The V-REP scene file related to this tutorial is located in V-REP's installation folder's &quot;tutorials\BubbleRobExt&quot;. The plugin project files of this tutorial are located in V-REP's installation folder's &quot;v_repExtBubbleRob&quot;.<br>
+</p>
+
+<p>V-REP automatically loads all plugins that it can find in its folder (i.e. the installation folder, or the same folder as the one that contains &quot;vrep.exe&quot;) at program start-up. V-REP recognizes plugin files with following mask: &quot;v_repExt*.dll&quot; on Windows, &quot;libv_repExt*.dylib&quot; on Mac OS and &quot;libv_repExt*.so&quot; on Linux. Additionally a plugin's filename should not contain any underscore (except the one at the beginning obviously). The plugin file of this tutorial is &quot;v_repExtBubbleRob.dll&quot;. When testing it, make sure it was properly loaded at V-REP start-up: switch the <a href="userInterface.htm#ConsoleWindow">console window</a> to visible by unchecking the <strong>Hide console window</strong> item in the <a href="settings.htm">user settings dialog</a> ([Menu bar --&gt; Tools --&gt; Settings]). This option is only available in the Windows version. On Mac, have a look at the system's console, and on Linux try to start V-REP from within a console. The console window should display something similar to this:<br>
+</p>
+
+<p align=center><img src="images/pluginTut1.jpg"></p>
+<br>
+
+<p>Additionally, when looking at V-REP's menu bar, an additional entry &quot;Plugins&quot; and item &quot;BubbleRob Properties&quot; should have appeared (as of now, only the Windows BubbleRob plugin exports a dialog. Under Mac or Linux you will not see a plugin entry in the menu bar, which doesn't mean that the plugin wasn't loaded and isn't active!):<br>
+</p>
+
+<p align=center><img src="images/pluginTut2.jpg"></p>
+<br>
+
+<p>Click [Menu bar --&gt; Plugins --&gt; BubbleRob Properties] to open the dialog exported by the plugin:<br>
+</p>
+
+<p align=center><img src="images/pluginTut3.jpg"></p>
+<br>
+
+<p>Above plugin dialog is composed by a list that lists up all BubbleRob robots in the current <a href="scenes.htm">scene</a>. Additionaly, when a BubbleRob in the list is selected, its maximum velocity is displayed and can also be changed.<br>
+</p>
+
+<p>As you already understood, this plugin was written for BubbleRob from the <a href="bubbleRobTutorial.htm">BubbleRob tutorial</a>. Load the related scene file (&quot;tutorials\BubbleRob\BubbleRob.ttt&quot;). Select BubbleRob's <a href="visionSensors.htm">vision sensor</a> in the <a href="userInterface.htm#SceneHierarchy">scene hierarchy</a> and delete it. Close the <a href="pagesAndViews.htm">floating view</a> that visualizes the minimum distance between BubbleRob and its obstacles (simply click the red button at the upper right hand side of the floating view). Select all cylinders around BubbleRob, and in the <a href="scriptProperties.htm">shape dialog</a> change their color to blue (click the <strong>Adjust outside color</strong> button to adjust the color of one cylinder, then click the corresponding <strong>Apply to selection</strong> button to have all cylinders with the same color). Now we can easily recognize the original BubbleRob scene from this one. Remove also BubbleRob's attached <a href="customUserInterfaces.htm">custom user interface</a>: open the <a href="customUserInterfacePropertiesDialog.htm">custom user interfaces dialog</a>, select &quot;bubbleCtrl&quot; in the list and press the delete key. Close the dialog.<br>
+</p>
+
+<p>Notice how the BubbleRob dialog doesn't list-up our BubbleRob? This is because our plugin cannot recognize BubbleRob yet. One could associate the plugin with BubbleRob's main <a href="objects.htm">object</a> name &quot;bubbleRob&quot;. But what if someone renames that object to something different at a later stage? Then BubbleRob wouldn't be recognized again. Obviously this is not the best way to achieve what we want.<br>
+</p>
+
+<p>Instead we will tag individual objects of our BubbleRob <a href="models.htm">model</a>, by attaching custom data to them. That data, which will be saved/loaded/copied together with the object, is identified by a header number as illustrated by following figure:<br>
+</p>
+
+<p align=center><img src="images/pluginTut4.jpg"></p>
+<br>
+
+<p>Header numbers identify a company or developer: if you, as an individual or a company, decide to add custom data to a <a href="objects.htm">scene object</a> or directly to a <a href="scenes.htm">scene</a> (refer to <a href="apiFunctions.htm#simAddObjectCustomData">simAddObjectCustomData</a>, <a href="apiFunctions.htm#simGetObjectCustomData">simGetObjectCustomData</a>, <a href="apiFunctions.htm#simAddSceneCustomData">simAddSceneCustomData</a> and <a href="apiFunctions.htm#simGetSceneCustomData">simGetSceneCustomData</a>), then you should always use the same header number to write/read your custom data: because only you will know the meaning of that data. Your header number should be the serial number of your (first) V-REP copy. Always keep the same, otherwise you risk clashes with data from other developers.<br>
+</p>
+
+<p>This tutorial uses a header number 0: this means that this plugin will read/write custom data stored under the header number 0. Look at the &quot;Access.h&quot; file of the plugin's project. The header number is identified by <strong>DEVELOPER_DATA_HEADER</strong>. The plugin reads and writes various data items under the same header number. To do this, it uses a data arrangement that allows identifying various data items, as shown in following figure:<br>
+</p>
+
+<p align=center><img src="images/pluginTut5.jpg"></p>
+<br>
+
+<p>You are free to pack/code your data items in a different way (format), but there again, once you have your method, stick to it, otherwise you won't be able to read your data stored in the old format. Best is to have the very first byte of your data represent the format version. The &quot;CAccess&quot; class of the plugin project has several helper functions to insert/extract a specific data item from a data block (<strong>insertSerializationData</strong> and <strong>extractSerializationData</strong>).<br>
+</p>
+
+<p>If we now return to the &quot;Access.h&quot; file of the project, we can notice 4 data item IDs:<br>
+</p>
+
+<li><strong>BUBBLEROB_DATA_MAXVELOCITY</strong>: item id is 0. The data stored under this item will represent BubbleRob's max velocity. At the same time, that item will identify (tag) BubbleRob's base object.<br>
+</li>
+
+<li><strong>BUBBLEROB_DATA_LEFTMOTOR</strong>: item id is 1. That item will identify (tag) BubbleRob's left <a href="joints.htm">joint object</a>.<br>
+</li>
+
+<li><strong>BUBBLEROB_DATA_RIGHTMOTOR</strong>: item id is 2. That item will identify (tag) BubbleRob's right joint object.<br>
+</li>
+
+<li><strong>BUBBLEROB_DATA_SENSOR</strong>: item id is 3. That item will identify (tag) BubbleRob's proximity sensor object.<br>
+</li>
+
+
+<p>We will now tag various objects of our BubbleRob model. We could do this programmatically by using appropriate <a href="apiOverview.htm">API</a> function calls (refer to <a href="apiFunctions.htm#simAddObjectCustomData">simAddObjectCustomData</a> and <a href="apiFunctions.htm#simGetObjectCustomData">simGetObjectCustomData</a>), but since the tags are not complex, we can proceed in another way: select &quot;bubbleRob&quot; in the scene hierarchy, then open the <a href="commonPropertiesDialog.htm">object common properties dialog</a>. Click <strong>View / edit custom data</strong> to open the object custom data dialog. Under the <strong>Attached custom data</strong> item you have a summary of what custom data is currently attached to object &quot;bubbleRob&quot;. It should be empty. In the <strong>command line</strong> below, enter following string &quot;0,0,4,3.1415&quot; and click <strong>Add</strong>. You just added the <strong>BUBBLEROB_DATA_MAXVELOCITY</strong> tag to the &quot;bubbleRob&quot; object! (the string was formatted as: &quot;<strong>DEVELOPER_DATA_HEADER</strong>, <strong>BUBBLEROB_DATA_MAXVELOCITY</strong>, itemLengthInBytes, bubbleRobMaxVelocity&quot;. Before the plugin can recognize a change in the scene, you will have to trigger an event. Do this by copy-pasting any object, then deleting it again. The plugin always reacts to object paste events, erase events, create events, etc. Notice how an object has appeared in the BubbleRob properties dialog: indeed, the plugin is now able to recognize BubbleRob's base object. However the plugin still doesn't know what object is BubbleRob's left/right motor, or proximity sensor. Select the &quot;leftMotor&quot; object in the scene hierarchy and in a similar way you did earlier, add custom data with following string: &quot;0,1,4,0&quot;. For the &quot;rightMotor&quot;, use following string: &quot;0,2,4,0&quot;. Finally, select &quot;sensingNose&quot; and add custom data with following string: &quot;0,3,4,0&quot;. The BubbleRob plugin is now fully aware of our BubbleRob model. Try copy/pasting BubbleRob: the plugin directly recognizes the new BubbleRob too! Remove the copy again.<br>
+</p>
+
+<p>The BubbleRob plugin adds 2 new Lua commands (custom Lua commands should follow the convention: &quot;simExt*&quot; for the name):<br>
+</p>
+
+<h3>simExtBubbleMoveAndAvoid</h3>
+<table class=apiTable>
+	<tr class=apiTableTr> 
+		<td class=apiTableLeftDescr>
+			Description 
+		</td> 
+		<td class=apiTableRightDescr>
+			Sets BubbleRob into an automatic movement mode for a given duration 
+		</td>
+	</tr> 
+	<tr class=apiTableTr> 
+		<td class=apiTableLeftLSyn>
+			Lua synopsis
+		</td> 
+		<td class=apiTableRightLSyn>number result,number maximumVelocity=simExtBubbleMoveAndAvoid(number movementDuration,table_2 relativeBackVelocities,boolean dontBlock)<br></td> 
+	</tr> 
+	<tr class=apiTableTr> 
+		<td class=apiTableLeftLParam>Lua parameters</td> 
+		<td class=apiTableRightLParam>
+			<div><strong>movementDuration</strong>: duration in seconds of the automatic movement</div>
+			<div><strong>relativeBackVelocities</strong>: when BubbleRob detects an obstacle, it will move backwards for some time. relativeBackVelocities[1] is the relative velocity of the left wheel when moving back. relativeBackVelocities[2] is the relative velocity of the right wheel when moving back.<br>
+			</div>
+			<div><strong>dontBlock</strong>: if true, the function returns directly (non-blocking operation), otherwise the function only returns when the automatic movement finished (this however requires the calling script to be threaded!). Can be nil or omitted, in which case the operation is blocking.<br>
+			</div>
+		</td> 
+	</tr> 
+	<tr class=apiTableTr> 
+		<td class=apiTableLeftLRet>
+			Lua return values
+		</td> 
+		<td class=apiTableRightLRet>
+			<div><strong>result</strong>: -1 in case of an error</div>
+			<div><strong>maximumVelocity</strong>: the maximum velocity at which BubbleRob is moving. nil if result is -1<br>
+			</div>
+		</td> 
+	</tr> 
+</table> 
+<br>
+
+
+<h3>simExtBubbleStop</h3>
+<table class=apiTable>
+	<tr class=apiTableTr> 
+		<td class=apiTableLeftDescr>
+			Description 
+		</td> 
+		<td class=apiTableRightDescr>
+			Stops the automatic movement of BubbleRob</td>
+	</tr> 
+	<tr class=apiTableTr> 
+		<td class=apiTableLeftLSyn>
+			Lua synopsis
+		</td> 
+		<td class=apiTableRightLSyn>number result=simExtBubbleStop()<br></td> 
+	</tr> 
+	<tr class=apiTableTr> 
+		<td class=apiTableLeftLParam>Lua parameters</td> 
+		<td class=apiTableRightLParam>
+			<div><strong>-</strong><br>
+			</div>
+		</td> 
+	</tr> 
+	<tr class=apiTableTr> 
+		<td class=apiTableLeftLRet>
+			Lua return values
+		</td> 
+		<td class=apiTableRightLRet><div>result: -1 in case of an error</div>
+		</td> 
+	</tr> 
+</table> 
+<br>
+
+<p>Now let's adjust the <a href="childScripts.htm">child script</a> associated with &quot;bubbleRob&quot;: open the <a href="scriptProperties.htm">script dialog</a> and select in the list &quot;Threaded child script (associated with bubbleRob)&quot; and press the delete key. Then click <strong>Insert new script</strong>, select &quot;child script (threaded)&quot;. Under the <strong>Associated object</strong> item, select &quot;bubbleRob&quot;, then close the dialog. In the scene hierarchy, next to the object icon of &quot;bubbleRob&quot;, notice how the script icon has turned blue: the blue color indicates that the child script will launch a new thread. Double-click that icon, the <a href="scriptEditor.htm">script editor</a> opens. Replace the code with following code:<br>
+</p>
+
+<pre class=lightRedBox>simDelegateChildScriptExecution()<br>-- Check if the required plugin is there:<br>moduleName=0<br>moduleVersion=0<br>index=0<br>bubbleRobModuleNotFound=true<br>while moduleName do<br>    moduleName,moduleVersion=simGetModuleName(index)<br>    if (moduleName=='BubbleRob') then<br>        bubbleRobModuleNotFound=false<br>    end<br>    index=index+1<br>end<br>if (bubbleRobModuleNotFound) then
+    txt='BubbleRob plugin was not found. (v_repExtBubbleRob.dll)&amp;&amp;nSimulation will not run properly'<br>    simDisplayDialog('Error',txt,sim_dlgstyle_ok,true,nil,{0.8,0,0,0,0,0},{0.5,0,0,1,1,1})<br>else<br>    result,maxVelocity=simExtBubbleMoveAndAvoid(20,{0.5,0.25}) -- Run for 20 seconds!<br>end</pre>
+
+<p>The first part of the code is in charge of checking whether the plugin required to run this script (&quot;v_repExtBubbleRob.dll&quot;) is available (i.e. loaded). If not, an error message is displayed. Otherwise the custom Lua function is called: &quot;simExtBubbleMoveAndAvoid&quot;. The function instructs the plugin to move the BubbleRob model while avoiding obstacles, and this for a duration of 20 seconds. The function is blocking (the omitted third argument is false by default), which means that the call doesn't return until the function has finished (i.e. after 20 seconds). Run the simulation: BubbleRob moves for 20 seconds then stops, as expected. Now save the scene, and leave V-REP. Temporarily rename the plugin to &quot;TEMP_v_repExtBubbleRob.dll&quot; so that V-REP won't load it anymore, then start V-REP again. Load the previously saved scene and run the simulation: an error message now appears, indicating that the required plugin could not be found. Leave V-REP again, rename back the plugin to &quot;v_repExtBubbleRob.dll&quot; and start V-REP again.<br>
+</p>
+
+<p>Let's have a look at how the plugin executes the simExtBubbleMoveAndAvoid command. Open the script dialog and double-click &quot;Main script (default)&quot;. A warning message appears informing you that the <a href="mainScript.htm">main script</a> should not be customized if possible. Click &quot;yes&quot; anyway. Notice how &quot;Main script (default)&quot; turned into &quot;Main script (customized)&quot;. The script editor now displays the main script. Focus on the meaning and location of following commands:<br>
+</p>
+
+<li><strong><a href="apiFunctions.htm#simOpenModule">simOpenModule</a>(sim_handle_all)</strong>: this instruction is executed once at simulation start. The plugin intercepts that command and initializes values for the simulation.<br>
+</li>
+
+<li><strong><a href="apiFunctions.htm#simHandleChildScript">simHandleChildScript</a>(sim_handle_all_except_explicit)</strong>: this calls child scripts (see the section on <a href="scriptCallingMethodology.htm">script calling methodology</a> for details), and in our case, launches a thread which executes the child script attached to &quot;bubbleRob&quot;.<br>
+</li>
+
+<li><strong><a href="apiFunctions.htm#simHandleModule">simHandleModule</a>(sim_handle_all)</strong>: this instruction is executed at every simulation pass. The plugin intercepts that command and handles BubbleRob.<br>
+</li>
+
+<li><strong><a href="apiFunctions.htm#simCloseModule">simCloseModule</a>(sim_handle_all)</strong>: this instruction is executed once at simulation end. The plugin intercepts that command and could clean up values after a simulation.<br>
+</li>
+
+<p>The motor target velocities and the proximity sensor data for BubbleRob are set and read by the plugin when <strong>simHandleModule</strong> is called in the main script. The command simExtBubbleMoveAndAvoid just passes the movement parameters to the plugin. Why is that? Why not handle BubbleRob's movement directly in simExtBubbleMoveAndAvoid? There are two main reasons for that:<br>
+</p>
+
+<li>Having a synchronized movement and behavior when the movement is handled in a thread is more difficult.</li>
+
+<li>The plugin should leave callback routines (as the one that is called when simExtBubbleMoveAndAvoid is executed) as quickly as possible to avoid slowing down or even blocking V-REP.
+</li>
+
+<p>The custom Lua command simExtBubbleMoveAndAvoid basically calls back the plugin, which in turn registers the parameters of the command. Then, the plugin directly gives the control back to V-REP (even if simExtBubbleMoveAndAvoid operates in a blocking fashion: indeed, V-REP holds back the thread until a specific value was set when the command is blocking).<br>
+</p>
+
+<p>So, in summary: custom Lua commands can execute directly when they are not linked to a time duration. However, when a custom Lua command requires execution over a certain time duration (like our simExtBubbleMoveAndAvoid command), then the command can only be started (e.g. passing parameters, etc.), but execution should be handled by the simHandleModule command.<br>
+</p>
+
+<p>Close the script editor. Hit the undo toolbar button until the &quot;Main script (customized)&quot; turns back into &quot;Main script (default)&quot;. Now open the child script associated with &quot;bubbleRob&quot; and replace the line containing the simExtBubbleMoveAndAvoid command with: <br>
+</p>
+
+<pre class=lightRedBox>result,maxVelocity=simExtBubbleMoveAndAvoid(20,{0.5,0.25},true)<br>simWait(5)<br>simExtBubbleStop()</pre>
+
+<p>Start the simulation and notice the different behavior: because of the simExtBubbleMoveAndAvoid command's 3rd argument, the command is not blocking anymore. So BubbleRob moves for 5 seconds, then simExtBubbleStop is executed and BubbleRob stops.<br>
+</p>
+
+<p>Now, in the BubbleRob properties dialog, select &quot;Object: Associated with bubbleRob&quot;. The velocity is 120 RPM. Change it to 240. Save the scene and reload it. Notice how the value was also saved together with the BubbleRob model. Restore it to 120. Start the simulation, and while the simulation is running, copy the BubbleRob model one or two times. Create a new scene. Notice how the BubbleRob properties dialog is empty. Paste one BubbleRob into the scene and run the simulation. Switch back to the original scene: everything operates flawlessly over several scenes/simulations.<br>
+</p>
+
+<p>When designing a plugin for V-REP, it is very important to have,  for every object/model that should be recognized by the plugin, a corresponding data structure in the plugin (e.g. the &quot;CBubbleRob&quot; class). Switching scene should recreate the content of the CBubbleRobContainer (and in a similar way, erasing/creating/etc. objects should trigger a refresh of the CBubbleRobContainer). Following figure illustrates the concept for the BubbleRob plugin:<br>
+</p>
+
+<p align=center><img src="images/pluginTut6.jpg"></p>
+<br>
+
+<p>Finally, if you have to start new threads from within a plugin, make sure you do not access any of V-REP's API functions from those threads. This limitation should be relaxed in future.<br>
+</p>
+
+
+
+<br>
+<br>
+
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

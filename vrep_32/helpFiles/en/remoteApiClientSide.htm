@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Enabling the Remote API - client side</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Enabling the Remote API - client side</h1>
+
+<p class=warningBox>All units going to, or coming from the <a href="apiFunctionListAlphabetical.htm">API</a> are in <strong>meters</strong>, <strong>kilograms</strong>, <strong>seconds</strong> and <strong>radians</strong> (unless otherwise explicitly indicated), independently of what was selected for the <a href="userInterface.htm">user interface</a> units in the <a href="settings.htm">user settings dialog</a>.<br>
+</p>
+
+
+<br>
+<br>
+<h3>
+C/C++ client
+</h3>
+
+<p>To use the remote API functionality in your C/C++ application, just include following C-language files in your project:</p>
+
+<li>extApi.h</li>
+<li>extApi.c</li>
+<li>extApiPlatform.h (contains platform specific code)</li>
+<li>extApiPlatform.c (contains platform specific code)</li>
+
+<p>Above files are located in V-REP's installation directory, under <em>programming</em>. To enable the remote API on the client side (i.e. your application), call<em> <a href="remoteApiFunctions.htm#simxStart">simxStart</a></em>. See the bubbleRobClient project in the <em>programming</em> directory for an example. <a href="remoteApiFunctions.htm">This page</a> lists and describes all supported  C/C++ remote API functions. V-REP remote API functions can easily be recognized from their &quot;simx&quot;-prefix.
+</p>
+
+<br>
+<br>
+<h3>
+Python client
+</h3>
+
+<p>To use the remote API functionality in your Python script, you will need following 3 items:</p>
+
+<li>vrep.py</li>
+<li>vrepConst.py</li>
+<li>remoteApi.dll, remoteApi.dylib or remoteApi.so (depending on your target platform)</li>
+
+<p>Above files are located in V-REP's installation directory, under <em>programming</em>. You might have to build the remoteApi shared library yourself (using <em>remoteApiSharedLib.vcproj</em> or <em>remoteApiSharedLib_Makefile</em>) if not already built in the <em>programming/remoteApiSharedLib</em> directory. Once you have above elements in a directory known to Python, call <em>import vrep</em> to load the library. To enable the remote API on the client side (i.e. your application), call <a href="remoteApiFunctionsPython.htm#simxStart"><em>vrep.simxStart</em></a>. See the <em>simpleTest.py</em> script in the <em>programming/Python</em> directory for an example. <a href="remoteApiFunctionsPython.htm">This page</a> lists and describes all supported  Python remote API functions. V-REP remote API functions can easily be recognized from their &quot;simx&quot;-prefix.
+</p>
+
+
+<br>
+<br>
+<h3>
+Java client
+</h3>
+
+<p>To use the remote API functionality in your Java application, you will need following 2 items:</p>
+
+<li>remoteApi.java</li>
+<li>remoteApiJava.dll, remoteApiJava.dylib or remoteApiJava.so (depending on your target platform)</li>
+
+<p>Above files are located in V-REP's installation directory, under <em>programming</em>. You might have to build the remoteApiJava shared library yourself (using <em>remoteApiSharedLibJava.vcproj</em> or <em>remoteApiSharedLibJava_Makefile</em>) if not already built in the <em>programming/remoteApiSharedLib</em> directory. Once you have above elements in a directory known to Java, compile <em>remoteApi.java</em> with <em>javac remoteApi.java</em> and call <em>remoteApi vrep = new remoteApi() </em> to load the library. To enable the remote API on the client side (i.e. your application), call <a href="remoteApiFunctionsJava.htm#simxStart"><em>vrep.simxStart</em></a>.   See the <em>simpleTest.java</em> program in the <em>programming/Java</em> directory for an example.<a href="remoteApiFunctionsJava.htm">This page</a> lists and describes all supported  Java remote API functions. V-REP remote API functions can easily be recognized from their &quot;simx&quot;-prefix.
+</p>
+
+
+<br>
+<br>
+<h3>
+Matlab client
+</h3>
+
+<p>To use the remote API functionality in your Matlab program, you will need following 3 items:</p>
+
+<li>extApi.h</li>
+<li>remApi.m</li>
+<li>remoteApi.dll, remoteApi.dylib or remoteApi.so (depending on your target platform)</li>
+
+<p>Above files are located in V-REP's installation directory, under <em>programming</em>. You might have to build the remoteApi shared library yourself (using <em>remoteApiSharedLib.vcproj</em> or <em>remoteApiSharedLib_Makefile</em>) if not already built in the <em>programming/remoteApiSharedLib</em> directory. You might have to call <em>mex -setup</em>. Once you have above elements in Matlab's current folder, call <em>vrep=remApi('remoteApi','extApi.h') </em>to build the object and load the library. To enable the remote API on the client side (i.e. your application), call <a href="remoteApiFunctionsMatlab.htm#simxStart"><em>vrep.simxStart</em></a>.   See the <em>simpleTest.m</em> program in the <em>programming/Matlab</em> directory for an example.<a href="remoteApiFunctionsMatlab.htm">This page</a> lists and describes all supported  Matlab remote API functions. V-REP remote API functions can easily be recognized from their &quot;simx&quot;-prefix.</p>
+<p>Make sure your Matlab uses the same bit-architecture as the remoteApi library: 64bit Matlab with 32bit remoteApi library will not work!</p>
+
+<p>
+You can make the loadlibrary command much faster by using the mfilename option to loadlibrary to generate a prototype file and thunkfile. This also has the advantage that a compiler will not be needed anymore to run the loadlibrary command. Refer to the Matlab loadlibrary documentation for details.
+</p>
+
+
+
+<br>
+<br>
+<h3>
+Urbi client
+</h3>
+
+<p>To use the remote API functionality in your Urbi script, you will need following 2 items:</p>
+
+<li>remoteApiConst.urbi</li>
+<li>remoteApiUrbi.dll, remoteApiUrbi.dylib or remoteApiUrbi.so (depending on your target platform)</li>
+
+<p>Above files are located in V-REP's installation directory, under <em>programming</em>. You might have to build the remoteApiUrbi shared library yourself  if not already built in the <em>programming/remoteApiSharedLib</em> directory. Under Windows, use <em>remoteApiSharedLibUrbi.vcproj</em>. Under Linux/Mac, do following steps:</p>
+
+<li>Create an <em>extApiUrbi.uob</em> folder in the Urbi root</li>
+<li>Copy following elements into that new folder: extApi.c, extApi.h, extApiInternal.h, extApiPlatform.c, extApiPlatform.h, v_repConst.h and extApiUrbi.cpp </li>
+<li>From within above folder, type:</li>
+
+<p>../bin/umake -q --shared-library -o remoteApiUrbi.so EXTRA_CPPFLAGS=-DNON_MATLAB_PARSING</p>
+
+<p>To load the remote Api functionality from a script,  call <em>loadFile(&quot;remoteApiConst.urbi&quot;)</em> and <em>loadModule(&quot;remoteApiUrbi&quot;)</em>. To enable the remote API on the client side (i.e. your application), call <a href="remoteApiFunctionsUrbi.htm#simxStart"><em>vrep.simxStart</em></a>.   See the <em>simpleTest.urbi</em> script in the <em>programming/Urbi</em> directory for an example. <a href="remoteApiFunctionsUrbi.htm">This page</a> lists and describes all supported  Urbi remote API functions. V-REP remote API functions can easily be recognized from their &quot;simx&quot;-prefix.
+</p>
+
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="remoteApiServerSide.htm">Enabling the Remote API - server side</a></li>
+<li><a href="remoteApiOverview.htm">Remote API overview</a></li>
+<li><a href="remoteApiModusOperandi.htm">Remote API modus operandi</a></li>
+<li><a href="remoteApiFunctionListAlphabetical.htm">Alphabetical remote API function list</a></li>
+<li><a href="remoteApiFunctionListCategory.htm">Remote API function list by category</a></li>
+<li><a href="remoteApiConstants.htm">Remote API constants</a></li>
+<br>
+<br>
+ </tr>
+ <tr>
+   <td > 
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

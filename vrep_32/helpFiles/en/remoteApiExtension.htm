@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Extending the Remote API</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Extending the Remote API</h1>
+
+<p>The remote API can easily be extended by the user, with the creation of custom remote API functions. Following section will briefly explain how to proceed in order to do so.</p>
+
+<p>
+First, let's have a look at how commands (or command replies) are sent or received from/to the client/server. Without entering too much into details, consider following figure:</p>
+
+<p align=center><img src="images/remoteApiMessage.jpg"></p>
+<p class=imageLabel>[Remote API message content]</p>
+<br>
+
+
+
+<p>From above figure, focus on following 3 elements:</p>
+<li><strong>The command ID</strong>: the command ID, which is a simple integer value, identifies a <em>type</em> of command. As an example, following command ID is linked to the remote API function <a href="remoteApiFunctions.htm#simxSetJointPosition">simxSetJointPosition</a>: simx_cmd_set_joint_position. A command ID is most of the time not enough to fully describe (or identify) a command (see next item). </li>
+<li><strong>The command data</strong>: the command data is often required, but not always. It might be needed to fully describe a command. As an example, the remote API function <a href="remoteApiFunctions.htm#simxSetJointPosition">simxSetJointPosition</a> requires the handle of the joint as command data. </li>
+<li><strong>The pure data</strong>: the pure data is data that accompanies a command or a command reply. As an example, the remote API function <a href="remoteApiFunctions.htm#simxSetJointPosition">simxSetJointPosition</a> would have the joint position value specified in the pure data section. Internally, the pure data might be split into smaller chunks when sent, if a <em>split</em> operation mode was chosen (e.g. <a href="remoteApiConstants.htm#operationModes">simx_opmode_oneshot_split</a> or <a href="remoteApiConstants.htm#operationModes">simx_opmode_streaming_split</a>)</li>
+
+
+<p>
+Two commands are considered same if they have the same <strong>command ID</strong> and the same <strong>command data</strong>. It is important to be able to compare commands, since a remote API function will often send a request, and fetch the reply from a previously made request in the inbox buffer to reduce the communication lag (i.e. non-blocking operation, for instance with the <a href="remoteApiConstants.htm#operationModes">simx_opmode_streaming</a> or the <a href="remoteApiConstants.htm#operationModes">simx_opmode_buffer</a> operation mode). A command waiting to be sent in the outbox buffer will also be overwritten by a same command (e.g. if you call simxSetJointPosition(jointHandle1,42.0f,simx_opmode_oneshot), directly followed by simxSetJointPosition(jointHandle1,0.0f,simx_opmode_oneshot), then the second function call will overwrite what the first function call generated in the outbox buffer. If however the second function call had been simxSetJointPosition(jointHandle2,0.0f,simx_opmode_oneshot), then we would have two distinct commands in the outbox buffer (since the command data differs)).</p>
+
+<p>
+To add an additional command to the remote API, proceed as follows:</p>
+
+<li>Select a command ID, and add it to the file &quot;programming/include/extApiCustomConst.h&quot;. Make sure to add it at the right position, according to what other values are needed to fully identify the command (see above explanation)</li>
+<li>Add a function declaration in the file &quot;programming/remoteApi/extApiCustom.h&quot;. Follow the examples provided in that file.</li>
+<li>Add the function body in the file &quot;programming/remoteApi/extApiCustom.c&quot;. Follow the examples provided in that file (or get inspired by the actual implementation in the file &quot;programming/remoteApi/extApi.c&quot;). Basically there should be 4 sections inside the function:
+  <ol>
+<li>The section where the operation mode simx_opmode_remove is taken care of. Call the function _removeCommandReply_xxx, where xxx represents the command data (i.e.  &quot;null&quot;, &quot;int&quot;, &quot;intint&quot; or &quot;string&quot;)</li>
+<li>The section where the command is put into the outbox buffer and a command reply fetched from the inbox buffer. Call the function _exec_xxx_yyy, where xxx represents the command data (i.e.  &quot;null&quot;, &quot;int&quot;, &quot;intint&quot; or &quot;string&quot;), and yyy represents the pure data to send</li>
+<li>The section where pure data is extracted from the command reply. The pointer returned by the above _exec_xxx_yyy function points at the beginning of the command reply. Use the function _readPureDataXXX, where XXX can be &quot;Char&quot;, &quot;Int&quot; or &quot;Float&quot; according to the pure data you wish to read. If the pure data is a mixture of various types, you will have to extract it yourself. The pointer to the  pure data is given by: cmdReplyPointer+SIMX_SUBHEADER_SIZE+_getCmdDataSize(cmdReplyPointer). The buffer where the cmdReplyPointer points is a copy of the actual command reply, and remains valid until next remote API function is called.</li>
+<li>The section where the error code is returned.</li>
+</ol>
+</li>
+<li>Include the files &quot;programming/remoteApi/extApiCustom.h&quot; and &quot;programming/remoteApi/extApiCustom.c&quot; to your client project files.</li>
+<li>Add following code line in every file where you call the new remote API functions: #include &quot;extApiCustom.h&quot;</li>
+<li>Add the command handling part in the file &quot;programming/v_repExtRemoteApi/simxCustomCmd.cpp&quot;. Follow the examples provided in that file (or get inspired by the actual implementation in the file &quot;programming/v_repExtRemoteApi/simxCmd.cpp&quot;). Basically there should be 3 sections inside each code block related to a specific command:
+  <ol>
+<li>The section where the command data and pure data is retrieved. Command data is stored in _cmdData and/or _cmdString. Pure data is stored in _pureData. Endianness of the client is detected on the server side, and should be handled by the server (using the function littleEndianXXXXConversion).</li>
+<li>The section where the command is handled. This usually involves one or several calls to <a href="apiFunctionListAlphabetical.htm">regular API functions</a>, and/or execution of various algorithms. The success state of the command execution should be returned in section 3</li>
+<li>The section where the command success state and the return values (i.e. pure data) are prepared. Use the code retCmd-&gt;setDataReply_xxxx. If the pure data you send back is a complex type (e.g. a buffer), then you will be in charge to convert that buffer to the correct endianness (using the function littleEndianXXXXConversion).</li>
+</ol>
+</li>
+
+<li>Make sure to recompile the client application and the remote API plugin
+</li>
+
+
+
+<br>
+
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="remoteApiModusOperandi.htm">Remote API modus operandi</a></li>
+<br>
+<br>
+ </tr>
+ <tr>
+   <td > 
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

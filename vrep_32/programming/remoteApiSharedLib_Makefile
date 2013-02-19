@@ -1,0 +1,37 @@
+CFLAGS = -I./include -I./remoteApi -Wall -DNON_MATLAB_PARSING
+LDFLAGS = -lpthread -ldl
+
+OBJS = remoteApi/extApi.o remoteApi/extApiPlatform.o
+
+OS = $(shell uname -s)
+ECHO=@
+
+ifeq ($(OS), Linux)
+	CFLAGS += -D__linux -fPIC
+	OPTION = -shared
+	EXT = so
+else
+	CFLAGS += -D__APPLE__ -fPIC
+	OPTION = -dynamiclib -current_version 1.0
+	EXT = dylib
+endif
+
+TARGET = remoteApi.$(EXT)
+
+all: remoteApiLib
+
+remoteApiLib: $(OBJS)
+		@echo "Linking $(OBJS) to $(TARGET)"
+		$(ECHO)$(CC) $(CFLAGS) $(OBJS) $(OPTION) -o $(TARGET) $(LDFLAGS)
+
+%.o: %.c
+		@echo "Compiling $< to $@"
+		$(ECHO)$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.cpp
+		@echo "Compiling $< to $@"
+		$(ECHO)$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+		@echo "Cleaning $(OBJS) $(TARGET)"
+		$(ECHO)rm -rf $(OBJS) $(TARGET)

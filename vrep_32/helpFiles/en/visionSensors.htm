@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Vision sensors</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Vision sensors <img src="images/visionSensors1.jpg"></h1>
+
+<h3 class=relatedApiFunctions><a href="apiFunctionListCategory.htm#visionSensor">Related API functions</a></h3>
+
+
+<p>V-REP offers, next to <a href="proximitySensors.htm">proximity sensors</a>, another type of sensors: vision sensors. Vision sensors, which are <a href="viewableObjects.htm">viewable objects</a>, operate in a very similar way as <a href="cameras.htm">camera objects</a>: they will render the <a href="objects.htm">objects</a> that are in their field of view and trigger detection if specified thresholds are over- or under-shot. Vision sensors, which can detect <a href="renderableObjects.htm">renderable</a> <a href="entities.htm">entities</a>, should be used over proximity sensors mainly when color, light or structure plays a role in the detection process (e.g. infrared sensors, or, more generally, sensors sensible to light (cameras, etc.)). However, depending on the graphic card the application is running on, or on the complexity of the scene objects, vision sensors might be a little bit slower than proximity sensors. Following illustrates applications using vision sensors:<br>
+  <br>
+  <br>
+</p>
+
+<p align=center><img src="images/visionSensors2.jpg"></p>
+<p class=imageLabel>[(1) industrial robot observed by 2 vision sensors, (2) Line tracer vehicle equipped with 3 vision sensors]</p>
+<br>
+
+<p>The implemented vision sensor functionality uses a special feature of your graphic card called FBO (Frame Buffer Object). Nowadays almost all graphic cards come with FBO capability, however, in order to also support older graphic cards, V-REP can simulate the FBO functionality. You can verify whether your card supports FBO during a simulation: if the <a href="userInterface.htm#InformationText">information text</a> at the top of the page says <em>Vision sensor handling enabled (FBO)</em>, then your graphic card supports FBO. Otherwise, the FBO functionality is simulated by V-REP, in which case detection is slower. Also remember following when your card doesn't support FBO: (1) Make sure your vision sensors don't operate at a resolution higher than that of your page (maximize the application window), (2) don't minimize the application window, (3) make sure the page is not covered by dialogs. If V-REP detected an FBO capable graphic card on your computer, but your vision sensors are not operating properly, then try reinstalling your graphic card with the newest drivers. If this still didn't help, then you can force V-REP to use a non-FBO mode for the vision sensors by checking the<strong> Force non-FBO operation of vision sensors</strong> item in the <a href="settings.htm">user settings dialog</a>.
+</p>
+
+<p>Vision sensors can only operate while a <a href="simulation.htm">simulation</a> is running; this means that a vision sensor's image content is only visible during simulation.<br>
+</p>
+
+<p>
+Vision sensors are added to the <a href="scenes.htm">scene</a> with [menu bar --&gt; Add --&gt; Vision sensor]. </p>
+
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="visionSensorDescription.htm">Vision sensor types and mode of operation</a></li>
+<li><a href="visionSensorFilterComposition.htm">Vision sensor filter composition</a></li>
+<li><a href="visionSensorPropertiesDialog.htm">Vision sensor dialog</a></li>
+<li><a href="renderableObjects.htm">Renderable objects</a></li>
+
+<br>
+<br>
+
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

@@ -1,0 +1,1209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>ROS subscriber types</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1><a href="rosInterfaceOverview.htm">ROS</a> subscriber types</h1>
+
+
+<h3>
+<a name="simros_strmcmd_add_status_bar_message" id="simros_strmcmd_add_status_bar_message"></a>streamCmd: simros_strmcmd_add_status_bar_message
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a string stream. Received strings will be  automatically displayed in the status bar. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosAddStatusbarMessage">simRosAddStatusbarMessage</a>)  for details. </td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: (not used)</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::String</strong>: the message to display in the status bar</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_auxiliary_console_print" id="simros_strmcmd_auxiliary_console_print"></a>streamCmd: simros_strmcmd_auxiliary_console_print
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a string stream. Received strings will be  automatically displayed in a specific auxiliary console. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosAuxiliaryConsolePrint">simRosAuxiliaryConsolePrint</a>)  for details. </td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: handle of the auxiliary console</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::String</strong>: the string to display in the auxiliary console</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_clear_float_signal" id="simros_strmcmd_clear_float_signal"></a>streamCmd: simros_strmcmd_clear_float_signal
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a byte stream. When a message is received, then a specific signal will be cleared. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosClearFloatSignal">simRosClearFloatSignal</a>)  for details.   See also <a href="#simros_strmcmd_set_float_signal">simros_strmcmd_set_float_signal</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: (not used)</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: signal name</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::UInt8</strong>: if value is 0, then the specified signal is cleared, otherwise all float signals will be cleared.</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_clear_integer_signal" id="simros_strmcmd_clear_integer_signal"></a>streamCmd: simros_strmcmd_clear_integer_signal
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a byte stream. When a message is received, then a specific signal will be cleared. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosClearIntegerSignal">simRosClearIntegerSignal</a>)  for details.  See also <a href="#simros_strmcmd_set_integer_signal">simros_strmcmd_set_integer_signal</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: (not used)</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: signal name</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::UInt8</strong>: if value is 0, then the specified signal is cleared, otherwise all integer signals will be cleared.</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_clear_string_signal" id="simros_strmcmd_clear_string_signal"></a>streamCmd: simros_strmcmd_clear_string_signal
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a byte stream. When a message is received, then a specific signal will be cleared. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosClearStringSignal">simRosClearStringSignal</a>)  for details. See also <a href="#simros_strmcmd_set_string_signal">simros_strmcmd_set_string_signal</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: (not used)</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: signal name</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::UInt8</strong>: if value is 0, then the specified signal is cleared, otherwise all string signals will be cleared.</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_array_parameter" id="simros_strmcmd_set_array_parameter"></a>streamCmd: simros_strmcmd_set_array_parameter
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a point stream. Received values will be  automatically applied according to the <a href="apiConstants.htm#arrayParameters">array parameter identifier</a>. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetArrayParameter">simRosSetArrayParameter</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_array_parameter">simros_strmcmd_get_array_parameter</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: an <a href="apiConstants.htm#arrayParameters">array parameter identifier</a></div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>geometry_msgs::Point32</strong>: the array values to apply.</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_boolean_parameter" id="simros_strmcmd_set_boolean_parameter"></a>streamCmd: simros_strmcmd_set_boolean_parameter
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a byte stream. Received values will be  automatically applied according to the <a href="apiConstants.htm#booleanParameters">boolean parameter identifier</a>. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetBooleanParameter">simRosSetBooleanParameter</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_boolean_parameter">simros_strmcmd_get_boolean_parameter</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: a <a href="apiConstants.htm#booleanParameters">Boolean parameter identifier</a></div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::UInt8</strong>: the boolean value to apply.</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_floating_parameter" id="simros_strmcmd_set_floating_parameter"></a>streamCmd: simros_strmcmd_set_floating_parameter
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a float stream. Received values will be  automatically applied according to a <a href="apiConstants.htm#floatingParameters">floating parameter identifier</a>. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetFloatingParameter">simRosSetFloatingParameter</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_floating_parameter">simros_strmcmd_get_floating_parameter</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: a <a href="apiConstants.htm#floatingParameters">floating parameter identifier</a></div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Float32</strong>: the float value to apply.</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_float_signal" id="simros_strmcmd_set_float_signal"></a>streamCmd: simros_strmcmd_set_float_signal
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a float stream. Received floats will be  automatically set as a  float signal. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetFloatSignal">simRosSetFloatSignal</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_float_signal">simros_strmcmd_get_float_signal</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: (not used)</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: the signal name</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Float32</strong>: the value of the signal</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_integer_parameter" id="simros_strmcmd_set_integer_parameter"></a>streamCmd: simros_strmcmd_set_integer_parameter
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to an integer  stream. Received values will be  automatically applied according to an <a href="apiConstants.htm#integerParameters">integer parameter identifier</a>. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetIntegerParameter">simRosSetIntegerParameter</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_integer_parameter">simros_strmcmd_get_integer_parameter</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: an <a href="apiConstants.htm#integerParameters">integer parameter identifier</a></div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Int32</strong>: the integer value to apply.</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_integer_signal" id="simros_strmcmd_set_integer_signal"></a>streamCmd: simros_strmcmd_set_integer_signal
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to an integer stream. Received values will be  automatically set as integer signal. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetIntegerSignal">simRosSetIntegerSignal</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_integer_signal">simros_strmcmd_get_integer_signal</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: (not used)</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: the signal name</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Int32</strong>: the value of the signal</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_joint_force" id="simros_strmcmd_set_joint_force"></a>streamCmd: simros_strmcmd_set_joint_force
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a float stream. Received values will be  automatically applied to a joint as its maximum force/torque. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetJointForce">simRosSetJointForce</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_joint_state">simros_strmcmd_get_joint_state</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of a joint. See also <a href="rosServices.htm#simRosGetObjectHandle">simRosGetObjectHandle</a>.</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Float64</strong>: the maximum force/torque</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_joint_position" id="simros_strmcmd_set_joint_position"></a>streamCmd: simros_strmcmd_set_joint_position
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a float stream. Received values will be  automatically applied to a joint as its position. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetJointPosition">simRosSetJointPosition</a>)  for details. See also <a href="#simros_strmcmd_set_joint_target_position">simros_strmcmd_set_joint_target_position</a> and <a href="rosPublisherTypes.htm#simros_strmcmd_get_joint_state">simros_strmcmd_get_joint_state</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of a joint. See also <a href="rosServices.htm#simRosGetObjectHandle">simRosGetObjectHandle</a>.</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Float64</strong>: the position (linear or angular value)</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_joint_state" id="simros_strmcmd_set_joint_state"></a>streamCmd: simros_strmcmd_set_joint_state
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a joint state stream. Received values will be  automatically applied to  joints as their position, target position, target velocity or maximum force/torque. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetJointState">simRosSetJointState</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_joint_state">simros_strmcmd_get_joint_state</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: (not used)</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>vrep_common::JointSetStateData</strong>: the state data</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_joint_target_position" id="simros_strmcmd_set_joint_target_position"></a>streamCmd: simros_strmcmd_set_joint_target_position
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a float stream. Received values will be  automatically applied to a joint as its target position (e.g. when position control is enabled). See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetJointTargetPosition">simRosSetJointTargetPosition</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_joint_state">simros_strmcmd_get_joint_state</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of a joint. See also <a href="rosServices.htm#simRosGetObjectHandle">simRosGetObjectHandle</a>.</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Float64</strong>: the target position (linear or angular value)</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_joint_target_velocity" id="simros_strmcmd_set_joint_target_velocity"></a>streamCmd: simros_strmcmd_set_joint_target_velocity
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a float stream. Received values will be  automatically applied to a joint as its target velocity (e.g. when not in position control mode). See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetJointTargetVelocity">simRosSetJointTargetVelocity</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_joint_state">simros_strmcmd_get_joint_state</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of a joint. See also <a href="rosServices.htm#simRosGetObjectHandle">simRosGetObjectHandle</a>.</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Float64</strong>: the target velocity (linear or angular value)</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_object_float_parameter" id="simros_strmcmd_set_object_float_parameter"></a>streamCmd: simros_strmcmd_set_object_float_parameter
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a float stream. Received values will be  automatically applied to an object as one of its float parameters. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetObjectFloatParameter">simRosSetObjectFloatParameter</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_object_float_parameter">simros_strmcmd_get_object_float_parameter</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of an object. See also <a href="rosServices.htm#simRosGetObjectHandle">simRosGetObjectHandle</a>.</div>
+<div><strong>auxInt2</strong>: identifier of the parameter to set. See the <a href="objectParameterIDs.htm">list of all possible object parameter identifiers</a></div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Float32</strong>: the float value</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_object_int_parameter" id="simros_strmcmd_set_object_int_parameter"></a>streamCmd: simros_strmcmd_set_object_int_parameter
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to an integer stream. Received values will be  automatically applied to an object as one of its integer parameters. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetObjectIntParameter">simRosSetObjectIntParameter</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_object_int_parameter">simros_strmcmd_get_object_int_parameter</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of an object. See the <a href="objectParameterIDs.htm">list of all possible object parameter identifiers</a></div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Int32</strong>: the integer value</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_object_pose" id="simros_strmcmd_set_object_pose"></a>streamCmd: simros_strmcmd_set_object_pose
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a pose stream. Received values will be  automatically applied to an object as its pose. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetObjectPose">simRosSetObjectPose</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_object_pose">simros_strmcmd_get_object_pose</a>, <a href="#simros_strmcmd_set_object_position">simros_strmcmd_set_object_position</a> and <a href="#simros_strmcmd_set_object_quaternion">simros_strmcmd_set_object_quaternion</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of an object. See also <a href="rosServices.htm#simRosGetObjectHandle">simRosGetObjectHandle</a>.</div>
+<div><strong>auxInt2</strong>: indicates relative to which reference frame the pose is specified. Specify -1 to set the absolute pose, sim_handle_parent to set the pose relative to the object's parent, or an object handle relative to whose reference frame the pose is specified.</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>geometry_msgs::PoseStamped</strong>: the pose. Refer to the ROS documentation for details</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_object_position" id="simros_strmcmd_set_object_position"></a>streamCmd: simros_strmcmd_set_object_position
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a point stream. Received values will be  automatically applied to an object as its position (coordinates). See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetObjectPosition">simRosSetObjectPosition</a>)  for details. See also <a href="#simros_strmcmd_set_object_quaternion">simros_strmcmd_set_object_quaternion</a> and <a href="rosPublisherTypes.htm#simros_strmcmd_get_object_pose">simros_strmcmd_get_object_pose</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of an object. See also <a href="rosServices.htm#simRosGetObjectHandle">simRosGetObjectHandle</a>.</div>
+<div><strong>auxInt2</strong>: indicates relative to which reference frame the position is specified. Specify -1 to set the absolute position, sim_handle_parent to set the position relative to the object's parent, or an object handle relative to whose reference frame the position is specified.</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>geometry_msgs::Point</strong>: the position (x,y,z)</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_object_quaternion" id="simros_strmcmd_set_object_quaternion"></a>streamCmd: simros_strmcmd_set_object_quaternion
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a quaternion stream. Received values will be  automatically applied to an object as its quaternion. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetObjectQuaternion">simRosSetObjectQuaternion</a>)  for details. See also <a href="#simros_strmcmd_set_object_position">simros_strmcmd_set_object_position</a> and <a href="rosPublisherTypes.htm#simros_strmcmd_get_object_pose">simros_strmcmd_get_object_pose</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of an object. See also <a href="rosServices.htm#simRosGetObjectHandle">simRosGetObjectHandle</a>.</div>
+<div><strong>auxInt2</strong>: indicates relative to which reference frame the orientation is specified. Specify -1 to set the absolute orientation, sim_handle_parent to set the orientation relative to the object's parent, or an object handle relative to whose reference frame the orientation is specified.</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>geometry_msgs::Quaternion</strong>: the quaternion (x,y,z,w)</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_object_selection" id="simros_strmcmd_set_object_selection"></a>streamCmd: simros_strmcmd_set_object_selection
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to an integer array stream. Received data represents the handles of objects which should appear as selected. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetObjectSelection">simRosSetObjectSelection</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_object_selection">simros_strmcmd_get_object_selection</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: (not used)</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Int32MultiArray</strong>: the object handles. If the array is empty, then no object will appear as selected.</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_string_signal" id="simros_strmcmd_set_string_signal"></a>streamCmd: simros_strmcmd_set_string_signal
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a string stream. Received values will be  automatically set as string signals. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetStringSignal">simRosSetStringSignal</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_string_signal">simros_strmcmd_get_string_signal</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: (not used)</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: the signal name</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::String</strong>: the signal value</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_twist_command" id="simros_strmcmd_set_twist_command"></a>streamCmd: simros_strmcmd_set_twist_command
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to twist data. Received data will be automatically applied to a string signal that can be read from anywhere. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_twist_status">simros_strmcmd_get_twist_status</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: (not used)</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: name of the string signal that should contain the twist data. Refer also to <a href="apiFunctions.htm#simGetStringSignal">simGetStringSignal</a>. The subscriber will automatically apply the received twist data to the string signal, which will contain a succession of 6 float values  (6*4 chars). From an <a href="scripts.htm">embedded script</a>, you can use following construction to access the twist data:</div>
+
+<pre class=lightRedBoxNoMarginAndSmall>
+local packedData=simGetStringSignal(signalName)
+if (packedData) then
+    local twistData=simUnpackFloats(packedData)
+    -- Do something with the twist data
+end</pre>
+
+
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data
+</td> 
+<td class=rosApiTableRightOut>
+<div><strong>geometry_msgs::Twist</strong>: the twist data</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_ui_button_label" id="simros_strmcmd_set_ui_button_label"></a>streamCmd: simros_strmcmd_set_ui_button_label
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to a string stream. Received values will be  automatically applied to a UI button as its label. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetUIButtonLabel">simRosSetUIButtonLabel</a>)  for details. </td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of a UI. See also <a href="rosServices.htm#simRosGetUIHandle">simRosGetUIHandle</a>.</div>
+<div><strong>auxInt2</strong>: the button ID</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::String</strong>: the button label (up-state label)</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_ui_button_property" id="simros_strmcmd_set_ui_button_property"></a>streamCmd: simros_strmcmd_set_ui_button_property
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to an integer  stream. Received values will be  automatically applied to a UI button as its properties. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetUIButtonProperty">simRosSetUIButtonProperty</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_ui_button_property">simros_strmcmd_get_ui_button_property</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of a UI. See also <a href="rosServices.htm#simRosGetUIHandle">simRosGetUIHandle</a>.</div>
+<div><strong>auxInt2</strong>: the button ID</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Int32</strong>: the button properties</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_ui_slider" id="simros_strmcmd_set_ui_slider"></a>streamCmd: simros_strmcmd_set_ui_slider
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to an integer stream. Received values will be  automatically applied to a UI slider as its position. See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetUISlider">simRosSetUISlider</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_ui_slider">simros_strmcmd_get_ui_slider</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of a UI. See also <a href="rosServices.htm#simRosGetUIHandle">simRosGetUIHandle</a>.</div>
+<div><strong>auxInt2</strong>: the button ID</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>std_msgs::Int32</strong>: the slider position (0-1000)</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>
+<a name="simros_strmcmd_set_vision_sensor_image" id="simros_strmcmd_set_vision_sensor_image"></a>streamCmd: simros_strmcmd_set_vision_sensor_image
+</h3>
+<table class=apiTable>
+<tr class=apiTableTr> 
+<td class=apiTableLeftDescr>
+Description 
+</td> 
+<td class=apiTableRightDescr>Enables a subscriber to an image  stream. Received images will be  automatically applied to a vision sensor (a vision sensor can be active or passive, in which case it can be used as image buffer or display).  See <a href="rosSubscribers.htm#dataStreamingInfo">here</a> for information on how to enable subscribers. See also the service equivalent (<a href="rosServices.htm#simRosSetVisionSensorImage">simRosSetVisionSensorImage</a>)  for details. See also <a href="rosPublisherTypes.htm#simros_strmcmd_get_vision_sensor_image">simros_strmcmd_get_vision_sensor_image</a>.</td>
+</tr> 
+<td class=rosApiTableLeftIn>Enabling parameters</td> 
+<td class=rosApiTableRightIn>
+<div><strong>auxInt1</strong>: the handle of a vision sensor. See also <a href="rosServices.htm#simRosGetObjectHandle">simRosGetObjectHandle</a>.</div>
+<div><strong>auxInt2</strong>: (not used)</div>
+<div><strong>auxString</strong>: (not used)</div>
+</td> 
+</tr> 
+<tr class=apiTableTr> 
+<td class=rosApiTableLeftOut> Streamed data read</td> 
+<td class=rosApiTableRightOut>
+<div><strong>sensor_msgs::Image</strong>: the image to apply. Currently only RGB8 and MONO8 image encoding is supported.</div>
+</td> 
+</tr> 
+</table> 
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+</td>
+</tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

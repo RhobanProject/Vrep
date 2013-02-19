@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Scripts</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div align="center">
+<table class=allEncompassingTable >
+ <tr>
+  <td >
+<p><a href="../index.html" TARGET="_top"><img src="images/homeImg.png"></a></p>
+
+
+
+<h1>Embedded scripts</h1>
+
+<p>V-REP is a highly customizable simulator: almost every step of a <a href="simulation.htm">simulation</a> is user-defined. This flexibility is allowed through an integrated script interpreter. The scripting language is <a href="http://www.lua.org">Lua</a>, which is an extension programming language designed to support general procedural programming. For more information on Lua, refer to the <a href="luaCrashCourse.htm">Lua crash course</a> section and the <a href="http://www.lua.org">online documentation</a>. See <a href="acknowledgments.htm">here</a> for acknowledgments and credits related to Lua.<br>
+</p>
+
+<p align=center><img src="images/luaLogo.jpg"></p>
+<p class=imageLabel>[Lua logo]</p>
+<br>
+
+<p>V-REP extends Lua's commands and adds V-REP specific commands that can be recognized by their <em>sim</em>-prefixes (e.g. <a href="apiFunctions.htm#simHandleCollision">simHandleCollision</a>). For a list of all V-REP specific Lua-commands, refer to the <a href="apiOverview.htm">regular API</a>. New, customized Lua-commands can also be registered from the <a href="mainClientApplication.htm">main client application</a> or from a <a href="plugins.htm">plugin</a>. Refer to the <a href="apiFunctionListCategory.htm#customizingLuaFunctions">related API-functions</a> for more information.<br>
+</p>
+
+<p>Lua's functionality itself can easily be extended by making use of a <a href="http://lua-users.org/wiki/LibrariesAndBindings">Lua extension library available online</a>.<br>
+</p>
+
+<p>
+Two types of embedded scripts are supported:
+</p>
+
+<li><strong>one <a href="mainScript.htm">main script</a></strong>: by default, each <a href="scenes.htm">scene</a> has a main script that handles all the functionality. Without main script, a <a href="simulation.htm">simulation</a> cannot run. The main script can be customized, but it is preferable to do all the customization work in a <a href="childScripts.htm">child script</a> (see hereafter).<br>
+</li>
+
+<li><strong>an unlimited number of <a href="childScripts.htm">child scripts</a></strong>: each <a href="objects.htm">scene object</a> can be associated with a child script that will handle a specific part of a simulation. The most common use for child scripts is to have them control a <a href="models.htm">model</a>.<br>
+</li>
+
+<p>Following are the main differences between the <a href="mainScript.htm">main script</a> and a <a href="childScripts.htm">child script</a>:<br>
+</p>
+
+<li>there can only be one main script. There can be an unlimited number of child scripts.
+</li>
+
+<li>the main script is independent and should preferably not be customized. Child scripts are associated with scene objects and should be customized.<br>
+</li>
+
+<li>the main script is never duplicated in a copy/paste operation of scene objects. Child scripts will duplicate themselves together with their associated scene object.<br>
+</li>
+
+<li>the main script cannot be threaded. Child scripts can launch their own thread if needed (<a href="childScripts.htm#threaded">threaded</a> and <a href="childScripts.htm#nonThreaded">non-threaded</a> operation is supported).<br>
+</li>
+
+
+<p>Next to embedded scripts V-REP supports also <a href="addOns.htm">add-ons</a>, also written in Lua, that allow to customize the simulator itself.</p>
+
+
+
+
+<br>
+<h3 class=recommendedTopics>Recommended topics</h3>
+<li><a href="mainScript.htm">The main script</a></li>
+<li><a href="childScripts.htm">Child scripts</a></li>
+<li><a href="addOns.htm">Add-ons</a></li>
+<li><a href="scriptProperties.htm">Script dialog</a></li>
+<li><a href="scriptEditor.htm">Script editor</a></li>
+<li><a href="scriptCallingMethodology.htm">Script calling methodology</a></li>
+<li><a href="scriptSimulationParameters.htm">Script simulation parameters</a></li>
+<li><a href="accessingGeneralObjects.htm">Accessing objects programmatically</a></li>
+<li><a href="explicitHandling.htm">Explicit and non-explicit calls</a></li>
+<li><a href="apiOverview.htm">Application Programming Interface</a></li>
+<br>
+<br>
+ </tr>
+</table> 
+</div>  
+  
+  
+</body>
+
+</html>

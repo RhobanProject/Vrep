@@ -2,7 +2,9 @@
 #define VREPCLIENT_HPP
 
 #include <iostream>
+#include <string>
 #include <vector>
+#include <map>
 extern "C" {
     #include "extApi.h"
     #include "extApiCustom.h"
@@ -55,6 +57,7 @@ class VREPClient
          */
         const Motor& getMotor(size_t index) const;
         Motor& getMotor(size_t index);
+        Motor *getMotor(std::string name);
 
         /**
          * Return a force sensor by its index
@@ -127,17 +130,17 @@ class VREPClient
         /**
          * Send a target position to the given joint
          */
-        void writeMotorPosition(simxInt handle, simxFloat pos) const;
+        void writeMotorPosition(simxInt handle, simxFloat pos);
 
         /**
          * Read current joint position
          */
-        double readMotorPosition(simxInt handle) const;
+        double readMotorPosition(simxInt handle);
 
         /**
          * Read current joint torque
          */
-        double readMotorTorque(simxInt handle) const;
+        double readMotorTorque(simxInt handle);
 
         /**
          * Read force sensor value
@@ -155,6 +158,11 @@ class VREPClient
          * Motor container
          */
         std::vector<Motor> _motors;
+
+        /**
+         * Motors, mapped by name
+         */
+        std::map<std::string, Motor*> _motorsByName;
 
         /**
          * Force sensor container

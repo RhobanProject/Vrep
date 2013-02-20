@@ -49,6 +49,16 @@ const Motor& VREPClient::getMotor(size_t index) const
         return _motors[index];
     }
 }
+
+Motor *VREPClient::getMotor(std::string name)
+{
+    if (_motorsByName.find(name) != _motorsByName.end()) {
+        return _motorsByName[name];
+    }
+
+    return NULL;
+}
+
 Motor& VREPClient::getMotor(size_t index)
 {
     if (index >= _motors.size()) {
@@ -171,6 +181,7 @@ void VREPClient::nextStep()
     }
     //Update accelerometer sensor
     readAccelerometer();
+    
     //Resume communication
     if (simxPauseCommunication(0) != 0) {
         throw std::string("Unable to resume communication");
@@ -199,15 +210,18 @@ void VREPClient::scanMotors()
     }
     //Save joints
     _motors.clear();
+    _motorsByName.clear();
     for (int i=0;i<motorCount;i++) {
         _motors.push_back(motorArray[i]);
     }
     //Load joints data
     for (int i=0;i<motorCount;i++) {
-        _motors[i].load(*this);
+        Motor *m = &_motors[i];
+        m->load(*this);
+        _motorsByName[m->getName()] = m;
     }
 }
-        
+ 
 void VREPClient::scanForceSensors()
 {
     simxInt sensorCount = 0;
@@ -301,7 +315,7 @@ bool VREPClient::getMotorPositionControl(simxInt handle) const
     }
 }
 
-void VREPClient::writeMotorPosition(simxInt handle, simxFloat pos) const
+void VREPClient::writeMotorPosition(simxInt handle, simxFloat pos)
 {
     simxInt error = simxSetJointTargetPosition(handle, pos, simx_opmode_oneshot);
     if (error != simx_error_noerror && error != simx_error_novalue_flag) {
@@ -309,7 +323,7 @@ void VREPClient::writeMotorPosition(simxInt handle, simxFloat pos) const
     }
 }
 
-double VREPClient::readMotorPosition(simxInt handle) const
+double VREPClient::readMotorPosition(simxInt handle)
 {
     simxFloat pos;
     simxInt error = simxGetJointPosition(handle, &pos, simx_opmode_buffer);
@@ -320,7 +334,7 @@ double VREPClient::readMotorPosition(simxInt handle) const
     return pos;
 }
 
-double VREPClient::readMotorTorque(simxInt handle) const
+double VREPClient::readMotorTorque(simxInt handle)
 {
     simxFloat torque;
     simxInt error = simxJointGetForce(handle, &torque, simx_opmode_buffer);

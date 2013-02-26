@@ -45,6 +45,7 @@ class Motor : public Object
          * to the join
          */
         void writePos(double pos);
+        void writePosDeg(double pos);
 
         /**
          * Initialization of motors data
@@ -58,6 +59,11 @@ class Motor : public Object
          * Automaticaly called by VREPClient
          */
         void update(VREPClient& VREP);
+
+        /**
+         * Revert the motor ?
+         */
+        void setRevert(bool revert);
 
     private:
 
@@ -94,6 +100,11 @@ class Motor : public Object
          * been modified
          */
         bool _positionDirty;
+
+        /**
+         * True if the motor is reverted
+         */
+        bool _revert;
 };
 
 #endif

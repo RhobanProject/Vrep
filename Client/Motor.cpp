@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include <assert.h>
 #include "Motor.hpp"
 #include "VREPClient.hpp"
@@ -10,8 +11,14 @@ Motor::Motor(simxInt handle) :
     _positionRead(0),
     _torqueRead(0),
     _positionWrite(0),
-    _positionDirty(false)
+    _positionDirty(false),
+    _revert(false)
 {
+}
+
+void Motor::setRevert(bool revert)
+{
+    _revert = revert;
 }
         
 double Motor::getMinPos() const
@@ -37,6 +44,11 @@ void Motor::writePos(double pos)
 {
     _positionWrite = pos;
     _positionDirty = true;
+}
+
+void Motor::writePosDeg(double pos)
+{
+    writePos(M_PI*pos/180);
 }
 
 void Motor::load(VREPClient& VREP)
@@ -65,7 +77,7 @@ void Motor::load(VREPClient& VREP)
 void Motor::update(VREPClient& VREP)
 {
     if (_positionDirty) {
-        VREP.writeMotorPosition(_handle, _positionWrite);
+        VREP.writeMotorPosition(_handle, _revert ? -_positionWrite : _positionWrite);
         _positionDirty = false;
     }
     _positionRead = VREP.readMotorPosition(_handle);

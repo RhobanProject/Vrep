@@ -73,6 +73,13 @@ class VREPClient
         double readAccelerometerZ() const;
 
         /**
+         * Return position tracker value
+         */
+        double readPositionTrackerX() const;
+        double readPositionTrackerY() const;
+        double readPositionTrackerZ() const;
+
+        /**
          * Start/Stop the V-REP simulation
          */
         void start();
@@ -130,17 +137,17 @@ class VREPClient
         /**
          * Send a target position to the given joint
          */
-        void writeMotorPosition(simxInt handle, simxFloat pos);
+        void writeMotorPosition(simxInt handle, simxFloat pos) const;
 
         /**
          * Read current joint position
          */
-        double readMotorPosition(simxInt handle);
+        double readMotorPosition(simxInt handle) const;
 
         /**
          * Read current joint torque
          */
-        double readMotorTorque(simxInt handle);
+        double readMotorTorque(simxInt handle) const;
 
         /**
          * Read force sensor value
@@ -153,6 +160,12 @@ class VREPClient
          * Read fom V-REP server accelerometer sensor
          */
         void readAccelerometer();
+
+        /**
+         * Read from V-REP server dummy object position
+         * tracker
+         */
+        void readPositionTracker();
 
         /**
          * Motor container
@@ -175,6 +188,13 @@ class VREPClient
         double _accelerometerXRead;
         double _accelerometerYRead;
         double _accelerometerZRead;
+
+        /**
+         * Position object tracked
+         */
+        double _positionTrackerXRead;
+        double _positionTrackerYRead;
+        double _positionTrackerZRead;
 
         /**
          * Object can access to private methods

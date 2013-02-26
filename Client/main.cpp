@@ -88,6 +88,11 @@ static void displayState()
     cout << "X=" << VREP.readAccelerometerX() << " ";
     cout << "Y=" << VREP.readAccelerometerY() << " ";
     cout << "Z=" << VREP.readAccelerometerZ() << endl;
+    //Display position tracker
+    cout << "   -    Position tracker ";
+    cout << "X=" << VREP.readPositionTrackerX() << " ";
+    cout << "Y=" << VREP.readPositionTrackerY() << " ";
+    cout << "Z=" << VREP.readPositionTrackerZ() << endl;
 }
 
 static void moveMotorsStep(double t)

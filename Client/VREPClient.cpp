@@ -6,7 +6,10 @@ VREPClient::VREPClient() :
     _forceSensors(),
     _accelerometerXRead(0),
     _accelerometerYRead(0),
-    _accelerometerZRead(0)
+    _accelerometerZRead(0),
+    _positionTrackerXRead(0),
+    _positionTrackerYRead(0),
+    _positionTrackerZRead(0)
 {
 }
 
@@ -98,6 +101,19 @@ double VREPClient::readAccelerometerZ() const
     return _accelerometerZRead;
 }
 
+double VREPClient::readPositionTrackerX() const
+{
+    return _positionTrackerXRead;
+}
+double VREPClient::readPositionTrackerY() const
+{
+    return _positionTrackerYRead;
+}
+double VREPClient::readPositionTrackerZ() const
+{
+    return _positionTrackerZRead;
+}
+
 void VREPClient::start()
 {
     //Start simulation
@@ -144,6 +160,20 @@ void VREPClient::start()
     if (error != simx_error_noerror && error != simx_error_novalue_flag) {
         throw std::string("Unable to set up accelerometer Z streaming");
     }
+    //Start position tracker data streaming
+    simxFloat posTracker;
+    error = simxGetFloatSignal("positionTrackerX", &posTracker, simx_opmode_streaming);
+    if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+        throw std::string("Unable to set up tracker X streaming");
+    }
+    error = simxGetFloatSignal("positionTrackerY", &posTracker, simx_opmode_streaming);
+    if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+        throw std::string("Unable to set up tracker Y streaming");
+    }
+    error = simxGetFloatSignal("positionTrackerZ", &posTracker, simx_opmode_streaming);
+    if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+        throw std::string("Unable to set up tracker Z streaming");
+    }
     //Simulation step to initialize communication (streaming/buffer)
     error = simxSynchronousTrigger();
     error = simxSynchronousTrigger();
@@ -181,6 +211,8 @@ void VREPClient::nextStep()
     }
     //Update accelerometer sensor
     readAccelerometer();
+    //Update position tracker
+    readPositionTracker();
     
     //Resume communication
     if (simxPauseCommunication(0) != 0) {
@@ -315,7 +347,7 @@ bool VREPClient::getMotorPositionControl(simxInt handle) const
     }
 }
 
-void VREPClient::writeMotorPosition(simxInt handle, simxFloat pos)
+void VREPClient::writeMotorPosition(simxInt handle, simxFloat pos) const
 {
     simxInt error = simxSetJointTargetPosition(handle, pos, simx_opmode_oneshot);
     if (error != simx_error_noerror && error != simx_error_novalue_flag) {
@@ -323,7 +355,7 @@ void VREPClient::writeMotorPosition(simxInt handle, simxFloat pos)
     }
 }
 
-double VREPClient::readMotorPosition(simxInt handle)
+double VREPClient::readMotorPosition(simxInt handle) const
 {
     simxFloat pos;
     simxInt error = simxGetJointPosition(handle, &pos, simx_opmode_buffer);
@@ -334,7 +366,7 @@ double VREPClient::readMotorPosition(simxInt handle)
     return pos;
 }
 
-double VREPClient::readMotorTorque(simxInt handle)
+double VREPClient::readMotorTorque(simxInt handle) const
 {
     simxFloat torque;
     simxInt error = simxJointGetForce(handle, &torque, simx_opmode_buffer);
@@ -374,23 +406,45 @@ void VREPClient::readAccelerometer()
         simx_opmode_buffer);
     if (error != simx_error_noerror) {
         accX = 0.0;
-        //throw std::string("Unable to read accelerometer X sensor");
     }
     error = simxGetFloatSignal("accelerometerY", &accY, 
         simx_opmode_buffer);
     if (error != simx_error_noerror) {
         accY = 0.0;
-        //throw std::string("Unable to read accelerometer Y sensor");
     }
     error = simxGetFloatSignal("accelerometerZ", &accZ, 
         simx_opmode_buffer);
     if (error != simx_error_noerror) {
         accZ = 0.0;
-        //throw std::string("Unable to read accelerometer Z sensor");
     }
 
     _accelerometerXRead = accX;
     _accelerometerYRead = accY;
     _accelerometerZRead = accZ;
+}
+
+void VREPClient::readPositionTracker()
+{
+    simxInt error;
+    simxFloat posX, posY, posZ;
+    error = simxGetFloatSignal("positionTrackerX", &posX, 
+        simx_opmode_buffer);
+    if (error != simx_error_noerror) {
+        posX = 0.0;
+    }
+    error = simxGetFloatSignal("positionTrackerY", &posY, 
+        simx_opmode_buffer);
+    if (error != simx_error_noerror) {
+        posY = 0.0;
+    }
+    error = simxGetFloatSignal("positionTrackerZ", &posZ, 
+        simx_opmode_buffer);
+    if (error != simx_error_noerror) {
+        posZ = 0.0;
+    }
+
+    _positionTrackerXRead = posX;
+    _positionTrackerYRead = posY;
+    _positionTrackerZRead = posZ;
 }
 

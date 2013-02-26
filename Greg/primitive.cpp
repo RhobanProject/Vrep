@@ -1,6 +1,7 @@
 #include <iostream>
 #include "primitive.h"
 #include "spline.h"
+#include <ga/ga.h>
 
 #define AMPLITUDE 30
 
@@ -10,8 +11,8 @@ Spline s2;
 volatile double t = 0.0;
 volatile double leftGain = 1.0;
 volatile double rightGain = 1.0;
-volatile double timeGain = 1.8;
-volatile double amplitudeGain = 1.0;
+volatile double timeGain = 1.6;
+volatile double amplitudeGain = 0.0;
 volatile double altitudeGain = 1.0;
 volatile double backGain = 0.4;
 volatile double balance = 1.0;
@@ -19,7 +20,7 @@ volatile double frontBalance = 1.0;
 volatile double backBalance = 1.0;
 volatile double leftOffset = 0.0;
 volatile double rightOffset = 0.0;
-volatile double frontOffset = 2.0;
+volatile double frontOffset = 10.0;
 volatile double backOffset = 0.0;
 volatile double open = 10.0;
 volatile double phase = 0.25;
@@ -28,6 +29,7 @@ using namespace std;
 
 void primitive_init(VREPClient &vrep)
 {
+    double x;
     // First spline: /\_________
     s1.addPoint(0.0, 0.0);
     s1.addPoint(0.1, 1.0);

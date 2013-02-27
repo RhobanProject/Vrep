@@ -2,7 +2,9 @@
 #include "VREPClient.hpp"
 
 VREPClient::VREPClient() :
+    _initStreaming(true),
     _motors(),
+    _motorsByName(),
     _forceSensors(),
     _accelerometerXRead(0),
     _accelerometerYRead(0),
@@ -121,59 +123,62 @@ void VREPClient::start()
     if (error != simx_error_noerror) {
         throw std::string("Unable to start the simulation");
     }
-    //Start joint data streaming
-    for (size_t i=0;i<_motors.size();i++) {
-        //Position
-        simxFloat pos;
-        simxInt error = simxGetJointPosition(_motors[i].getHandle(), &pos, 
-            simx_opmode_streaming);
-        if (error != simx_error_noerror && error != simx_error_novalue_flag) {
-            throw std::string("Unable to set up joint position streaming");
+    if (_initStreaming) {
+        _initStreaming = false;
+        //Start joint data streaming
+        for (size_t i=0;i<_motors.size();i++) {
+            //Position
+            simxFloat pos;
+            simxInt error = simxGetJointPosition(_motors[i].getHandle(), &pos, 
+                simx_opmode_streaming);
+            if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+                throw std::string("Unable to set up joint position streaming");
+            }
+            //Torque
+            simxFloat torque;
+            error = simxJointGetForce(_motors[i].getHandle(), &torque, 
+                simx_opmode_streaming);
+            if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+                throw std::string("Unable to set up joint torque streaming");
+            }
         }
-        //Torque
-        simxFloat torque;
-        error = simxJointGetForce(_motors[i].getHandle(), &torque, 
-            simx_opmode_streaming);
-        if (error != simx_error_noerror && error != simx_error_novalue_flag) {
-            throw std::string("Unable to set up joint torque streaming");
+        //Start force sensor data streaming
+        for (size_t i=0;i<_forceSensors.size();i++) {
+            simxInt error = simxReadForceSensor(_forceSensors[i].getHandle(), 
+                NULL, NULL, NULL, simx_opmode_streaming);
+            if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+                throw std::string("Unable to set up force sensor streaming");
+            }
         }
-    }
-    //Start force sensor data streaming
-    for (size_t i=0;i<_forceSensors.size();i++) {
-        simxInt error = simxReadForceSensor(_forceSensors[i].getHandle(), 
-            NULL, NULL, NULL, simx_opmode_streaming);
+        //Start accelerometer data streaming
+        simxFloat accelero;
+        error = simxGetFloatSignal("accelerometerX", &accelero, simx_opmode_streaming);
         if (error != simx_error_noerror && error != simx_error_novalue_flag) {
-            throw std::string("Unable to set up force sensor streaming");
+            throw std::string("Unable to set up accelerometer X streaming");
         }
-    }
-    //Start accelerometer data streaming
-    simxFloat accelero;
-    error = simxGetFloatSignal("accelerometerX", &accelero, simx_opmode_streaming);
-    if (error != simx_error_noerror && error != simx_error_novalue_flag) {
-        throw std::string("Unable to set up accelerometer X streaming");
-    }
-    error = simxGetFloatSignal("accelerometerY", &accelero, simx_opmode_streaming);
-    if (error != simx_error_noerror && error != simx_error_novalue_flag) {
-        throw std::string("Unable to set up accelerometer Y streaming");
-    }
-    error = simxGetFloatSignal("accelerometerZ", &accelero, simx_opmode_streaming);
-    if (error != simx_error_noerror && error != simx_error_novalue_flag) {
-        throw std::string("Unable to set up accelerometer Z streaming");
-    }
-    //Start position tracker data streaming
-    simxFloat posTracker;
-    error = simxGetFloatSignal("positionTrackerX", &posTracker, simx_opmode_streaming);
-    if (error != simx_error_noerror && error != simx_error_novalue_flag) {
-        throw std::string("Unable to set up tracker X streaming");
-    }
-    error = simxGetFloatSignal("positionTrackerY", &posTracker, simx_opmode_streaming);
-    if (error != simx_error_noerror && error != simx_error_novalue_flag) {
-        throw std::string("Unable to set up tracker Y streaming");
-    }
-    error = simxGetFloatSignal("positionTrackerZ", &posTracker, simx_opmode_streaming);
-    if (error != simx_error_noerror && error != simx_error_novalue_flag) {
-        throw std::string("Unable to set up tracker Z streaming");
-    }
+        error = simxGetFloatSignal("accelerometerY", &accelero, simx_opmode_streaming);
+        if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+            throw std::string("Unable to set up accelerometer Y streaming");
+        }
+        error = simxGetFloatSignal("accelerometerZ", &accelero, simx_opmode_streaming);
+        if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+            throw std::string("Unable to set up accelerometer Z streaming");
+        }
+        //Start position tracker data streaming
+        simxFloat posTracker;
+        error = simxGetFloatSignal("positionTrackerX", &posTracker, simx_opmode_streaming);
+        if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+            throw std::string("Unable to set up tracker X streaming");
+        }
+        error = simxGetFloatSignal("positionTrackerY", &posTracker, simx_opmode_streaming);
+        if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+            throw std::string("Unable to set up tracker Y streaming");
+        }
+        error = simxGetFloatSignal("positionTrackerZ", &posTracker, simx_opmode_streaming);
+        if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+            throw std::string("Unable to set up tracker Z streaming");
+        }
+    } 
     //Simulation step to initialize communication (streaming/buffer)
     error = simxSynchronousTrigger();
     error = simxSynchronousTrigger();
@@ -188,14 +193,29 @@ void VREPClient::start()
 }
 void VREPClient::stop()
 {
+    simxInt error;
     //Resume communication
     if (simxPauseCommunication(0) != 0) {
         throw std::string("Unable to resume communication");
     }
+    //Sync with V-REP
+    error = simxSynchronousTrigger();
+    error = simxSynchronousTrigger();
+    error = simxSynchronousTrigger();
+    if (error != simx_error_noerror) {
+        throw std::string("Unable to step the simulation");
+    }
     //Stop simulation
-    simxInt error = simxStopSimulation(simx_opmode_oneshot_wait);
+    error = simxStopSimulation(simx_opmode_oneshot_wait);
     if (error != simx_error_noerror) {
         throw std::string("Unable to stop the simulation");
+    }
+    //Sync with V-REP
+    error = simxSynchronousTrigger();
+    error = simxSynchronousTrigger();
+    error = simxSynchronousTrigger();
+    if (error != simx_error_noerror) {
+        throw std::string("Unable to step the simulation");
     }
 }
 

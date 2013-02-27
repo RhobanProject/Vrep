@@ -168,6 +168,11 @@ class VREPClient
         void readPositionTracker();
 
         /**
+         * Is the value streaming has to be initialized
+         */
+        bool _initStreaming;
+
+        /**
          * Motor container
          */
         std::vector<Motor> _motors;

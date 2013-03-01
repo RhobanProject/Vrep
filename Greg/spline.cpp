@@ -1,7 +1,16 @@
+#include <iostream>
 #include "spline.h"
 
-Spline::Spline() : nbPoints(0)
+using namespace std;
+
+Spline::Spline()
 {
+    clear();
+}
+
+void Spline::clear()
+{
+    nbPoints = 0;
 }
 
 double Spline::getXMax()
@@ -56,3 +65,24 @@ double Spline::getMod(double x)
     return get(x);
 }
 
+
+void Spline::print()
+{
+    int i;
+
+    cout << "Spline:" << endl;
+    for (i=0; i < nbPoints; i++) {
+        cout << points[i][0];
+        if (i != nbPoints-1) {
+            cout << ";";
+        }
+    }
+    cout << endl;
+    for (i=0; i < nbPoints; i++) {
+        cout << points[i][1];
+        if (i != nbPoints-1) {
+            cout << ";";
+        }
+    }
+    cout << endl;
+}

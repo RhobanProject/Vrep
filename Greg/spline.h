@@ -9,6 +9,11 @@ class Spline
         Spline();
 
         /**
+         * Clears the current spline
+         */
+        void clear();
+
+        /**
          * Add a point (x, y) to the spline
          */
         void addPoint(double x, double y);
@@ -27,6 +32,11 @@ class Spline
          * Gets the value for the given x, modulo the size of the spline
          */
         double getMod(double x);
+
+        /**
+         * Prints the spline
+         */
+        void print();
 
     protected:
         /**

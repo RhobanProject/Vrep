@@ -1,4 +1,7 @@
 #include <math.h>
+extern "C" {
+    #include "extApi.h"
+}
 #include "ForceSensor.hpp"
 #include "VREPClient.hpp"
 

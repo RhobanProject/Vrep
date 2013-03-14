@@ -1,4 +1,8 @@
 #include <iostream>
+extern "C" {
+    #include "extApi.h"
+    #include "extApiCustom.h"
+}
 #include "VREPClient.hpp"
 
 VREPClient::VREPClient() :

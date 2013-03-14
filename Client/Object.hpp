@@ -2,10 +2,9 @@
 #define OBJECT_HPP
 
 #include <iostream>
-extern "C" {
-    #include "extApi.h"
-}
 class VREPClient;
+typedef int simxInt;
+typedef float simxFloat;
 
 /**
  * Base class

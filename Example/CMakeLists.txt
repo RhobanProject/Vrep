@@ -24,6 +24,8 @@ set (SOURCES main.cpp)
 
 set (EXTRA_LIBRARIES pthread :remoteApi.so)
 
+execute_process (COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/genscript.sh" "${VREP_ROOT}" "${CMAKE_BINARY_DIR}/vrep")
+
 include_directories (${VREP_PATH}/remoteApi ${VREP_PATH}/include)
 link_directories (${VREP_PATH}/remoteApiSharedLib)
 add_definitions (-DNON_MATLAB_PARSING)

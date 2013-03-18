@@ -5,6 +5,9 @@ set (VREP_ROOT
     "${CMAKE_CURRENT_SOURCE_DIR}/../"
     CACHE "VRep root dir" STRING)
 
+execute_process (COMMAND "/bin/bash" "-c" "cd ${VREP_ROOT}; echo -n `pwd`"
+               OUTPUT_VARIABLE VREP_ROOT)
+
 set (VREP_PATH
     "${VREP_ROOT}/Vrep_32/programming/"
     CACHE "The VRep build path" STRING)

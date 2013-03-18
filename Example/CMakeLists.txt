@@ -2,7 +2,8 @@ project (VREPClient)
 cmake_minimum_required(VERSION 2.6)
 
 set (VREP_ROOT
-    "${CMAKE_CURRENT_SOURCE_DIR}/../")
+    "${CMAKE_CURRENT_SOURCE_DIR}/../"
+    CACHE "VRep root dir" STRING)
 
 set (VREP_PATH
     "${VREP_ROOT}/Vrep_32/programming/"

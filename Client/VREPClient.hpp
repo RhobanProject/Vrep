@@ -53,7 +53,11 @@ class VREPClient
          */
         const Motor& getMotor(size_t index) const;
         Motor& getMotor(size_t index);
-        Motor *getMotor(std::string name);
+
+        /**
+         * Return a motor by its name
+         */
+        Motor& getMotor(const std::string& name);
 
         /**
          * Return a force sensor by its index

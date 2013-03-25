@@ -59,13 +59,12 @@ const Motor& VREPClient::getMotor(size_t index) const
     }
 }
 
-Motor *VREPClient::getMotor(std::string name)
+Motor& VREPClient::getMotor(const std::string& name)
 {
     if (_motorsByName.find(name) != _motorsByName.end()) {
-        return _motorsByName[name];
+        return *(_motorsByName[name]);
     }
-
-    return NULL;
+    throw std::string("Invalid motor name");
 }
 
 Motor& VREPClient::getMotor(size_t index)

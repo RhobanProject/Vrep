@@ -136,6 +136,12 @@ class VREPClient
         void writeMotorPosition(simxInt handle, simxFloat pos) const;
 
         /**
+         * Send the maximum force torque to apply to 
+         * a joint
+         */
+        void writeMotorTorqueMax(simxInt handle, simxFloat force) const;
+
+        /**
          * Read current joint position
          */
         double readMotorPosition(simxInt handle) const;

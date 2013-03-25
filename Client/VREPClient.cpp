@@ -378,6 +378,14 @@ void VREPClient::writeMotorPosition(simxInt handle, simxFloat pos) const
         throw std::string("Unable to send joint target position");
     }
 }
+        
+void VREPClient::writeMotorTorqueMax(simxInt handle, simxFloat force) const
+{
+    simxInt error = simxSetJointForce(handle, force, simx_opmode_oneshot);
+    if (error != simx_error_noerror && error != simx_error_novalue_flag) {
+        throw std::string("Unable to send joint maximum torque");
+    }
+}
 
 double VREPClient::readMotorPosition(simxInt handle) const
 {

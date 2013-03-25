@@ -54,7 +54,8 @@ static void displayInitialState()
         cout << "[" << i << "] ";
         cout << VREP.getMotor(i).getName() << " ";
         cout << "minPos=" << VREP.getMotor(i).getMinPos() << " ";
-        cout << "maxPos=" << VREP.getMotor(i).getMaxPos() << endl;
+        cout << "maxPos=" << VREP.getMotor(i).getMaxPos() << " ";
+        cout << "TorqueMax=" << VREP.getMotor(i).getTorqueMax() << endl;
     }
     //And force sensors
     size_t countForceSensors = VREP.countForceSensors();

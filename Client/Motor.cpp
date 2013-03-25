@@ -15,15 +15,11 @@ Motor::Motor(simxInt handle) :
     _torqueRead(0),
     _positionWrite(0),
     _positionDirty(false),
-    _revert(false)
+    _revert(false),
+    _torqueMax(500.0)
 {
 }
 
-void Motor::setRevert(bool revert)
-{
-    _revert = revert;
-}
-        
 double Motor::getMinPos() const
 {
     return _min;
@@ -87,3 +83,18 @@ void Motor::update(VREPClient& VREP)
     _torqueRead = VREP.readMotorTorque(_handle);
 }
 
+void Motor::setRevert(bool revert)
+{
+    _revert = revert;
+}
+        
+double Motor::getTorqueMax() const
+{
+    return _torqueMax;
+}
+void Motor::setTorqueMax(double force, VREPClient& VREP)
+{
+    _torqueMax = force;
+    VREP.writeMotorTorqueMax(_handle, force);
+}
+ 

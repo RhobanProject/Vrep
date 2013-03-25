@@ -58,9 +58,17 @@ class Motor : public Object
         void update(VREPClient& VREP);
 
         /**
-         * Revert the motor ?
+         * Revert the motor position
+         * control
          */
         void setRevert(bool revert);
+
+        /**
+         * Maximum torque applied
+         * get and set
+         */
+        double getTorqueMax() const;
+        void setTorqueMax(double force, VREPClient& VREP);
 
     private:
 
@@ -102,6 +110,12 @@ class Motor : public Object
          * True if the motor is reverted
          */
         bool _revert;
+
+        /**
+         * The maximum value of torque apply
+         * on the joint
+         */
+        double _torqueMax;
 };
 
 #endif

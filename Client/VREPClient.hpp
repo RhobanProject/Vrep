@@ -5,10 +5,6 @@
 #include <string>
 #include <vector>
 #include <map>
-extern "C" {
-    #include "extApi.h"
-    #include "extApiCustom.h"
-}
 #include "Object.hpp"
 #include "Motor.hpp"
 #include "ForceSensor.hpp"
@@ -166,6 +162,11 @@ class VREPClient
          * tracker
          */
         void readPositionTracker();
+
+        /**
+         * Is the value streaming has to be initialized
+         */
+        bool _initStreaming;
 
         /**
          * Motor container

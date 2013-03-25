@@ -2,9 +2,6 @@
 #define FORCESENSOR_HPP
 
 #include <iostream>
-extern "C" {
-    #include "extApi.h"
-}
 #include "Object.hpp"
 class VREPClient;
 

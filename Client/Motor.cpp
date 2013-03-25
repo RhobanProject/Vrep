@@ -1,6 +1,9 @@
 #include <iostream>
 #include <math.h>
 #include <assert.h>
+extern "C" {
+    #include "extApi.h"
+}
 #include "Motor.hpp"
 #include "VREPClient.hpp"
 

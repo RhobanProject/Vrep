@@ -20,7 +20,7 @@ set (CLIENT_SOURCES
 
 include_directories(${CLIENT_PATH})
 
-set (SOURCES main.cpp spline.cpp primitive.cpp)
+set (SOURCES main.cpp spline.cpp primitive.cpp genetic.cpp)
 
 set (EXTRA_LIBRARIES pthread :remoteApi.so ga)
 

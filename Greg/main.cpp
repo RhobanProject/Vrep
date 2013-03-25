@@ -5,9 +5,10 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include "primitive.h"
-#include "VREPClient.hpp"
+#include <VREPClient.hpp>
 #include <ga/ga.h>
+
+#include "genetic.h"
 
 /**
  * VREPClient instance
@@ -47,36 +48,18 @@ static void attachSignalHandler()
     }
 }
 
-double score()
+/**
+ * Runs the genetic experience
+ */
+void runExperience(VREPClient &vrep)
 {
-    double x1, y1, z1;
-    double x2, y2, z2;
-    // Initializing primitive
-    primitive_init(VREP);
-    //Main Loop
-    cout << "Starting simulation" << endl;
-    VREP.start();
-    x1 = VREP.readPositionTrackerX();
-    y1 = VREP.readPositionTrackerY();
-    z1 = VREP.readPositionTrackerZ();
-    for (double t=0; t<30.0; t+=0.02) {
-        //Display state
-        //Do next step
-        VREP.nextStep();
-
-        //Compute motors move
-        primitive_tick(VREP);
-    }
-    x2 = VREP.readPositionTrackerX();
-    y2 = VREP.readPositionTrackerY();
-    z2 = VREP.readPositionTrackerZ();
-    //End simulation
-    cout << "Stopping simulation" << endl;
-    VREP.stop();
-
-    return sqrt(pow(x1-x2,2)+pow(y1-y2,2)+pow(z1-z2,2));
+    GeneticExperience experience(vrep);
+    experience.run();
 }
 
+/**
+ * Create the VREP instance and run the genetic experience
+ */
 int main(int argc, char* argv[])
 {
     //Network parameters
@@ -103,8 +86,11 @@ int main(int argc, char* argv[])
         cout << "Connecting to V-REP server " << ip << ":" << port << endl;
         VREP.connect(ip, port);
 
-        cout << "Running score evaluation" << endl;
-        cout << "Score: " << score() << endl;
+        for (int motor=0; motor<VREP.countMotors(); motor++) {
+            cout << "Motor #" << motor << ": " << VREP.getMotor(motor).getName() << endl;
+        }
+
+        runExperience(VREP);
     } catch (string str) {
         cerr << "Exception error: " << str << endl;
         exiting(false);

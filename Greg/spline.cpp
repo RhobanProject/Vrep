@@ -38,8 +38,12 @@ double Spline::get(double x)
         }
     }
 
-    if (i == 0 || i == nbPoints) {
-        return 0.0;
+    if (i == 0) {
+        return points[0][1];
+    }
+
+    if (i == nbPoints) {
+        return points[nbPoints-1][1];
     }
 
     return points[i-1][1]+ds[i-1]*(x-points[i-1][0]);

@@ -30,7 +30,7 @@
 
 /* Your custom remote API functions. */
 
-EXTAPI_DLLEXPORT simxInt simxCustomGetObjectName(simxInt objectHandle, simxChar** objectName, simxInt operationMode) 
+EXTAPI_DLLEXPORT simxInt simxCustomGetObjectName(simxInt clientID, simxInt objectHandle, simxChar** objectName, simxInt operationMode) 
 {
     simxChar* dataPointer;
     simxInt returnValue;
@@ -42,12 +42,12 @@ EXTAPI_DLLEXPORT simxInt simxCustomGetObjectName(simxInt objectHandle, simxChar*
     //Then take care of the "remove" operation mode:
     if (operationMode == simx_opmode_remove)
         //_int indicates that the command is identified by the command ID AND an integer value
-        return(_removeCommandReply_int(simx_customcmd_get_object_name, objectHandle)); 
+        return(_removeCommandReply_int(clientID, simx_customcmd_get_object_name, objectHandle)); 
 
     //Now "execute" the command (i.e. place the command (with its associated command data) 
     //into the outbox, and retrieve a command reply from the inbox)
     //_int indicates that the command is identified by the command ID AND an integer value
-    dataPointer = _exec_int(simx_customcmd_get_object_name, operationMode, 0, objectHandle, &returnValue);
+    dataPointer = _exec_int(clientID, simx_customcmd_get_object_name, operationMode, 0, objectHandle, &returnValue);
 
     //Now extract the desired data:
     //pure data is the data that is not used to identify a command
@@ -59,7 +59,7 @@ EXTAPI_DLLEXPORT simxInt simxCustomGetObjectName(simxInt objectHandle, simxChar*
     return(returnValue);
 }
 
-EXTAPI_DLLEXPORT simxInt simxCustomGetJointType(simxInt objectHandle, simxInt* jointType, simxInt operationMode)
+EXTAPI_DLLEXPORT simxInt simxCustomGetJointType(simxInt clientID, simxInt objectHandle, simxInt* jointType, simxInt operationMode)
 {
     simxChar* dataPointer;
     simxInt returnValue;
@@ -68,9 +68,9 @@ EXTAPI_DLLEXPORT simxInt simxCustomGetJointType(simxInt objectHandle, simxInt* j
         return(simx_error_initialize_error_flag);
 
     if (operationMode == simx_opmode_remove)
-        return(_removeCommandReply_int(simx_customcmd_get_joint_type, objectHandle)); 
+        return(_removeCommandReply_int(clientID, simx_customcmd_get_joint_type, objectHandle)); 
 
-    dataPointer = _exec_int(simx_customcmd_get_joint_type, operationMode, 0, objectHandle, &returnValue);
+    dataPointer = _exec_int(clientID, simx_customcmd_get_joint_type, operationMode, 0, objectHandle, &returnValue);
     
     if ((dataPointer != 0) && (returnValue == 0)) {
 	     jointType[0] = _readPureDataInt(dataPointer, 0, 0);
@@ -79,7 +79,7 @@ EXTAPI_DLLEXPORT simxInt simxCustomGetJointType(simxInt objectHandle, simxInt* j
     return(returnValue);
 }
 
-EXTAPI_DLLEXPORT simxInt simxCustomGetJointInterval(simxInt objectHandle, simxChar* cyclic, simxFloat* interval, simxInt operationMode)
+EXTAPI_DLLEXPORT simxInt simxCustomGetJointInterval(simxInt clientID, simxInt objectHandle, simxChar* cyclic, simxFloat* interval, simxInt operationMode)
 {
     simxChar* dataPointer;
     simxInt returnValue;
@@ -88,9 +88,9 @@ EXTAPI_DLLEXPORT simxInt simxCustomGetJointInterval(simxInt objectHandle, simxCh
         return(simx_error_initialize_error_flag);
 
     if (operationMode == simx_opmode_remove)
-        return(_removeCommandReply_int(simx_customcmd_get_joint_interval, objectHandle)); 
+        return(_removeCommandReply_int(clientID, simx_customcmd_get_joint_interval, objectHandle)); 
 
-    dataPointer = _exec_int(simx_customcmd_get_joint_interval, operationMode, 0, objectHandle, &returnValue);
+    dataPointer = _exec_int(clientID, simx_customcmd_get_joint_interval, operationMode, 0, objectHandle, &returnValue);
     
     if ((dataPointer != 0) && (returnValue == 0)) {
 	     cyclic[0] = _readPureDataChar(dataPointer, 0, 0);

@@ -18,9 +18,10 @@ class VREPClient
     public:
 
         /**
-         * Connection timeout (miliseconds)
+         * Connection timeout and communication speed (miliseconds)
          */
         static const simxInt CONNECTION_TIMEOUT = 2000;
+        static const simxInt CONNECTION_CYCLE = 5;
 
         /**
          * Initialization
@@ -93,6 +94,11 @@ class VREPClient
         void nextStep();
 
     private:
+
+        /**
+         * Vrep client ID
+         */
+        simxInt _id;
 
         /**
          * Retrieve all joints handle

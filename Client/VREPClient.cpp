@@ -2,10 +2,12 @@
 extern "C" {
     #include "extApi.h"
     #include "extApiCustom.h"
+    #include "extApiPlatform.h"
 }
 #include "VREPClient.hpp"
 
 VREPClient::VREPClient() :
+    _id(-1),
     _initStreaming(true),
     _motors(),
     _motorsByName(),
@@ -22,11 +24,14 @@ VREPClient::VREPClient() :
 void VREPClient::connect(const char* ip, int port)
 {
     //Connection to server
-    if (simxStart(ip, port, true, true, VREPClient::CONNECTION_TIMEOUT) == -1) {
+    _id = simxStart(ip, port, 1, 0, 
+        VREPClient::CONNECTION_TIMEOUT, 
+        VREPClient::CONNECTION_CYCLE);
+    if (_id == -1) {
         throw std::string("Unable to connect to V-REP Server");
     }
     //Enabling synchonous mode
-    if (simxSynchronous(true) != simx_error_noerror) {
+    if (simxSynchronous(_id, true) != simx_error_noerror) {
         throw std::string("Unable to enable synchronous mode");
     }
     //Retrieve joints
@@ -37,7 +42,7 @@ void VREPClient::connect(const char* ip, int port)
 
 void VREPClient::disconnect() const
 {
-    simxFinish();
+    simxFinish(_id);
 }
         
 size_t VREPClient::countMotors() const
@@ -122,7 +127,7 @@ double VREPClient::readPositionTrackerZ() const
 void VREPClient::start()
 {
     //Start simulation
-    simxInt error = simxStartSimulation(simx_opmode_oneshot_wait);
+    simxInt error = simxStartSimulation(_id, simx_opmode_oneshot_wait);
     if (error != simx_error_noerror) {
         throw std::string("Unable to start the simulation");
     }
@@ -132,14 +137,14 @@ void VREPClient::start()
         for (size_t i=0;i<_motors.size();i++) {
             //Position
             simxFloat pos;
-            simxInt error = simxGetJointPosition(_motors[i].getHandle(), &pos, 
+            simxInt error = simxGetJointPosition(_id, _motors[i].getHandle(), &pos, 
                 simx_opmode_streaming);
             if (error != simx_error_noerror && error != simx_error_novalue_flag) {
                 throw std::string("Unable to set up joint position streaming");
             }
             //Torque
             simxFloat torque;
-            error = simxJointGetForce(_motors[i].getHandle(), &torque, 
+            error = simxJointGetForce(_id, _motors[i].getHandle(), &torque, 
                 simx_opmode_streaming);
             if (error != simx_error_noerror && error != simx_error_novalue_flag) {
                 throw std::string("Unable to set up joint torque streaming");
@@ -147,7 +152,7 @@ void VREPClient::start()
         }
         //Start force sensor data streaming
         for (size_t i=0;i<_forceSensors.size();i++) {
-            simxInt error = simxReadForceSensor(_forceSensors[i].getHandle(), 
+            simxInt error = simxReadForceSensor(_id, _forceSensors[i].getHandle(), 
                 NULL, NULL, NULL, simx_opmode_streaming);
             if (error != simx_error_noerror && error != simx_error_novalue_flag) {
                 throw std::string("Unable to set up force sensor streaming");
@@ -155,42 +160,42 @@ void VREPClient::start()
         }
         //Start accelerometer data streaming
         simxFloat accelero;
-        error = simxGetFloatSignal("accelerometerX", &accelero, simx_opmode_streaming);
+        error = simxGetFloatSignal(_id, "accelerometerX", &accelero, simx_opmode_streaming);
         if (error != simx_error_noerror && error != simx_error_novalue_flag) {
             throw std::string("Unable to set up accelerometer X streaming");
         }
-        error = simxGetFloatSignal("accelerometerY", &accelero, simx_opmode_streaming);
+        error = simxGetFloatSignal(_id, "accelerometerY", &accelero, simx_opmode_streaming);
         if (error != simx_error_noerror && error != simx_error_novalue_flag) {
             throw std::string("Unable to set up accelerometer Y streaming");
         }
-        error = simxGetFloatSignal("accelerometerZ", &accelero, simx_opmode_streaming);
+        error = simxGetFloatSignal(_id, "accelerometerZ", &accelero, simx_opmode_streaming);
         if (error != simx_error_noerror && error != simx_error_novalue_flag) {
             throw std::string("Unable to set up accelerometer Z streaming");
         }
         //Start position tracker data streaming
         simxFloat posTracker;
-        error = simxGetFloatSignal("positionTrackerX", &posTracker, simx_opmode_streaming);
+        error = simxGetFloatSignal(_id, "positionTrackerX", &posTracker, simx_opmode_streaming);
         if (error != simx_error_noerror && error != simx_error_novalue_flag) {
             throw std::string("Unable to set up tracker X streaming");
         }
-        error = simxGetFloatSignal("positionTrackerY", &posTracker, simx_opmode_streaming);
+        error = simxGetFloatSignal(_id, "positionTrackerY", &posTracker, simx_opmode_streaming);
         if (error != simx_error_noerror && error != simx_error_novalue_flag) {
             throw std::string("Unable to set up tracker Y streaming");
         }
-        error = simxGetFloatSignal("positionTrackerZ", &posTracker, simx_opmode_streaming);
+        error = simxGetFloatSignal(_id, "positionTrackerZ", &posTracker, simx_opmode_streaming);
         if (error != simx_error_noerror && error != simx_error_novalue_flag) {
             throw std::string("Unable to set up tracker Z streaming");
         }
     } 
     //Simulation step to initialize communication (streaming/buffer)
-    error = simxSynchronousTrigger();
-    error = simxSynchronousTrigger();
-    error = simxSynchronousTrigger();
+    error = simxSynchronousTrigger(_id);
+    error = simxSynchronousTrigger(_id);
+    error = simxSynchronousTrigger(_id);
     if (error != simx_error_noerror) {
         throw std::string("Unable to step the simulation");
     }
     //Pause communication
-    if (simxPauseCommunication(1) != 0) {
+    if (simxPauseCommunication(_id, 1) != 0) {
         throw std::string("Unable to pause communication");
     }
 }
@@ -198,27 +203,20 @@ void VREPClient::stop()
 {
     simxInt error;
     //Resume communication
-    if (simxPauseCommunication(0) != 0) {
+    if (simxPauseCommunication(_id, 0) != 0) {
         throw std::string("Unable to resume communication");
     }
     //Sync with V-REP
-    error = simxSynchronousTrigger();
-    error = simxSynchronousTrigger();
-    error = simxSynchronousTrigger();
+    error = simxSynchronousTrigger(_id);
+    error = simxSynchronousTrigger(_id);
+    error = simxSynchronousTrigger(_id);
     if (error != simx_error_noerror) {
         throw std::string("Unable to step the simulation");
     }
     //Stop simulation
-    error = simxStopSimulation(simx_opmode_oneshot_wait);
+    error = simxStopSimulation(_id, simx_opmode_oneshot_wait);
     if (error != simx_error_noerror) {
         throw std::string("Unable to stop the simulation");
-    }
-    //Sync with V-REP
-    error = simxSynchronousTrigger();
-    error = simxSynchronousTrigger();
-    error = simxSynchronousTrigger();
-    if (error != simx_error_noerror) {
-        throw std::string("Unable to step the simulation");
     }
 }
 
@@ -238,16 +236,16 @@ void VREPClient::nextStep()
     readPositionTracker();
     
     //Resume communication
-    if (simxPauseCommunication(0) != 0) {
+    if (simxPauseCommunication(_id, 0) != 0) {
         throw std::string("Unable to resume communication");
     }
     //Simulation step
-    simxInt error = simxSynchronousTrigger();
+    simxInt error = simxSynchronousTrigger(_id);
     if (error != simx_error_noerror) {
         throw std::string("Unable to step the simulation");
     }
     //Pause communication
-    if (simxPauseCommunication(1) != 0) {
+    if (simxPauseCommunication(_id, 1) != 0) {
         throw std::string("Unable to pause communication");
     }
 }
@@ -258,7 +256,7 @@ void VREPClient::scanMotors()
     simxInt* motorArray = NULL;
     //Get joints
     if (
-        simxGetObjects(sim_object_joint_type, &motorCount, &motorArray, 
+        simxGetObjects(_id, sim_object_joint_type, &motorCount, &motorArray, 
         simx_opmode_oneshot_wait) != simx_error_noerror
     ) {
         throw std::string("Unable to retrieve motor handles");
@@ -283,7 +281,7 @@ void VREPClient::scanForceSensors()
     simxInt* sensorArray = NULL;
     //Get force sensor
     if (
-        simxGetObjects(sim_object_forcesensor_type, &sensorCount, &sensorArray, 
+        simxGetObjects(_id, sim_object_forcesensor_type, &sensorCount, &sensorArray, 
         simx_opmode_oneshot_wait) != simx_error_noerror
     ) {
         throw std::string("Unable to retrieve force sensor handles");
@@ -303,7 +301,7 @@ std::string VREPClient::getNameFromHandle(simxInt handle) const
 {
     simxChar* name = NULL;
     simxInt error = 0;
-    error = simxCustomGetObjectName(handle, &name, simx_opmode_oneshot_wait);
+    error = simxCustomGetObjectName(_id, handle, &name, simx_opmode_oneshot_wait);
     if (error == simx_error_noerror) {
         return std::string(name);
     } else {
@@ -315,7 +313,7 @@ simxInt VREPClient::getMotorType(simxInt handle) const
 {
     simxInt type = -1;
     simxInt error = 0;
-    error = simxCustomGetJointType(handle, &type, simx_opmode_oneshot_wait);
+    error = simxCustomGetJointType(_id, handle, &type, simx_opmode_oneshot_wait);
     if (error == simx_error_noerror) {
         return type;
     } else {
@@ -330,7 +328,7 @@ void VREPClient::getMotorInterval
     simxFloat interval[2];
     simxInt error = 0;
 
-    error = simxCustomGetJointInterval(handle, &cyclicChar, 
+    error = simxCustomGetJointInterval(_id, handle, &cyclicChar, 
         (simxFloat*)interval, simx_opmode_oneshot_wait);
     if (error == simx_error_noerror) {
         cyclic = (bool)cyclicChar;
@@ -347,7 +345,7 @@ bool VREPClient::getMotorDynamic(simxInt handle) const
     simxInt value;
     simxInt error = 0;
 
-    error = simxGetObjectIntParameter(handle, 2000, &value, 
+    error = simxGetObjectIntParameter(_id, handle, 2000, &value, 
         simx_opmode_oneshot_wait);
     if (error == simx_error_noerror) {
         return (bool)value;
@@ -361,7 +359,7 @@ bool VREPClient::getMotorPositionControl(simxInt handle) const
     simxInt value;
     simxInt error = 0;
 
-    error = simxGetObjectIntParameter(handle, 2001, &value, 
+    error = simxGetObjectIntParameter(_id, handle, 2001, &value, 
         simx_opmode_oneshot_wait);
     if (error == simx_error_noerror) {
         return (bool)value;
@@ -372,7 +370,7 @@ bool VREPClient::getMotorPositionControl(simxInt handle) const
 
 void VREPClient::writeMotorPosition(simxInt handle, simxFloat pos) const
 {
-    simxInt error = simxSetJointTargetPosition(handle, pos, simx_opmode_oneshot);
+    simxInt error = simxSetJointTargetPosition(_id, handle, pos, simx_opmode_oneshot);
     if (error != simx_error_noerror && error != simx_error_novalue_flag) {
         throw std::string("Unable to send joint target position");
     }
@@ -380,7 +378,7 @@ void VREPClient::writeMotorPosition(simxInt handle, simxFloat pos) const
         
 void VREPClient::writeMotorTorqueMax(simxInt handle, simxFloat force) const
 {
-    simxInt error = simxSetJointForce(handle, force, simx_opmode_oneshot);
+    simxInt error = simxSetJointForce(_id, handle, force, simx_opmode_oneshot);
     if (error != simx_error_noerror && error != simx_error_novalue_flag) {
         throw std::string("Unable to send joint maximum torque");
     }
@@ -389,7 +387,7 @@ void VREPClient::writeMotorTorqueMax(simxInt handle, simxFloat force) const
 double VREPClient::readMotorPosition(simxInt handle) const
 {
     simxFloat pos;
-    simxInt error = simxGetJointPosition(handle, &pos, simx_opmode_buffer);
+    simxInt error = simxGetJointPosition(_id, handle, &pos, simx_opmode_buffer);
     if (error != simx_error_noerror) {
         throw std::string("Unable to read joint current position");
     } 
@@ -400,7 +398,7 @@ double VREPClient::readMotorPosition(simxInt handle) const
 double VREPClient::readMotorTorque(simxInt handle) const
 {
     simxFloat torque;
-    simxInt error = simxJointGetForce(handle, &torque, simx_opmode_buffer);
+    simxInt error = simxJointGetForce(_id, handle, &torque, simx_opmode_buffer);
     if (error != simx_error_noerror) {
         throw std::string("Unable to read joint current torque");
     } 
@@ -414,8 +412,8 @@ void VREPClient::readForceSensor(simxInt handle,
 {
     simxFloat force[3];
     simxFloat torque[3];
-    simxChar state;
-    simxInt error = simxReadForceSensor(handle, &state, force, 
+    simxUChar state;
+    simxInt error = simxReadForceSensor(_id, handle, &state, force, 
         torque, simx_opmode_buffer);
     if (error != simx_error_noerror) {
         throw std::string("Unable to read force sensor");
@@ -433,17 +431,17 @@ void VREPClient::readAccelerometer()
 {
     simxInt error;
     simxFloat accX, accY, accZ;
-    error = simxGetFloatSignal("accelerometerX", &accX, 
+    error = simxGetFloatSignal(_id, "accelerometerX", &accX, 
         simx_opmode_buffer);
     if (error != simx_error_noerror) {
         accX = 0.0;
     }
-    error = simxGetFloatSignal("accelerometerY", &accY, 
+    error = simxGetFloatSignal(_id, "accelerometerY", &accY, 
         simx_opmode_buffer);
     if (error != simx_error_noerror) {
         accY = 0.0;
     }
-    error = simxGetFloatSignal("accelerometerZ", &accZ, 
+    error = simxGetFloatSignal(_id, "accelerometerZ", &accZ, 
         simx_opmode_buffer);
     if (error != simx_error_noerror) {
         accZ = 0.0;
@@ -458,17 +456,17 @@ void VREPClient::readPositionTracker()
 {
     simxInt error;
     simxFloat posX, posY, posZ;
-    error = simxGetFloatSignal("positionTrackerX", &posX, 
+    error = simxGetFloatSignal(_id, "positionTrackerX", &posX, 
         simx_opmode_buffer);
     if (error != simx_error_noerror) {
         posX = 0.0;
     }
-    error = simxGetFloatSignal("positionTrackerY", &posY, 
+    error = simxGetFloatSignal(_id, "positionTrackerY", &posY, 
         simx_opmode_buffer);
     if (error != simx_error_noerror) {
         posY = 0.0;
     }
-    error = simxGetFloatSignal("positionTrackerZ", &posZ, 
+    error = simxGetFloatSignal(_id, "positionTrackerZ", &posZ, 
         simx_opmode_buffer);
     if (error != simx_error_noerror) {
         posZ = 0.0;

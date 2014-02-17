@@ -38,12 +38,12 @@
 /* Your custom remote API functions. */
 
 //related to command ID: simx_customcmd_get_object_name
-EXTAPI_DLLEXPORT simxInt simxCustomGetObjectName(simxInt objectHandle, simxChar** objectName, simxInt operationMode); 
+EXTAPI_DLLEXPORT simxInt simxCustomGetObjectName(simxInt clientID, simxInt objectHandle, simxChar** objectName, simxInt operationMode); 
 
 //related to command ID: simx_customcmd_get_joint_type
-EXTAPI_DLLEXPORT simxInt simxCustomGetJointType(simxInt objectHandle, simxInt* jointType, simxInt operationMode); 
+EXTAPI_DLLEXPORT simxInt simxCustomGetJointType(simxInt clientID, simxInt objectHandle, simxInt* jointType, simxInt operationMode); 
 
 //related to command ID: simx_customcmd_get_joint_interval
-EXTAPI_DLLEXPORT simxInt simxCustomGetJointInterval(simxInt objectHandle, simxChar* cyclic, simxFloat* interval, simxInt operationMode); 
+EXTAPI_DLLEXPORT simxInt simxCustomGetJointInterval(simxInt clientID, simxInt objectHandle, simxChar* cyclic, simxFloat* interval, simxInt operationMode); 
 
 #endif /* _EXTAPICUSTOM__ */		

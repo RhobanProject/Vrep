@@ -3,6 +3,8 @@
 #include <assert.h>
 extern "C" {
     #include "extApi.h"
+    #include "extApiCustom.h"
+    #include "extApiPlatform.h"
 }
 #include "Motor.hpp"
 #include "VREPClient.hpp"

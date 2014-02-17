@@ -1,5 +1,7 @@
 extern "C" {
     #include "extApi.h"
+    #include "extApiCustom.h"
+    #include "extApiPlatform.h"
 }
 #include "Object.hpp"
 #include "VREPClient.hpp"

@@ -6,7 +6,7 @@ V-REP version for RhobanProject (education)
 Directories:
 ------------
 
-- Addon: Altered files of V-REP for customn remote API commands
+- Addon: Altered files of V-REP for custom remote API commands
 - Models: Robots models for V-REP
 - Scenes: Simulations set up
 - Client: Simple interface for communicating with V-REP running simulation
@@ -15,10 +15,10 @@ Directories:
 Compiling:
 ----------
 
-- make Client/build/ ; cd Client/build/
+- mkdir Client/build/ ; cd Client/build/
 - cmake .. #Build V-REP remote API custom commands
 - make #Build Client into library
-- make Example/build ; cd Example/build/ 
+- mkdir Example/build ; cd Example/build/ 
 - cmake ..
 - make #Build example against Client library
 

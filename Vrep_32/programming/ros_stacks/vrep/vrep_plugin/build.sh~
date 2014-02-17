@@ -1,4 +1,0 @@
-#!/bin/sh
- make
- cp -u -f ./lib/libvrep_ros_plugin.so /home/user/V-REP_V2_6_4b_Linux/libv_repExtROS.so
-# /home/user/V-REP_V2_6_4b_Linux/vrep.sh

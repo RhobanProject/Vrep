@@ -9,7 +9,7 @@ execute_process (COMMAND "/bin/bash" "-c" "cd ${VREP_ROOT}; echo -n `pwd`"
     OUTPUT_VARIABLE VREP_ROOT)
 
 set (VREP_PATH
-    "${VREP_ROOT}/Vrep_32/programming/"
+    "${VREP_ROOT}/Vrep/programming/"
     CACHE "The VRep build path" STRING)
 
 set (CLIENT_PATH

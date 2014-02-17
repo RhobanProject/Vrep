@@ -11,6 +11,12 @@ Directories:
 - Scenes: Simulations set up
 - Client: Simple interface for communicating with V-REP running simulation
 - Example: Basic example moving robot and printing all sensors values
+- Vrep: Containts V-REP 3.1.0 
+
+Installation:
+-------------
+
+- Copy V-REP 3.1.0 directory to Vrep/
 
 Compiling:
 ----------

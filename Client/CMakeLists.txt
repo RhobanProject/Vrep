@@ -12,17 +12,17 @@ execute_process (COMMAND "/bin/bash" "-c" "cd ${VREP_ROOT}; echo -n `pwd`"
 execute_process (COMMAND "/bin/bash" "-c" "cd ${VREP_ROOT}; Addon/links.sh ${VREP_ROOT}")
 
 #Recompile Vrep parts which are overloaded by our implementation
-execute_process (COMMAND "/bin/bash" "-c" "cd ${VREP_ROOT}/Vrep_32/programming/v_repExtRemoteApi; make -f makefile")
-execute_process (COMMAND "/bin/bash" "-c" "cp ${VREP_ROOT}/Vrep_32/programming/v_repExtRemoteApi/lib/libv_repExtRemoteApi.so ${VREP_ROOT}/Vrep_32/")
+execute_process (COMMAND "/bin/bash" "-c" "cd ${VREP_ROOT}/Vrep/programming/v_repExtRemoteApi; make -f makefile")
+execute_process (COMMAND "/bin/bash" "-c" "cp ${VREP_ROOT}/Vrep/programming/v_repExtRemoteApi/lib/libv_repExtRemoteApi.so ${VREP_ROOT}/Vrep/")
 
 set (VREP_PATH
-    "${CMAKE_CURRENT_SOURCE_DIR}/../Vrep_32/programming/"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../Vrep/programming/"
     CACHE "The VRep build path" STRING)
 
 set (SOURCES VREPClient.cpp Motor.cpp Object.cpp ForceSensor.cpp 
-    ${VREP_ROOT}/Vrep_32/programming/remoteApi/extApi.c
-    ${VREP_ROOT}/Vrep_32/programming/remoteApi/extApiCustom.c
-    ${VREP_ROOT}/Vrep_32/programming/remoteApi/extApiPlatform.c)
+    ${VREP_ROOT}/Vrep/programming/remoteApi/extApi.c
+    ${VREP_ROOT}/Vrep/programming/remoteApi/extApiCustom.c
+    ${VREP_ROOT}/Vrep/programming/remoteApi/extApiPlatform.c)
 
 set (EXTRA_LIBRARIES pthread)
 

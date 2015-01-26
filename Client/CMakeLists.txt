@@ -14,6 +14,8 @@ execute_process (COMMAND "/bin/bash" "-c" "cd ${VREP_ROOT}; Addon/links.sh ${VRE
 #Recompile Vrep parts which are overloaded by our implementation
 execute_process (COMMAND "/bin/bash" "-c" "cd ${VREP_ROOT}/Vrep/programming/v_repExtRemoteApi; make -f makefile")
 execute_process (COMMAND "/bin/bash" "-c" "cp ${VREP_ROOT}/Vrep/programming/v_repExtRemoteApi/lib/libv_repExtRemoteApi.so ${VREP_ROOT}/Vrep/")
+execute_process (COMMAND "/bin/bash" "-c" "cd ${VREP_ROOT}/Vrep/programming/v_repExtUrdf; qmake-qt4 v_repExtUrdf.pro; make")
+execute_process (COMMAND "/bin/bash" "-c" "cp ${VREP_ROOT}/Vrep/programming/v_repExtUrdf/lib/libv_repExtUrdf.so ${VREP_ROOT}/Vrep/")
 
 set (VREP_PATH
     "${CMAKE_CURRENT_SOURCE_DIR}/../Vrep/programming/"
